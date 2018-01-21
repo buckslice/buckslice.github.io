@@ -1,0 +1,7 @@
+writing this down because im stupid
+
+open cmd here
+python -m http.server
+
+then use this url to see site
+localhost:8000/index.html

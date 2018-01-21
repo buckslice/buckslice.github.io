@@ -1,0 +1,211 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+/*@import url("https://fonts.googleapis.com/css?family=Lato&effect=anaglyph");*/
+
+* {
+    margin:0;
+    padding:0;
+}
+
+body {
+	//font-family: myFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	
+	/* using githubs font family */
+	
+	font-family: "Lato",
+				-apple-system, 
+				BlinkMacSystemFont, 
+				Roboto, 
+				"Helvetica Neue",
+				Helvetica,
+				Arial,
+				sans-serif;
+	
+	//font-family: Arial, sans-serif;
+	
+	color: #eeeeee;
+	font-size: 1rem;
+	background-color: #223344;
+	margin: auto;
+	max-width: 60rem;
+	overflow-y:scroll;
+
+}
+
+.content{
+	margin: 0;
+}
+
+footer{
+	display: table;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+	margin-top: 6rem;
+}
+
+p{
+	line-height: 130%;
+	margin-bottom:1rem;
+}
+
+h1,h2,h3,h4{
+	font-weight: normal;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+h1{
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+h2{
+	font-size: 2rem;
+	margin-bottom: .5rem;
+}
+h3 {
+	font-size: 1.5rem;
+	margin-bottom: .5rem;
+}
+
+ul{
+	padding-left: 2rem;
+}
+
+#nav{
+	//-webkit-box-shadow: 0px 8px 8px rgba(0,0,0,0.5);
+	box-shadow: 0px 8px 8px rgba(0,0,0,0.5);
+}
+
+#nav ul {
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #333;
+	font-size: 1.2rem;
+	padding-left: 0;
+}
+#nav li {
+    float: left;
+}
+#nav li a {
+    display: block;
+    color: #eeeeee;
+    text-align: center;
+    padding: 1rem 1.2rem;
+    text-decoration: none;
+}
+/* Change the link color to #111 (black) on hover */
+#nav li a:hover:not(.active) {
+    background-color: #111;
+}
+.active {
+	box-shadow: inset 0 0 10px #000000;
+    background-color: #5c0da5;
+}
+
+.card{
+	/*
+	border-style: solid;
+	border-width: .2rem;
+	border-color: #777777;
+	*/
+	
+	//-webkit-box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
+	box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
+	//-webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+	width:100%;	
+	color: #eeeeee;
+	
+	//display:inline-block;
+	position:relative;	
+}
+
+/* pre render the shadow then just transition the opacity */
+.card::after{
+	content:"";
+	position:absolute;
+	z-index:-1;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	//-webkit-box-shadow: 0 8px 16px 5px rgba(0,0,0,0.7);
+	box-shadow: 0 8px 16px 5px rgba(0,0,0,0.7);
+	opacity:0;
+	//-webkit-transition: 0.2s;
+	transition: opacity 0.2s;
+	
+}
+
+.card:hover::after{
+	opacity:1;
+}
+
+.swagtext{
+	margin-top:2rem;
+	text-shadow: 0px .1em .2em #000;
+}
+
+.card h3{
+	text-shadow: 0px .1em .2em #000;
+}
+.card p {
+	margin-bottom:.5rem;
+}
+
+.card img{
+	width:100%;
+	margin-bottom:.5rem;
+}
+
+a.card:link{
+	text-decoration: none;
+}
+a.card:visited{
+	color: #eeeeee;
+	text-decoration: none;
+}
+a.card:hover{
+	//color:#ffffbb;
+	color:#ffffff;
+	text-decoration: none;
+}
+a.card:active {
+    text-decoration: none;
+}
+
+.container {
+    padding: 0rem .6rem 0rem .6rem;
+}
+
+.pageCentered{
+	left:0;
+	position: absolute;
+	text-align: center;
+	top: 20%;
+	width: 95%;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 1.5rem;
+	//background-color:#ffaa55;
+	//padding: 1rem;	
+}
+
+.box {
+	box-shadow: 0 8px 16px 5px rgba(0,0,0,0.7);
+}
+
+@media only screen and (max-width: 700px){
+	.grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media only screen and (max-width: 60rem){
+	.content {
+		margin: 0 1rem;
+	}
+}
