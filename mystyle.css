@@ -205,7 +205,7 @@ a.card:active {
 	text-align: center;
 	float: right;
 	padding: 1rem;
-	margin-right: 5rem;
+	margin: 5rem;
 	background-color: #333;
 	box-shadow: 
 	0 0 0 5px hsl(0, 0%, 40%),
@@ -238,5 +238,12 @@ a.card:active {
 @media only screen and (max-width: 62rem){
 	.content {
 		margin: 0 1rem;
+	}
+	#nav{
+		margin: 0 -1rem;
+	}
+	.image-text img{
+		width: 200px;
+		height: 200px;
 	}
 }
