@@ -74,31 +74,30 @@ h3 {
 	margin-bottom: .5rem;
 }
 
-
-.link a {
+a.link {
 	font-size: 2rem;
 }
-.link a:link {
-    color: cyan;
+a.link:link{
+	color: cyan;
 }
-.link a:visited {
-    color: cyan;
+a.link:visited{
+	color: cyan;
 }
-.link a:hover {
-    color: #ffffbb;
+a.link:hover{
+	color: #ffffbb;
 }
-.link a:active {
-    color: white;
+a.link:active{
+	color: white;
 }
-
 
 ul{
+	//padding: 1rem 2rem;
 	padding-left: 2rem;
 }
 
 #nav{
 	//-webkit-box-shadow: 0px 8px 8px rgba(0,0,0,0.5);
-	box-shadow: 0px 8px 8px rgba(0,0,0,0.5);
+	box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
 }
 
 #nav ul {
@@ -106,7 +105,7 @@ ul{
     overflow: hidden;
     background-color: #333;
 	font-size: 1.2rem;
-	padding-left: 0;
+	padding: 0;
 }
 #nav li {
     float: left;
@@ -135,6 +134,7 @@ ul{
 	width:100%;	
 	color: #eeeeee;
 	position:relative;	
+	background-color: #333333
 }
 
 /* pre render the shadow then just transition the opacity */
@@ -151,7 +151,6 @@ ul{
 	opacity:0;
 	//-webkit-transition: 0.2s;
 	transition: opacity 0.2s;
-	
 }
 
 .card:hover::after{
@@ -165,9 +164,16 @@ ul{
 	margin-bottom:.5rem;
 }
 
-.card img{
+.banner,
+.card img,
+.card video {
 	width:100%;
 	margin-bottom:.5rem;
+}
+
+.rightVid{
+	float: right;
+	padding: 1rem 0 1rem 1rem;
 }
 
 /* this is like a subclass of link or something, its diff from .card a:link */
@@ -218,7 +224,7 @@ a.card:active {
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1.5rem;
 	//background-color:#ffaa55;
 	//padding: 1rem;	
@@ -231,7 +237,12 @@ a.card:active {
 
 @media only screen and (max-width: 700px){
 	.grid {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr 1fr;
+	}
+}
+@media only screen and (max-width: 400px){
+	.grid {
+		grid-template-columns: 1fr;
 	}
 }
 
