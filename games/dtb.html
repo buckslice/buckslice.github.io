@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/img/planet.ico">
+
+    <title>Downtown Bazooka</title>
+
+	<link href="/mystyle.css" rel="stylesheet">
+	
+  </head>
+
+  <body style="background-color: #120f26;>  	
+  	<div class="content">
+  	<div id="nav"><ul>
+		<li><a href="/games.html">Games</a></li>
+		<li><a href="/projects.html">Projects</a></li>
+		<li><a href="/archive.html">Archive</a></li>
+		<li><a href="/gallery.html">Gallery</a></li>
+		<li><a href="/blog.html">Blog</a></li>
+		<li><a href="/resume.pdf">Resume</a></li>
+		<li style="float:right"><a href="/about.html">About</a></li>
+	</ul></div>
+	
+	<!--<img class="banner" src="/img/stacked.png" alt="">-->
+	hey put a nice screenshot in here, of that cool pink city or something. should every game have a cover photo tho?
+
+	<div class="rightFloat">
+		<img src="/img/dtb.gif" alt="">
+	</div>
+	
+	<h1>Downtown Bazooka</h1>
+	
+	<h3>Overview</h3>
+	<p>
+	Downtown Bazooka is a 3D action exploration game inspired by Tron and Mad Max. 
+	It was developed with members from the Video Game Development Club at UCI over the course of the 2015-2016 school year. 
+	I was the main programmer and was accompanied by a gameplay programmer, sound designer, and producer.
+	</p>
+	
+	<h3>Instructions</h3>
+	<p>
+	WASD / Arrow keys - Move<br>
+	Space - Jump<br>
+	Left Click - Shoot (can shoot at feet to launch yourself)<br>
+	<br>
+	The goal of the game is to get to each waypoint and then defeat the final boss.<br>
+	BEWARE OF ENEMIES AND LAVA!!
+	</p>
+	
+	<div class="linkm">
+		<a class="link" href="null">Download dtb.zip</a>
+		<span class="linki">30 mb</span>
+		<img class="linki ic" src="/img/win.png">
+	</div>
+	
+	
+	<h3>Engine Features</h3>
+	<ul>
+		<li>Custom physics solution</li><ul class="nest">
+			<li>Spacial partitioning using quadtrees</li>
+			<li>Collision events sent to Entity system for gameplay programming</li>			
+			<li>Axis-aligned bounding box collisions</li><ul class="nest">
+				<li>static, dynamic, and trigger colliders</li>
+				<li>triggers will pass through dynamics but still call collision events</li>
+				<li>dynamics will collide with everything even while moving (enemy stacking)</li></ul>
+			<li>Heightmap terrain collisions</li>
+			<li>Debug rendering system</li></ul>
+		<li>Transform system with support for 3D position, rotation, scale, and parenting</li>
+		<li>Noise generation and Math utility classes</li><ul class="nest">
+			<li>supports simplex and worley (cell) noise generation with fractal variants</li>
+			<li>used to procedurally generate city and terrain</li></ul>
+		<li>Flexible particle system</li>
+		<li>Bloom shader and full screen shader support</li>
+		<li>Sound effect and music playback system</li>
+	</ul>
+	
+	<h3>What I Learned</h3>
+	<p>
+	The primary reason of this project was to learn more about C++ and actually make my own game engine with it. 
+	In the process I also learned much about OpenGL and physics. While the engine was mostly from scratch, 
+	I did use SFML for the OpenGL bindings, 2D UI rendering, and audio support.
+	</p>
+	<p>
+	Oh boy was this challenging. So many things I took for granted with Unity ended up being huge hurdles and roadblocks during development.
+	Here's a short list of the most time consuming parts of the engine:
+	</p>
+	<ul>
+		<li>Rendering code (mesh handling, shaders, particles etc), so many different ways to handle this. 
+		Ended up just super optimizing cube drawing using instancing, since basically everything in the game is made of cubes (except the terrain).</li>
+		<li>Transform / Entity system, required TONS of matrix math making sure they combine in correct order to have proper parent child relationships</li>
+		<li>Physics... even as basic as it was with one collider shape (AABB), 3 different collider types, and collision callback events, it still took tons of time, 
+		and never really worked 100%. Regardless, I am very proud of that code specifically and how far I was able to get.</li>
+	</ul>
+	<p>
+	Overall it was a very rewarding experience, despite the pain and torment of not using an engine. 
+	It really made me appreciate Unity and everything it does for you. But man, 
+	there's nothing like seeing your game boot up super fast as a raw C++ app, feels so badass, haha!
+	</p>
+	
+	</div>
+	<footer>
+		Copyright © John F. Collins III 2018
+		<div class="sneaky">(Trying to look really professional)</div>
+	</footer>
+	
+  </body>
+</html>

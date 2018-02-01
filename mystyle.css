@@ -1,3 +1,4 @@
+/*@import url('https://fonts.googleapis.com/css?family=Inconsolata');*/
 @import url("https://fonts.googleapis.com/css?family=Lato");
 /*@import url("https://fonts.googleapis.com/css?family=Raleway");*/
 
@@ -7,10 +8,16 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--main-bg-color : #223344;
+}
+
 body {
 	//font-family: myFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	
-	/* using githubs font family */
+	/*ont-family:Consolas,'Inconsolata', Arial, sans-serif;*/
+	
+	/* githubs font family */	
 	
 	font-family: "Lato",
 				-apple-system, 
@@ -20,8 +27,8 @@ body {
 				Helvetica,
 				Arial,
 				sans-serif;
-	
-	//font-family: Arial, sans-serif;
+				
+			
 	
 	color: #eeeeee;
 	font-size: 1rem;
@@ -30,26 +37,48 @@ body {
 	max-width: 60rem;
 	overflow-y:scroll;
 	
-	/*
-	display: flex;
-	flex-direction: column;
-	height:100%;
-	*/
 }
 
-
 .content{
-	min-height: calc(100vh - 7rem);
+	min-height: calc(100vh - 9rem);
 }
 
 footer{
-	padding: 4rem 0 1rem 0;
+	margin: 6rem 0 1rem 0;
 	text-align: center;
+	color:rgba(255,255,255,0.5);
 }
 
 p{
 	line-height: 130%;
-	//margin-bottom:1rem;
+	margin: 0.5rem 0;
+}
+
+ul{
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	padding-left: 2rem;
+}
+
+.nest{
+	margin:0;
+}
+
+.mfont{
+	font-size:1.2rem;
+}
+
+.linkm{
+	margin: 2rem 0;
+}
+
+.linki {
+	margin: 0 0 0 1rem;
+	filter: opacity(0.5);
+	font-size:2rem;
+}
+.ic {
+	vertical-align: text-bottom;
 }
 
 h1,h2,h3,h4{
@@ -71,28 +100,24 @@ h2{
 }
 h3 {
 	font-size: 1.5rem;
-	margin-bottom: .5rem;
+	margin-top: 1rem;
+	margin-bottom: 0.5rem;
 }
 
 a.link {
 	font-size: 2rem;
 }
 a.link:link{
-	color: cyan;
+	color: #00EEEE;
 }
 a.link:visited{
-	color: cyan;
+	color: #00EEEE;
 }
 a.link:hover{
-	color: #ffffbb;
+	color: #FFFFBB;
 }
 a.link:active{
 	color: white;
-}
-
-ul{
-	//padding: 1rem 2rem;
-	padding-left: 2rem;
 }
 
 #nav{
@@ -104,8 +129,9 @@ ul{
     list-style-type: none;
     overflow: hidden;
     background-color: #333;
-	font-size: 1.2rem;
+	font-size: 1.35rem;
 	padding: 0;
+	margin: 0;
 }
 #nav li {
     float: left;
@@ -121,6 +147,7 @@ ul{
 #nav li a:hover:not(.active) {
     background-color: #111;
 }
+
 .active {
 	box-shadow: inset 0 0 10px #000000;
     background-color: #5c0da5;
@@ -157,23 +184,21 @@ ul{
 	opacity:1;
 }
 
-.card h3{
-	//text-shadow: 0px .1em .2em #000;
-}
-.card p {
-	margin-bottom:.5rem;
-}
-
 .banner,
 .card img,
 .card video {
 	width:100%;
-	margin-bottom:.5rem;
+}
+.card h3 {
+	margin-top:.5rem;
 }
 
-.rightVid{
+.rightFloat{
 	float: right;
-	padding: 1rem 0 1rem 1rem;
+}
+.rightFloat img{
+	display: block;
+	margin: .5rem 0 .5rem 1rem;
 }
 
 /* this is like a subclass of link or something, its diff from .card a:link */
@@ -194,7 +219,7 @@ a.card:active {
 }
 
 .card-inner {
-    padding: 0rem .6rem 0rem .6rem;
+    margin: 0rem .6rem 0rem .6rem;
 }
 
 .pageCentered{
@@ -207,27 +232,24 @@ a.card:active {
 
 .image-text{
 	vertical-align: top;
-	display: inline-block;
+	display: block;
 	text-align: center;
 	float: right;
-	padding: 1rem;
+	padding: .5rem;
 	margin: 5rem;
 	background-color: #333;
 	box-shadow: 
 	0 0 0 5px hsl(0, 0%, 40%),
-    0 0 0 10px hsl(0, 0%, 50%),
-    0 0 0 15px hsl(0, 0%, 60%),
-    0 0 0 20px hsl(0, 0%, 70%),
-    0 0 0 25px hsl(0, 0%, 80%),
-    0 0 0 30px hsl(0, 0%, 90%);
+    0 0 0 10px hsl(0, 0%, 60%),
+    0 0 0 15px hsl(0, 0%, 80%),
+    0 0 0 20px hsl(0, 0%, 90%);
+
 }
 
 .grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1.5rem;
-	//background-color:#ffaa55;
-	//padding: 1rem;	
 }
 
 .sneaky{
@@ -238,6 +260,9 @@ a.card:active {
 @media only screen and (max-width: 700px){
 	.grid {
 		grid-template-columns: 1fr 1fr;
+	}
+	.rightFloat{
+		float:none;
 	}
 }
 @media only screen and (max-width: 400px){
