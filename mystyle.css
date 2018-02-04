@@ -8,18 +8,22 @@
 	box-sizing: border-box;
 }
 
+/* should actually use something like this maybe, like how itch.io does link coloring too
 :root {
 	--main-bg-color : #223344;
 }
+*/
 
-body {
-	//font-family: myFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+html{
+	height: 100%;
+}
+
+body, button {
+	/*font-family: myFont, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 	
-	/*font-family:Consolas,'Inconsolata', Arial, sans-serif;*/
+	font-family:Consolas,'Inconsolata', Arial, sans-serif;
 	
 	/* githubs font family */	
-	
-	
 	font-family: "Lato",
 				-apple-system, 
 				BlinkMacSystemFont, 
@@ -28,16 +32,27 @@ body {
 				Helvetica,
 				Arial,
 				sans-serif;
-	
-				
-			
-	
+
 	color: #eeeeee;
-	font-size: 1rem;
+	font-size: 1.05rem;
+}
+
+body {
 	background-color: #223344;
 	margin: auto;
 	max-width: 60rem; //960px;
 	overflow-y:scroll;
+	height:100%;
+}
+
+ /*was doing this for aboutme page, but ended up going with img tag
+ that stretches since still looks cool, saving this for later tho*/
+.bg {
+	background-image: url(img/deep.png);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .content{
@@ -51,7 +66,7 @@ footer{
 }
 
 p{
-	line-height: 130%;
+	line-height: 140%;
 	margin: 0.5rem 0;
 }
 
@@ -214,12 +229,14 @@ a.link:active{
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-	
-	border:none;
-	background-color:#4CAF50;
-	//text-decoration:none;
+	font-size:1.5rem;
+	background-color: #333;
 	text-align:center;
 	padding: 1rem 2rem;
+}
+
+#gameContainer button:hover{
+	background-color: #336633;
 }
 
 /* this is like a subclass of link or something, its diff from .card a:link */
@@ -256,7 +273,6 @@ a.card:active {
     0 0 0 10px hsl(0, 0%, 60%),
     0 0 0 15px hsl(0, 0%, 80%),
     0 0 0 20px hsl(0, 0%, 90%);
-
 }
 
 .grid {
