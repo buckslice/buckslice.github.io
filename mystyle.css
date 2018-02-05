@@ -166,7 +166,6 @@ a.link:active{
 
 .active {
 	box-shadow: inset 0 0 10px #000000;
-    background-color: #5c0da5;
 }
 
 .card{
@@ -205,6 +204,9 @@ a.link:active{
 .card video {
 	width:100%;
 }
+.banner{
+	margin-bottom: .5rem;
+}
 .card h3 {
 	margin-top:.5rem;
 }
@@ -214,7 +216,7 @@ a.link:active{
 }
 .rightFloat img{
 	display: block;
-	margin: .5rem 0 .5rem 1rem;
+	margin: 0 0 .5rem 1rem;
 }
 
 #gameContainer{
@@ -236,7 +238,7 @@ a.link:active{
 }
 
 #gameContainer button:hover{
-	background-color: #336633;
+	background-color: #07420b;
 }
 
 /* this is like a subclass of link or something, its diff from .card a:link */
@@ -283,7 +285,7 @@ a.card:active {
 
 .sneaky{
 	font-size:.5rem; 
-	color:rgba(255,255,255,0.05);
+	color:rgba(255,255,255,0.1);
 }
 
 @media only screen and (max-width: 700px){
