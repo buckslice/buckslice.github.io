@@ -40,7 +40,7 @@ body, button {
 body {
 	background-color: #223344;
 	margin: auto;
-	max-width: 83.25rem;
+	//max-width: 83.25rem;
 	overflow-y:scroll;
 	height:100%;
 }
@@ -57,6 +57,8 @@ body {
 
 .content{
 	min-height: calc(100vh - 8.5rem);
+	max-width: 60rem;
+	margin: 0 auto;
 }
 
 footer{
@@ -156,16 +158,22 @@ a.link:active{
 	padding: 0;
 	margin: 0;
 }
-#nav li {
-    float: left;
-}
 #nav li a {
+	float: left;
     display: block;
     color: #eeeeee;
     text-align: center;
     padding: 1rem 1.2rem;
     text-decoration: none;
 }
+.swagtext{
+	color: rgba(0,0,0,0.5);
+	font-size: 3rem;
+	margin-right: 1rem;
+	float: right;
+	vertical-align: middle;
+}
+
 /* Change the link color to #111 (black) on hover */
 #nav li a:hover:not(.active) {
     background-color: #111;
@@ -324,14 +332,14 @@ a.card:active {
 	.grid {
 		grid-template-columns: 1fr;
 	}
+	.swagtext{
+		font-size: 2.5rem;
+	}
 }
 
-@media only screen and (max-width: 85.25rem){
-	.content {
+@media only screen and (max-width: 62rem){
+    .content {
 		margin: 0 1rem;
-	}
-	#nav{
-		margin: 0 -1rem;
 	}
 	.banner{
 		margin: 0 -1rem;
