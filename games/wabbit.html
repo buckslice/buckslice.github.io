@@ -14,7 +14,7 @@
 	<script src="Build_wabbits/UnityLoader.js"></script>
 	<script>
 	function runUnityLoader(){
-		var gameInstance = UnityLoader.instantiate("gameContainer", "Build_wabbits/WabbitGL.json");
+		var gameInstance = UnityLoader.instantiate("gameContents", "Build_wabbits/WabbitGL.json");
 	}
 	</script>
 	
@@ -47,7 +47,9 @@
 	<h1>WabbitSlide</h1>
 	
 	<div id="gameContainer">
+		<div id="gameContents">
 		<button type="button" onclick="runUnityLoader();">Play</button>
+		</div>
 	</div>
 	
 	<h3>Overview</h3>
