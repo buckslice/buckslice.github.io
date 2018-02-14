@@ -219,9 +219,16 @@ a.link:active{
 	opacity:1;
 }
 
-.card img,
-.card video {
+.card img{
 	width:100%;
+}
+
+.imgc {
+	position: relative;
+	padding-bottom: 79.2%; /* aspect ratio of gifs */
+	height: 0;
+	overflow: hidden;
+	background-color:rgba(0,0,0,1.0);
 }
 
 .banner{
