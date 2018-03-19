@@ -10,10 +10,11 @@
 
 
 :root {
-	--bg-color : #120F26; //#223344;
-	--fg-color : #000000; //#333
+	--bg-color : #120F26;
+	--fg-color : #000000; 
 	--accent-color : #FFF1AF;
-	--text-color : #EEEEEE; //#EEEEEE
+	--text-color : #EEEEEE; 
+	--button-color : #006622;
 }
 
 
@@ -58,7 +59,7 @@ body {
 }
 
 .hueRotate {
-	animation: colorchange 100s;
+	animation: colorchange 200s;
 	animation-iteration-count: infinite;
 }
 
@@ -70,7 +71,7 @@ body {
 }
 
 .content{
-	min-height: calc(100vh - 8.5rem);
+	min-height: calc(100vh - 14rem);
 	max-width: 60rem;
 	margin: 0 auto;
 }
@@ -181,9 +182,9 @@ a.link:active{
     text-decoration: none;
 }
 .swagtext{
-	color: rgba(255,255,255,0.75);
+	color: var(--text-color);
 	font-size: 3rem;
-	font-weight: 700;
+	//font-weight: 700;
 	margin-right: 1rem;
 	float: right;
 	vertical-align: middle;
@@ -300,7 +301,7 @@ https://www.w3schools.com/cSS/css_combinators.asp
 	padding: 1rem 2rem;
 }
 #gameContainer button:hover{
-	background-color: var(--accent-color);
+	background-color: var(--button-color);
 }
 
 /* this is like a subclass of link or something, its diff from .card a:link */
@@ -313,7 +314,7 @@ a.card:visited{
 }
 a.card:hover{
 	//color:#ffffff;
-	color: var(--accent-color);
+	//color: var(--accent-color);
 	text-decoration: none;
 }
 a.card:active {
@@ -324,7 +325,7 @@ a.card:active {
     margin: 0rem .6rem 0rem .6rem;
 }
 .card-inner h3{
-	color: var(--accent-color)	
+	//color: var(--accent-color)	
 }
 
 .image-text{

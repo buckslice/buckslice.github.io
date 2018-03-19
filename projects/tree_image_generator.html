@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/img/planet.ico">
+
+    <title>Tree Image Generator</title>
+
+	<link href="/mystyle.css" rel="stylesheet">
+	
+  </head>
+
+  <body>  	
+  	<div id="nav"><ul>
+		<li><a href="/about.html">About</a></li>
+		<li><a href="/games.html">Games</a></li>
+		<li><a href="/projects.html">Projects</a></li>
+		<li><a href="/archive.html">Archive</a></li>
+		<li><a href="/blog.html">Blog</a></li>
+		<li><a href="/resume.pdf">Resume</a></li>
+		<li class="swagtext">John Francis Collins III</li>
+	</ul></div>
+	<div class="content">
+	
+	<h1>Tree Image Generator</h1>
+
+	<img src="/img/quadtree.gif" alt="">	
+	
+	<h3>Overview</h3>
+	<p>
+		This app uses QuadTrees (a Tree structure where each node has 4 children) to recursively subdivide an image, favoring trees whose areas have the greatest deviations from their average color. The app allows you to load an image, build the new QuadTree Image, and then save it to file. Various parameters can be tweaked such as number of splits (how many times a tree is split into its 4 children), minimum size of a tree, animation speed, and whether or not you want to draw borders around each tree. Without the border drawing it usually just ends up looking like a poorly compressed image, but sometimes its cool, hah!
+	</p>
+	
+	<div class="linkm">
+		<a class="link" href="TreeImageGenerator.jar">Download TreeImageGenerator.jar</a>
+		<span class="linki">19 kb<img src="/img/java.png" title="java"></span>
+	</div>
+
+	</div>
+	<footer>
+		Copyright © John F. Collins III 2018
+	</footer>
+	
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/img/planet.ico">
+
+    <title>WabbitSlide</title>
+
+	<link href="/mystyle.css" rel="stylesheet">
+	
+	<script src="statacus/UnityLoader.js"></script>
+	<script>
+	function runUnityLoader(){
+		var gameInstance = UnityLoader.instantiate("gameContents", "statacus/statacus.json");
+	}
+	</script>
+	
+	<style>
+	@media only screen and (max-width: 85.25rem){
+		.content {
+			margin: 0 1rem;
+		}
+	}
+	</style>
+	
+  </head>
+ 
+  <body>  	
+  	<div id="nav"><ul>
+		<li><a href="/about.html">About</a></li>
+		<li><a href="/games.html">Games</a></li>
+		<li><a href="/projects.html">Projects</a></li>
+		<li><a href="/archive.html">Archive</a></li>
+		<li><a href="/blog.html">Blog</a></li>
+		<li><a href="/resume.pdf">Resume</a></li>
+		<li class="swagtext">John Francis Collins III</li>
+	</ul></div>
+	<div class="content" style="max-width: 83.25rem;">
+	
+	<h1>Statacus</h1>
+	
+	<div id="gameContainer">
+		<div id="gameContents">
+		<button type="button" onclick="runUnityLoader();">Play</button>
+		</div>
+	</div>
+	
+	<h3>Overview</h3>
+	<p>
+		Statacus was built during the Video Game Development Club's 2016 winter game jam at UCI. The theme was "There's never enough", so we made an action RPG where there are never enough stat upgrade options. You start with the same 3 basic stats, but as you beat each level you unlock a new random stat. Beware as there are some troll stats that don't aid you at all in battle. Haha!
+	</p>
+	<h3>What I Learned</h3>
+	<p>
+		It was my first time making a stat system and it was really fun thinking of all the stats and then integrating them into the gameplay calculations. Between the stats combined with the scaling waves of enemies I quickly learned how hard and complicated it was to balance these kind of games. I spent tons of time towards the end of the jam tweaking and changing the parameters for how many enemies each wave spawned and at what frequencies, and also things like how much a stat should be upgraded when you spend a point in it. It was very time intensive, but fun trying to balance it all. I think we were successful here, because there were many different viable strategies players used to beat the game so thats pretty cool.
+
+		Overall this game turned out to be very fun and we ended up winning first place at the jam!
+	</p>
+
+	</div>
+	<footer>
+		Copyright © John F. Collins III 2018
+	</footer>
+
+  </body>
+</html>
+
