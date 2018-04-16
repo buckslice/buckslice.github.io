@@ -345,19 +345,13 @@ a.card:active {
 
 .grid {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1.5rem;
 }
 
 .sneaky{
 	font-size:.5rem; 
 	color:rgba(255,255,255,0.1);
-}
-
-@media only screen and (max-width: 1200px){
-	.grid {
-		grid-template-columns: 1fr 1fr 1fr;
-	}
 }
 
 @media only screen and (max-width: 800px){

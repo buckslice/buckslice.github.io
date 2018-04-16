@@ -1,0 +1,13 @@
+{
+"companyName": "Binko and Bonko",
+"productName": "Need for Feed: Here Crumbs the Pain",
+"dataUrl": "need-for-feed.data.unityweb",
+"asmCodeUrl": "need-for-feed.asm.code.unityweb",
+"asmMemoryUrl": "need-for-feed.asm.memory.unityweb",
+"asmFrameworkUrl": "need-for-feed.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#000000"
+}
