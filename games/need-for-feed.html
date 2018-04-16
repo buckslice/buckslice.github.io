@@ -11,10 +11,11 @@
 
 	<link href="/mystyle.css" rel="stylesheet">
 	
-	<script src="statacus/UnityLoader.js"></script>
+	<script src="need-for-feed/UnityLoader.js"></script>
 	<script>
+	var gameInstance = null
 	function runUnityLoader(){
-		var gameInstance = UnityLoader.instantiate("gameContents", "need-for-feed/need-for-feed.json");
+		gameInstance = UnityLoader.instantiate("gameContents", "need-for-feed/need-for-feed.json");
 	}
 	</script>
 </head>
@@ -37,6 +38,7 @@
 		<div id="gameContents">
 		<button type="button" onclick="runUnityLoader();">Play</button>
 		</div>
+		<div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
 	</div>
 	
 	<h3>Overview</h3>

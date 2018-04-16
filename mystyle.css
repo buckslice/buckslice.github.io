@@ -237,7 +237,6 @@ a.link:active{
 
 .card img{
 	width:100%;
-		
 	//border-radius: 40px;
 }
 
@@ -302,6 +301,13 @@ https://www.w3schools.com/cSS/css_combinators.asp
 }
 #gameContainer button:hover{
 	background-color: var(--button-color);
+}
+
+.fullscreen {
+	background-image: url('/img/fullscreen.png');
+	width:32px;
+	height:32px;
+	float:right;
 }
 
 /* this is like a subclass of link or something, its diff from .card a:link */
