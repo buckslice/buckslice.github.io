@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/icons/wireboi.ico">
+
+    <title>AR/VR Prototypes</title>
+
+	<link href="/mystyle.css" rel="stylesheet">
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-98825853-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-98825853-2');
+</script>
+
+	
+</head>
+
+<body>  	
+  	<div id="nav"><ul>
+		<li><a href="/about.html">About</a></li>
+		<li><a href="/games.html">Games</a></li>
+		<li><a href="/projects.html">Projects</a></li>
+		<li><a href="/archive.html">Archive</a></li>
+		<li><a href="/blog.html">Blog</a></li>
+		<li><a href="/resume.pdf">Resume</a></li>
+		<li class="swagtext">John Francis Collins III</li>
+	</ul></div>
+	<div class="content">
+	
+	<h1>AR/VR God Head</h1>
+	
+	<div class="rightFloat">
+		<img src="/img/godvr.gif" alt="">
+	</div>
+	
+	<h3>Overview</h3>
+	<p>
+God Head is a locally networked game that mixes AR (augmented reality) and VR (virtual reality). You can be the follower, running from zombies and praying to your god. Or you can be the god. smiting your follower's foes and spying on his actions. The follower is immersed in virtual reality, while the god is watching in augmented reality. Built over the course of two days for the 2016 Global Game Jam
+	</p>
+	
+	<h3>Development</h3>
+	<p>
+My colleague, Vincent, and I received funding to make an educational VR game, so we decided to join the 2016 Global Game Jam and make a game that would help us get acquainted with the technology. The game jam's theme was 'ritual' so we decided on an asymmetrical game where one player is the follower who can worship and thereby empower his god to protect him, while the other player was the god who could smite his follower's foes.
+<br><br>
+The follower uses an oculus rift and travels in first person virtual reality on the surface of the level. The god uses a rift as well, but with a webcam strapped to the front to allow him to track an image target in augmented reality. The follower and god are networked together so the player can see the god head flying in the sky as he tilts and turns the image target, and the god can see the follower running about on the terrain as he flees from the zombies.
+<br><br>
+The majority of our weekend was spent getting the whole setup working. Some of the harder parts included: networking between the two games, jerry-rigging the hardware setup, and writing the transformation code to get the god head to appear in the correct spot in the ground player's world. Overall the jam was quite successful because we were able to figure out many of the complicated technical elements that our educational game would require. Below is a video of the prototype.
+	</p>
+<br>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/djh6vLe1TCM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+	
+<div class="linkm">
+	<a class="link" href="http://therealitystreaming.com/2016/02/02/god-head-global-game-jam-2016/">Article Feature</a>
+</div>
+<div class="linkm">
+	<a class="link" href="https://globalgamejam.org/2016/games/arvr-god-head">Global Game Jam Page</a>
+</div>
+<div class="linkm">
+	<a class="link" href="https://github.com/Vwing/GGJ2016">Github Project</a>
+</div>
+
+<h1>CellVR Education Game</h1>
+<p>
+After the global game jam we began work on the main game. As it was to be an educational game, we decided to go with a cell biology theme. One player would be inside the cell navigating through its different parts and finding collectibles, while the other player would be floating around, looking at the cell and helping guide the player inside. We also added the ability for the "god" player to use their hands (with a leap motion controller) to perhaps carry the cell player around to different cells, but we weren't able to implement that in game play in time. Much of the development time was spent getting the game to work on two phones using gear VR headsets instead of two computers with Oculus rifts (as in the previous game). Here is a video of our presentation of the game.
+</p>
+<br>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/AbW4h3iYwh0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<p>
+Here is the github project link if you would like to play around with the source / get it working yourself. I didn't include a download to the game because of the extensive and complicated hardware requirements, but let me know if you have any questions or comments about the game!
+</p>
+
+<div class="linkm">
+	<a class="link" href="https://github.com/buckslice/vr_research">Github Project</a>
+</div>
+	
+
+
+	</div>
+	<footer>
+		Copyright © John F. Collins III 2018
+	</footer>
+	
+</body>
+</html>
