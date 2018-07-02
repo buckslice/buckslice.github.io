@@ -24,9 +24,14 @@ function setup(){
 	colorMode(RGB);
 	noStroke();  // Don't draw a stroke around shapes
 	
-	bgColor = color(177,61,36);
+	bgColor = color(150,61,36);
 	offColor = color(240,136,63);
 	onColor = color(255,207,105);
+	
+	bgColor = color(10);
+	offColor = color(127);
+	onColor = color(230);
+
 	
 	frameRate(fr);
 	for (var i = 0; i < totalSigs; ++i){
