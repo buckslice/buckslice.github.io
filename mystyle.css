@@ -8,15 +8,13 @@
 	box-sizing: border-box;
 }
 
-
 :root {
-	--bg-color : #120F26;
+	--bg-color : #272727;
 	--fg-color : #000000; 
 	--accent-color : #FFF1AF;
 	--text-color : #EEEEEE; 
 	--button-color : #006622;
 }
-
 
 html{
 	height: 100%;
@@ -25,20 +23,23 @@ html{
 body, button {
 	/*font-family: myFont, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 	
-	font-family:Consolas,'Inconsolata', Arial, sans-serif;
+	/*font-family:Consolas,'Inconsolata', Arial, sans-serif;*/
 	
 	/* githubs font family */	
-	font-family: "Lato",
+	/*font-family: "Lato",
 				-apple-system, 
 				BlinkMacSystemFont, 
 				Roboto, 
 				"Helvetica Neue",
 				Helvetica,
 				Arial,
-				sans-serif;
+				sans-serif;*/
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+				
+	/*font-family: Arial, Helvetica, sans-serif;*/
 
 	color: var(--text-color);
-	font-size: 1.05rem;
+	font-size: .9rem;
 }
 
 body {
@@ -83,18 +84,18 @@ footer{
 }
 
 p{
-	line-height: 140%;
+	line-height: 150%;
 	margin: 0.5rem 0;
 }
 
 ul{
+	line-height: 150%;
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
 	padding-left: 2rem;
 }
 
 h1,h2,h3,h4{
-	//text-shadow: 0px .1em .2em #000;
 	font-weight: normal;
 	margin-left: 0;
 	margin-right: 0;
@@ -162,16 +163,19 @@ a.link:active{
 }
 
 #nav{
-	//box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
+	background-color: var(--fg-color);
 }
 
 #nav ul {
+	margin: 0;
+	
+	max-width:60rem;
+	margin: auto;
+	
     list-style-type: none;
     overflow: hidden;
-    background-color: var(--fg-color);
 	font-size: 1.35rem;
 	padding: 0;
-	margin: 0;
 }
 #nav li a {
 	float: left;
@@ -181,6 +185,7 @@ a.link:active{
     padding: 1rem 1.2rem;
     text-decoration: none;
 }
+
 .swagtext{
 	color: var(--text-color);
 	font-size: 3rem;
