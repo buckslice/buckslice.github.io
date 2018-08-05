@@ -245,6 +245,14 @@ a.link:active{
 	//border-radius: 40px;
 }
 
+.flex-grid {
+  display: flex;
+  justify-content: space-between;
+}
+.flex-grid .col {
+  width: 99%;
+}
+
 .imgc {
 	position: relative;
 	padding-bottom: 79.2%; /* aspect ratio of gifs */
