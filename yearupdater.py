@@ -4,6 +4,7 @@
 year = 2019
 
 import os
+import io
 
 def getFilePaths(rootDir='.'): # default to local dir
 	files = []
@@ -21,12 +22,13 @@ for file in files:
 		words = f.read()
 		lines = words.split('\n')
 		
+		foundCopyRight = False
 		for i in range(len(lines)):
 			if 'Copyright' in lines[i] and 'John F. Collins III' in lines[i]:
-				lines[i] = f'Copyright © John F. Collins III {year}'
+				lines[i] = f'Copyright ©️ John F. Collins III {year}'
 				foundCopyRight = True
 				break
 			
 	if foundCopyRight:
-		with open(file, 'w') as f:
+		with io.open(file, 'w', encoding='utf8') as f:
 			f.write('\n'.join(lines))
