@@ -1,22 +1,22 @@
 
 let bricks = [];
-let xbricks, ybricks, xslots, brickW, brickH;
+let xbricks, ybricks, xslots, brickW, brickH, grav;
 
 var canvas;
 
-let breakCount = 0;
-let phase = 0;
-let countdown = 0;
+let brickCount = 0;
+let brokeOwn = false;
+let nextBreakCounter = 0;
 
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
 	canvas.position(0,0);
 	canvas.style('z-index', '-5');
 	
+	grav = createVector(0, 0.3);
 	xbricks = min(35, floor(windowWidth / 100));
 	ybricks = min(21, floor(windowHeight / 60));
 	xslots = xbricks * 2 + 1; // spots in each row for a brick
-	//print(xbricks*ybricks);
 	colorMode(RGB, 1);
 	strokeWeight(2);
 	frameRate(60);
@@ -37,7 +37,7 @@ function setup(){
 			
 			if ((x+y) % 2 == 1){
 				row.push(new Brick((x-1)*brickW/2, y * brickH, createVector(r,g,b)));
-				breakCount += 1;
+				brickCount += 1;
 			}else{
 				row.push(null);
 			}
@@ -55,70 +55,49 @@ function windowResized(){
 function draw(){
 	background(0,0,0);
 	
-	if(phase > 0){
-		if(phase == 1){
-			if(millis() > countdown){			
-				let d = selectAll('.removable');
-				for (let i = 0; i < d.length; ++i){
-					d[i].remove();
-				}
-				textAlign(CENTER);
-				textSize(20);
-				noStroke();
-				fill(1,1,1);
-				phase = 2;
-				countdown = millis() + 2000;
-			}
-		}else if(phase == 2){
-			if(millis() > countdown){
-				phase = 3;
-				countdown = millis() + 4000;
-			}
-		}else if(phase == 3){
-			text('no ya it is a dead end.', windowWidth/2, windowHeight/2);
-			if(millis() > countdown){
-				phase = 4;
-				countdown = millis() + 5000;
-			}
-		}else if(phase == 4){
-			text('for now...', windowWidth/2, windowHeight/2);
-			if(millis() > countdown){
-				phase = 5;
-			}
+	if (mouseIsPressed && mouseButton == LEFT){	
+		if(breakBrick(mouseX, mouseY)){
+			brokeOwn = true;
 		}
-	}else{	
-		if (mouseIsPressed && mouseButton == LEFT){	
-			breakBrick();
-		}
-		
-		for (let y = 0; y < bricks.length; ++y){
-			for(let x = 0; x < bricks[y].length; ++x){
-				if (bricks[y][x] != null){
-					bricks[y][x].update();
-					bricks[y][x].render();
-				}
+	}
+	// start breaking bricks slowly if no action
+	if(!brokeOwn && millis() > 4000 && nextBreakCounter < millis()){
+		breakBrick(random(windowWidth), random(windowHeight));
+		nextBreakCounter = millis() + random(2000,4000);
+	}
+	
+	for (let y = 0; y < bricks.length; ++y){
+		for(let x = 0; x < bricks[y].length; ++x){
+			if (bricks[y][x] != null){
+				bricks[y][x].update();
+				bricks[y][x].render();
 			}
 		}
 	}
 }
 
-function breakBrick(){
+// break brick at xpos and ypos on screen
+function breakBrick(xpos, ypos){
 	for (let y = 0; y < bricks.length; ++y){
 		for(let x = 0; x < bricks[y].length; ++x){
-			if (bricks[y][x] != null && bricks[y][x].contains(mouseX,mouseY)){
+			if (bricks[y][x] != null && bricks[y][x].contains(xpos,ypos)){
 				bricks[y][x] = null;
-				breakCount -= 1;
-				if(breakCount <= 0) {
-					phase = 1;
-					countdown = millis() + 1000;
+				brickCount -= 1;
+				
+				if(brickCount <= 0){
+					setTimeout(function(){
+						let d = select('.editable');
+						d.html('Nice job...');
+					}, 1000);
 				}
 				
 				checkBricksAbove(x,y);
 				
-				return;
+				return true;
 			}
 		}
 	}
+	return false;
 }
 
 function checkBricksAbove(x,y){
@@ -165,7 +144,6 @@ function checkBrickFall(x, y) {
 function Brick(x,y,c){
 	this.pos = createVector(x,y);
 	this.vel = createVector(0, 0);
-	this.acc = createVector(0, 0.3);
 	this.curY = y;
 	this.color = c;
 }
@@ -175,7 +153,7 @@ Brick.prototype.contains = function(x,y){
 }	
 
 Brick.prototype.update = function(){
-	this.vel.add(this.acc);
+	this.vel.add(grav);
 	this.pos.add(this.vel);
 	
 	if (this.pos.y >= this.curY){
