@@ -214,7 +214,7 @@ a.link:active{
 
 .card{
 	//box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
-    transition: opacity 0.2s;
+    //transition: opacity 0.1s;
 	width:100%;	
 	color: var(--text-color);
 	position:relative;	
@@ -240,8 +240,7 @@ a.link:active{
 	//border-color: rgba(120,120,0,0.7);
 	
 	opacity:0;
-	//-webkit-transition: 0.2s;
-	transition: opacity 0.2s;
+	//transition: opacity 0.1s;
 }
 
 .card:hover::after{

@@ -1,6 +1,8 @@
 
 # updates all .html files copyright year
 
+# update app to work with any arbitrary string
+
 year = 2019
 
 import os
