@@ -35,6 +35,9 @@ function setup(){
 			let b = xp * 0.4+0.1-g*0.6;
 			g = g * 0;
 			
+			r = b;
+			g = b;
+			
 			if ((x+y) % 2 == 1){
 				row.push(new Brick((x-1)*brickW/2, y * brickH, createVector(r,g,b)));
 				brickCount += 1;
@@ -87,7 +90,9 @@ function breakBrick(xpos, ypos){
 				if(brickCount <= 0){
 					setTimeout(function(){
 						let d = select('.editable');
-						d.html('Nice job...');
+						if ( d != null){
+							d.html('Nice job...');
+						}
 					}, 1000);
 				}
 				

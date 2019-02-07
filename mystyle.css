@@ -124,6 +124,12 @@ h3 {
 	margin-top: 1rem;
 	margin-bottom: 0.5rem;
 }
+img{
+	max-width:100%; /*dont let images go out of their divs */
+}
+iframe{
+	max-width:100%;
+}
 
 .nest{
 	margin:0;
@@ -256,7 +262,7 @@ a.link:active{
   display: flex;
   justify-content: space-between;
 }
-.flex-grid .col {
+.flex-grid .col { /* for padding? */ 
   width: 99%;
 }
 
