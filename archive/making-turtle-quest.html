@@ -41,40 +41,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<h1>
 		The Making of Turtle Quest
 	</h1>
+	
 	<h3 style="color:#FF0000">THIS ARTICLE IS A WORK IN PROGRESS</h3>
-		<h3 style="color:#FF0000">(IM GONA ADD PICTURES DONT WORRY)</h3>
-	<br><br>
+		<h3 style="color:#FF0000">(IM GONA ADD MORE PICTURES DONT WORRY)</h3>
+	<br>
+	
 	<img src="/img/turtleQuest.png" alt="">
 	
 	<p>
-	In this post I will talk about how me and my friend Jeffrey made TurtleQuest over the course of the weekend (Jan 25th-27th 2019) for the Global Game Jam. As the event began we tried to get into a group with an artist and failed (again as we do every year lol). So we ended up just doing a two man group and had to fend for ourselves on the art side. Not to worry, this wasn't are first rodeo lol.
+	In this post I will talk about how my friend Jeffrey and I made TurtleQuest over the course of the weekend (Jan 25th-27th 2019) for the Global Game Jam. As the event began we tried to get into a group with an artist and failed (again as we do every year lol). So we ended up just doing a two man group and had to fend for ourselves on the art side. Not to worry, this wasn't are first rodeo lol.
 	</p>
 	<p>
-	We decide to take on the Assetless diversifier (no traditional art assets allowed), so the visuals of TurtleQuest were all procedurally generated or done with shaders. The only exceptions were we used scaled Unity primitives for the turtle, shark and trash, and we used a particle system for the jellyfish (only with the unity default particle though so still counts hiyeahh).
+	We decided to take on the Assetless diversifier (no traditional art assets allowed), so the visuals of TurtleQuest were all procedurally generated or done with shader programs. The only exceptions were we used scaled Unity primitives for the turtle, shark and trash, and we used a particle system for the jellyfish (only with the unity default particle though so still counts??? hiyeahh).
 	</p>
-	<p>
-	First I will explain the basis of pretty much all the art in this game.
-	</p>
-	
 	<h2>Talkin' bout NOISE</h2>
 	
-	<p>Okay so basically the game uses procedural noise for all of the art. From the textures on every object, to the shape of the terrain/rocks/coral/kelp, to the rippling water refraction effect. Its all noise babeyyyy. Before I kind of try to explain what noise is please just check out these two links (at least the first one)<br>
-	<a class="link" href="https://thebookofshaders.com/11/">The book of shaders: Noise</a><br>
-	<a class="link" href="https://thebookofshaders.com/13/">The book of shaders: Fractal Brownian Motion</a>
+	<p>Turtle Quest uses procedural noise for pretty much all of the art. From the textures on every object, to the shape of the terrain/rocks/coral/kelp, to the rippling water refraction effect. Its all noise babeyyyy.
 	</p>
 	
 	<p>
-	That whole site is pretty cash money if you are interested in shaders and they explain everything really smartly (just like me does hurhurrhur).
-	</p>
+	If you don't know what procedural noise is, I wrote a tutorial explaining it which also has links to a bunch of other better tutorials, so please take a gander!
 	
-	<p>I'll try to add my own layman's explanation. A good thought to take away from those articles 'noise is smooth randomness'. So when you think about the difference between a random number function vs a noise function, random functions have no arguments (or if they do its usually providing a range), while with noise functions you have to give a coordinate into the space you are sampling. Either 1D, 2D, 3D, or even 4D coordinates depending on what specific noise function or library you are using. The end returns of noise functions are going to be singular float values (usually in a range -1 to 1 or 0 to 1), but the kicker is that nearby sampled values will have similar results to eachother. And the functions know about this because of the coordinate you are passing to them. This smooth continuity is what allows much more complex and rich effects to be created as oppose to simply random values.
+	<h3>
+	<a class="link" href="/archive/explaining-noise.html">Explaining Noise</a>
+	</h3>
 	</p>
 	
 	<p>
-	Another good thing to takeaway is that theres tons of different ways to tweak, combine, and experiment with your noise functions and related code. The main way I learned is just trying random stuff and seeing what happens. Eventually you kind of get a vague idea on what parameters to change first so you can become a fast badboy. Additionally when learning its great to test noise in shaders because you don't even have to stop the game to see the changes as shaders can recompile while the games running!
-	</p>
-	
-	<p>So over the years (eww) I have accumulated and modified different noise functions I found and packaged them into two files. The first is a csharp file, 
+	Over the years I have accumulated and modified different noise functions I found and packaged them into two files. The first is a csharp file, 
 	
 	<a class="link" href="https://github.com/buckslice/turtle-quest/blob/master/Assets/Terrain/Noise.cs">Noise.cs</a>,
 	
@@ -82,7 +76,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	
 	<a class="link" href="https://github.com/buckslice/turtle-quest/blob/master/Assets/Shaders/Includes/Noise.cginc">Noise.cginc</a>.
 	
-	That's how I did all the texture effects, water refraction effect, and kelp rippling vertex displacement. So depending on where you need the noise you use either file. Just make sure to #include "Assets/path/to/Noise.cginc" in your shaders if you use that one.	
+	That's how I did all the texture effects, water refraction effect, and kelp rippling vertex displacement. So if you need your noise in a C# script use the first file, and if you need it in a shader, use the second file. Just make sure to #include "Assets/path/to/Noise.cginc" in your shaders if using the latter.
+	</p>
+	
+	<p>
+	Additionally, if you are interested in Unity's upcoming Burst compiler and ECS stuff there is a new fast math library that includes its own noise functions as well. Open Package Manager -> enable experimental packages -> Unity.Mathematics if you want to try it out!
+	</p>
+	
+	<p>
+	It's okay if you don't understand exactly what these functions do. The main way I learn is by just trying random stuff and seeing what happens. Eventually you kind of get a vague idea on what parameters to change first and you'll get faster at it. Additionally when learning it's great to test noise in shaders because you don't even have to stop the game to see the changes as shaders can recompile while the games running!
 	</p>
 	
 	<h2>Terrain Generation</h2>
@@ -90,17 +92,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<p>
 	I made code that generates a grid mesh in the xz plane and then offset it on the y based on noise generation. Hopefully you read the second link about fractal brownian motion as well. Here is the fbm function.
 	</p>
-	
-	<pre><code class="language-csharp">float fbm(float3 x, int octaves, float frequency, float persistence, float lacunarity) {
-    float sum = 0.0;
-    float amplitude = 1.0;
-    for (int i = 0; i < octaves; i++) {
-        sum += snoise(x * frequency) * amplitude;
-        amplitude *= persistence;
-        frequency *= lacunarity;
-    }
-    return sum;
-}</code></pre>
 
 	<h2>Rock/Coral Generation</h2>
 	
@@ -125,7 +116,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }</code></pre>
 
 	<p>
-	So what this is doing is basically ____ todo: explain this garbage lol
+	I will explain each piece of this glorious one liner ripples function. The first part '0.5 + 0.5 *' is to make the effect be lighter, because the worley noise function returns a value between 0 and 1, so this part rescales the total value to around 0.5-1.0, this is good because the ripple value is being multiplied with the albedo of all our objects and we dont want to want to make anything go full dark. 'wp' this part is providing our coordinate into the noise function which is the world position of the object. This world position is calculated in the vertex shader of all of our shaders and this is good because it makes the ripple effect look good on static and moving objects. Otherwise the ripples would still be going slow on fast moving objects and would look weird. The '+ float3(_Time...' part is basically making it so the ripples slowly scroll across all the objects, otherwise they wouldn't move at all on static objects. Each axis is just going at a different speed using the global _Time shader variable. The rest of the values are just the various parameters of the noise function to give it the right frequency/complexity/shape.
 	</p>
 	
 	<p>	

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/icons/planet.ico">
+
+    <title>Trying to Explain Noise</title>
+
+	<link href="/mystyle.css" rel="stylesheet">
+	
+	<link href="/libs/prism.css" rel="stylesheet">
+	
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TC4FMXD');</script>
+<!-- End Google Tag Manager -->
+
+	
+  </head>
+
+  <body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  	<div id="nav"><ul>
+		<li><a href="/games.html">Games</a></li>
+		<li><a href="/projects.html">Projects</a></li>
+		<li><a href="/archive.html">Archive</a></li>
+		<li><a href="/resume.pdf">Resume</a></li>
+		<li class="rightFloat"><a href="/about.html">About</a></li>
+	</ul></div>
+  	<div class="content">
+	
+	<h1>
+		Explaining Noise
+	</h1>
+	<p>
+	In this article I am going explain what procedural noise is (sorta) and demonstrate some great ways to use it in your games!
+	</p>
+	
+	<h2>
+	What is Noise?
+	</h2>
+	
+	<p>
+	Noise is basically smooth randomness. Random number functions will return random values in a range of your choosing, while with noise functions, you provide a coordinate into the noise space (whether it be 1D, 2D, 3D, 4D, or higher!) and it will return a random value where nearby sampled values will have a similar results.
+	</p>
+	
+	<p>
+	Now in this tutorial I am not going to cover how these functions work (because I still don't really understand), but more how to use them to create awesome effects in your games!
+	</p>
+	
+	<h2>
+	Fractal Noise
+	</h2>
+	<p>Fractal Noise is made by combining samples of noise with increasing frequencies and decreasing amplitudes. Each successive noise function you add is called an octave. Persistence is what you multiply the amplitude by each time, and lacunarity is what you multiply the frequency by each time. In the following example there are 6 octaves and the lacunarity is set to 2, but it demonstrates the effect of playing with the persistence levels of the function. Also I stole this from somewhere obviously, but the website got taken down so I don't feel that bad.
+	</p>
+	
+	
+	<table border="0">
+  <tbody><tr align="center" valign="center">
+    <td><b>Frequency<b></b></b></td>
+    <td><font size="+2">1</font></td><td></td>
+    <td><font size="+2">2</font></td><td></td>
+    <td><font size="+2">4</font></td><td></td>
+    <td><font size="+2">8</font></td><td></td>
+    <td><font size="+2">16</font></td><td></td>
+    <td><font size="+2">32</font></td><td></td>
+  </tr>
+
+  <tr><td><pre>  </pre></td></tr>
+  
+  <tr valign="center">
+    <td><b>Persistence = 1/4</b></td>
+    <td><img src="/img/noise/prln_b1.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_b2.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_b3.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_b4.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_b5.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_b5.gif" width="64" height="50"></td><td><b><font size="+2">=</font></b></td>
+    <td><img src="/img/noise/prln_br.gif" width="64" height="50"></td><td><b></b></td>
+  </tr>
+  <tr valign="top" align="center">
+    <td><b>Amplitude:</b></td>
+    <td>1</td><td></td>
+    <td><sup>1</sup>/<sub>4</sub></td><td></td>
+    <td><sup>1</sup>/<sub>16</sub></td><td></td>
+    <td><sup>1</sup>/<sub>64</sub></td><td></td>
+    <td><sup>1</sup>/<sub>256</sub></td><td></td>
+    <td><sup>1</sup>/<sub>1024</sub></td><td></td>
+    <td>result</td><td></td>
+  </tr>
+
+  <tr><td><pre>  </pre></td></tr>
+  
+  <tr valign="center">
+    <td><b>Persistence = 1/2</b></td>
+    <td><img src="/img/noise/prln_c1.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_c2.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_c3.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_c4.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_c5.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_c6.gif" width="64" height="50"></td><td><b><font size="+2">=</font></b></td>
+    <td><img src="/img/noise/prln_cr.gif" width="64" height="50"></td><td><b></b></td>
+  </tr>
+  <tr valign="top" align="center">
+    <td><b>Amplitude:</b></td>
+    <td>1</td><td></td>
+    <td><sup>1</sup>/<sub>2</sub></td><td></td>
+    <td><sup>1</sup>/<sub>4</sub></td><td></td>
+    <td><sup>1</sup>/<sub>8</sub></td><td></td>
+    <td><sup>1</sup>/<sub>16</sub></td><td></td>
+    <td><sup>1</sup>/<sub>32</sub></td><td></td>
+    <td>result</td><td></td>
+  </tr>
+
+  <tr><td><pre>  </pre></td></tr>
+  
+  <tr valign="center">
+    <td><b>Persistence = 1 / root2</b></td>
+    <td><img src="/img/noise/prln_a1.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_a2.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_a3.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_a4.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_a5.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_a6.gif" width="64" height="50"></td><td><b><font size="+2">=</font></b></td>
+    <td><img src="/img/noise/prln_ar.gif" width="64" height="50"></td><td><b></b></td>
+  </tr>
+  <tr valign="top" align="center">
+    <td><b>Amplitude:</b></td>
+    <td>1</td><td></td>
+    <td><sup>1</sup>/<sub>1.414</sub></td><td></td>
+    <td><sup>1</sup>/<sub>2</sub></td><td></td>
+    <td><sup>1</sup>/<sub>2.828</sub></td><td></td>
+    <td><sup>1</sup>/<sub>4</sub></td><td></td>
+    <td><sup>1</sup>/<sub>5.656</sub></td><td></td>
+    <td>result</td><td></td>
+  </tr>
+
+  <tr><td><pre>  </pre></td></tr>
+  
+  <tr valign="center">
+    <td><b>Persistence = 1</b></td>
+    <td><img src="/img/noise/prln_d1.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_d2.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_d3.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_d4.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_d5.gif" width="64" height="50"></td><td><b><font size="+2">+</font></b></td>
+    <td><img src="/img/noise/prln_d6.gif" width="64" height="50"></td><td><b><font size="+2">=</font></b></td>
+    <td><img src="/img/noise/prln_dr.gif" width="64" height="50"></td><td><b></b></td>
+  </tr>
+  <tr valign="top" align="center">
+    <td><b>Amplitude:</b></td>
+    <td>1</td><td></td>
+    <td>1</td><td></td>
+    <td>1</td><td></td>
+    <td>1</td><td></td>
+    <td>1</td><td></td>
+    <td>1</td><td></td>
+    <td>result</td><td></td>
+  </tr>
+
+</tbody></table>
+	
+<br><br>
+<p>
+Here is a similar example of fractal noise, but in 2D. Each successive iteration the frequency increases and the amplitude decreases, as it goes from left to right, finally combining in the nice fractal result.
+</p>
+<center>
+<table>
+<tbody><tr>
+<td><img src="/img/noise/perlin_a.jpg" width="96" height="96"></td><td><b><font size="+2">+</font></b></td>
+<td><img src="/img/noise/perlin_b.jpg" width="96" height="96"></td><td><b><font size="+2">+</font></b></td>
+<td><img src="/img/noise/perlin_c.jpg" width="96" height="96"></td><td><b><font size="+2">+</font></b></td>
+<td><img src="/img/noise/perlin_d.jpg" width="96" height="96"></td><td><b><font size="+2">+</font></b></td>
+<td><img src="/img/noise/perlin_e.jpg" width="96" height="96"></td><td><b><font size="+2">+</font></b></td>
+<td><img src="/img/noise/perlin_f.jpg" width="96" height="96"></td><td><b><font size="+2">=</font></b></td>
+<td><img src="/img/noise/p_128.jpg" width="96" height="96"></td>
+</tr>
+</table>
+</center>
+
+<br>
+<p>
+The actual code for this is pretty simple, here is what it looks like in HLSL:
+</p>
+
+	<pre><code class="language-csharp">float fbm(float3 x, int octaves, float frequency, float persistence, float lacunarity) {
+    float sum = 0.0;
+    float amplitude = 1.0;
+    for (int i = 0; i < octaves; i++) {
+        sum += snoise(x * frequency) * amplitude;
+        amplitude *= persistence;
+        frequency *= lacunarity;
+    }
+    return sum;
+}</code></pre>
+	
+<p>
+fbm stands for fractal brownian motion, another name for this. And snoise is where you call the original noise function you want to use for this. You can combine any sort of noise this way for different effects. There's a bunch of different ways to write these fractal functions, like you can have the value clamped at the end, or you can have fractional octave values if you want to get super detailed, you can also apply random offsets at each octave to further purify artifacts, but it looks pretty good as is.
+</p>
+
+	
+	<h2>
+	References and Additional Reading
+	</h2>
+	
+		<a class="link" href="https://thebookofshaders.com/11/">The book of shaders: Noise</a><br>
+	
+		<a class="link" href="https://thebookofshaders.com/13/">The book of shaders: Fractal Brownian Motion</a>
+
+	
+
+	
+	</div>
+	<footer>
+Copyright ©️ John F. Collins III 2019
+	</footer>
+	
+	<script src="/libs/prism.js"></script>
+  </body>
+</html>
