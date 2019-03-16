@@ -7,9 +7,12 @@
     <meta name="author" content="">
     <link rel="icon" href="/icons/planet.ico">
 
-    <title>Gallery</title>
+    <title>Laboratory</title>
 
 	<link href="mystyle.css" rel="stylesheet">
+	
+	<script language="javascript" type="text/javascript" src="/libs/p5.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/libs/p5.dom.min.js"></script>
 	
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -22,12 +25,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	
   </head>
 
-  <body>
+  <body class="nonselectable" style="overflow-x: hidden; background-color: #000000;">
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  	<div class="content">
   	<div id="nav"><ul>
 		<li><a href="/games.html">Games</a></li>
 		<li><a href="/projects.html">Projects</a></li>
@@ -35,21 +37,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<li><a href="/resume.pdf">Resume</a></li>
 		<li class="rightFloat"><a href="/about.html">About</a></li>
 	</ul></div>
+  	<div class="content">
 	
-	<h1>Gallery</h1>
-	<p>
-		I will post gamedev screenshots here, mainly of pretty rendering bugs I find!
-	</p>
-	<p>
-		I think I might switch to use a google album though in the future, or perhaps separate
-		links at the end of each project page that links to a screenshot section. For now though, this is nice :)
-	</p>
-	<br>
+	<script>
+	let lab = true;
+	</script>
+	<script language="javascript" type="text/javascript" src="/projects/bricks.js"></script>
 	
-	<div class="grid" style="grid-template-columns: 1fr 1fr;">
-	<img class="card" src="/img/bug_dtb2.png" alt="">
-	<img class="card" src="/img/bug_dtb1.png" alt="">
-	<img class="card" src="/img/bug_raymarch1.png" alt="" style="width:100%">
+	<h1>
+		Laboratory
+	</h1>
+	<p>
+	This is my secret lab! Don't touch anything... I will add some links to games I am working on soon
+	</p>
+	
+	<div class="linkm">
+		<a class="link" href="void.html">Test link</a>
 	</div>
 	
 	</div>
@@ -57,5 +60,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 Copyright ©️ John F. Collins III 2019
 	</footer>
   </body>
-
 </html>
