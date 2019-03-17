@@ -73,12 +73,12 @@ function setup(){
 	
 }
 
-let canBreak = true;
+let overLink = false;
 function mouseOverLink(){
-	canBreak = false;
+	overLink = true;
 }
 function mouseOutLink(){
-	canBreak = true;
+	overLink = false;
 }
 
 function windowResized(){
@@ -93,8 +93,10 @@ let dposx = 0;
 let dposy = 0;
 let durw = 50;
 let durh = 80;
+let canBreak = false;
 function mousePressed(){
 	good = checkDur();
+	canBreak = !overLink;
 }
 function mouseReleased(){
 	if(good && checkDur()){
@@ -116,7 +118,9 @@ function checkDur(){
 	checkCol(dposx, dposy) &&
 	checkCol(dposx+durw, dposy) &&
 	checkCol(dposx, dposy+durh) &&
-	checkCol(dposx+durw, dposy+durh);
+	checkCol(dposx+durw, dposy+durh) &&
+	checkCol(dposx,dposy+durh/2.0) &&
+	checkCol(dposx+durw,dposy+durh/2.0);
 }
 
 function draw(){
