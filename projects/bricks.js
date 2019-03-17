@@ -1,12 +1,7 @@
-
-let bricks = [];
-let xbricks, ybricks, xslots, brickW, brickH, grav;
-
 var canvas;
-
-let brickCount = 0;
-let nextBreakCounter = 0;
-let brokeOwn = true;
+let xbricks, ybricks, xslots, brickW, brickH, grav;
+let bricks, brickCount, nextBreakCounter, brokeOwn;
+let overLink,good,opening,openTime,dposx,dposy,durw,durh,canBreak;
 
 if(typeof lost == 'undefined'){
 	lost = false;
@@ -15,11 +10,18 @@ if(typeof lab == 'undefined'){
 	lab = false;
 }
 
-function setup(){
+function setup(){ // called by p5.js
 	canvas = createCanvas(windowWidth, windowHeight);
 	canvas.position(0,0);
 	canvas.style('z-index', '-5');
-	
+
+	reset();
+}
+
+function reset(){
+	bricks = [];
+	brickCount = 0;
+	nextBreakCounter = 0;
 	grav = createVector(0, 0.3);
 	xbricks = min(35, floor(windowWidth / 100));
 	ybricks = min(21, floor(windowHeight / 60));
@@ -30,19 +32,26 @@ function setup(){
 	brickW = windowWidth / xbricks;
 	brickH = windowHeight / ybricks;
 	
+	brokeOwn = !lost;
+	canBreak = false;
+	overLink = false;
+	good = false;
+	opening = false;
+	openTime = 0;
+	durw = 50;
+	durh = 80;
 	dposx = random(0, windowWidth-durw-20);
 	dposy = random(windowHeight / 2, windowHeight-durh);
-	
-	if(lost){
-		brokeOwn = false;
-	}
 	
 	// make it so clicking on links doesnt break bricks
 	links = selectAll('.link');
 	for(let i = 0; i < links.length; ++i){
-		links[i].mouseOver(mouseOverLink);
-		links[i].mouseOut(mouseOutLink);
+		//links[i].mouseOut(mouseOutLink);		// these glitch out when you reload page
+		//links[i].mouseOver(mouseOverLink);
+		links[i].elt.addEventListener("mouseover", function(){overLink=true;});
+		links[i].elt.addEventListener("mouseout", function(){overLink=false;});		
 	}
+
 	
 	for (let y = 0; y < ybricks; ++y){
 		let row = [];
@@ -70,15 +79,6 @@ function setup(){
 		
 		bricks.push(row);
 	}
-	
-}
-
-let overLink = false;
-function mouseOverLink(){
-	overLink = true;
-}
-function mouseOutLink(){
-	overLink = false;
 }
 
 function windowResized(){
@@ -86,14 +86,6 @@ function windowResized(){
 }
 
 // make sure u clicking on the dur correctly
-let good = false;
-let opening = false;
-let openTime = 0;
-let dposx = 0;
-let dposy = 0;
-let durw = 50;
-let durh = 80;
-let canBreak = false;
 function mousePressed(){
 	good = checkDur();
 	canBreak = !overLink;
@@ -104,7 +96,30 @@ function mouseReleased(){
 			openTime = millis();
 		}
 		opening = true;
-		setTimeout(function(){window.location.href = "laboratory.html";}, 500);
+		//setTimeout(function(){window.location.href = "laboratory.html";}, 500);
+		
+		setTimeout(function(){			
+			d = select('.content');
+			d.html(`
+				<h1>Laboratory</h1>
+				<p>Welcome to my testing laboratory!</p>
+				
+				<div class="linkm">
+					<a class="link" href="void.html">Test link</a>
+				</div>
+				
+				<div class="linkm">
+					<a class="link" href="https://drive.google.com/uc?export=download&id=1Up0mS2ljgmbuu6SEsceZ4LxymH_6ASo2">Test DarkForest</a>
+					<span class="linki">26 mb <img src="/img/android.png" title="android"></span>
+				</div>`
+			);
+			
+			lab = true;
+			reset();
+			
+		},500);
+		
+		
 	}
 }
 // check if color at point is not monochromatic (dur)
