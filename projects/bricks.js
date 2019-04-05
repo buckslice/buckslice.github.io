@@ -105,10 +105,6 @@ function mouseReleased(){
 				<p>Welcome to my testing laboratory!</p>
 				
 				<div class="linkm">
-					<a class="link" href="void.html">Test link</a>
-				</div>
-				
-				<div class="linkm">
 					<a class="link" href="https://drive.google.com/uc?export=download&id=1Up0mS2ljgmbuu6SEsceZ4LxymH_6ASo2">Test DarkForest</a>
 					<span class="linki">26 mb <img src="/img/android.png" title="android"></span>
 				</div>`
@@ -117,7 +113,7 @@ function mouseReleased(){
 			lab = true;
 			reset();
 			
-		},500);
+		},1000);
 		
 		
 	}
