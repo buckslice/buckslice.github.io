@@ -21,7 +21,6 @@ function setup() {
     colorA = color(100, 70, 20);
     colorB = color(130, 90, 30);
 
-    let x = 0;
     let y = 0;
     for (let i = 0; i <= height / symbolSize; ++i) {
         let stream = new Stream(0, y + 20);
@@ -29,6 +28,7 @@ function setup() {
         streams.push(stream);
         y += symbolSize;
     }
+    counter = -streams.length;
 }
 
 function draw() {
@@ -37,7 +37,7 @@ function draw() {
     if (frameCount % 2 == 0) {
         counter += 1;
         for (let i = 0; i < streams.length; ++i) {
-            if ((i + counter) % 30 == 0) {
+            if (i + counter >= 0 && (i + counter) % 30 == 0) {
                 let moveAmount = random(100, 200);
                 if (streams[i].x > 0) {
                     streams[i].lerpMove(-moveAmount);
@@ -127,7 +127,7 @@ Stream.prototype.render = function () {
 
         this.x = this.startX + InOutQuart(this.time) * this.move;
     } else {
-        if(random() < 0.01){
+        if (random() < 0.01) {
             //this.changeRandomSymbols();
         }
         //fill(1,1,1);
