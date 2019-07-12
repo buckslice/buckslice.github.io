@@ -13,7 +13,7 @@ function setup(){
 	frameRate(30);
 	//noStroke();  // Don't draw a stroke around shapes
 
-	for(var i = 0; i < 500; ++i){
+	for(var i = 0; i < 1000; ++i){
 		glitches.push(new Glitch(random(windowWidth), random(windowHeight)));
 	}
 }
@@ -79,6 +79,6 @@ Glitch.prototype.update = function(){
 }
 
 Glitch.prototype.render = function(){
-	//ellipse(this.pos.x, this.pos.y, 5);
+	//ellipse(this.pos.x, this.pos.y, this.size);
 	rect(this.pos.x - this.size / 2, this.pos.y - this.size / 2, this.size, this.size);
 }

@@ -7,11 +7,9 @@ var tree;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	//colorMode(HSB, 100);
 	stroke(0);
 	strokeWeight(2);
 	frameRate(30);
-	//noStroke();  // Don't draw a stroke around shapes
 
 	for (let i = 0; i < 5000; ++i) {
 		ants.push(new Ant(random(windowWidth), random(windowHeight)));
@@ -39,7 +37,8 @@ function draw() {
 	tree = new Quadtree(0, 0, windowWidth, windowHeight, 0);
 	for (let i = 0; i < ants.length; ++i) {
 		let a = ants[i];
-		tree.insert(new QuadtreeItem(a.pos.x, a.pos.y, a.size, a.size, a));
+		let s = a.size / 2.0;
+		tree.insert(new AABB(a.pos.x - s, a.pos.y - s, a.pos.x + s, a.pos.y + s, a));
 	}
 
 	stroke(0, 255, 0);
@@ -52,8 +51,7 @@ function draw() {
 }
 
 function Ant(x, y) {
-	this.pos = createVector(x, y);
-	this.vel = createVector(0, random(5) + 5)
+	this.pos = createVector(x, y); // center point of ant
 	this.nextDecide = 0;
 	this.dir = 0;
 	this.size = 10;
@@ -62,7 +60,6 @@ function Ant(x, y) {
 }
 
 Ant.prototype.update = function () {
-	//this.pos.add(this.vel);
 	var move = random(1) + this.speed;
 
 	this.nextDecide -= 1;
@@ -89,20 +86,21 @@ Ant.prototype.update = function () {
 		this.pos.y -= move;
 	}
 
-	if (this.pos.x + this.size > windowWidth) {
-		this.pos.x = windowWidth - this.size;
+	let s2 = this.size / 2.0;
+	if (this.pos.x + s2 > windowWidth) {
+		this.pos.x = windowWidth - s2
 		this.nextDecide = -1;
 	}
-	if (this.pos.x < 0) {
-		this.pos.x = 0;
+	if (this.pos.x < s2) {
+		this.pos.x = s2;
 		this.nextDecide = -1;
 	}
-	if (this.pos.y + this.size > windowHeight) {
-		this.pos.y = windowHeight - this.size;
+	if (this.pos.y + s2 > windowHeight) {
+		this.pos.y = windowHeight - s2;
 		this.nextDecide = -1;
 	}
-	if (this.pos.y < 0) {
-		this.pos.y = 0;
+	if (this.pos.y < s2) {
+		this.pos.y = s2;
 		this.nextDecide = -1;
 	}
 }
@@ -110,25 +108,25 @@ Ant.prototype.update = function () {
 Ant.prototype.render = function () {
 	//ellipse(this.pos.x, this.pos.y, 5);
 	//rect(this.pos.x - this.size / 2, this.pos.y - this.size / 2, this.size, this.size);
-	rect(this.pos.x, this.pos.y, this.size, this.size);
+	let s = this.size / 2.0;
+	rect(this.pos.x - s, this.pos.y - s, this.size, this.size);
 }
 
 Ant.prototype.eat = function (g) {
-	// kind of trash, sometimes you get really big guys fast if they each a bunch of small
-	// dudes because more mass is lost the greater the size with this formula
-	this.size += Math.sqrt(g.size);
+	let myA = this.size * this.size;
+	let gA = g.size * g.size;
+	this.size = Math.sqrt(myA + gA); // size is sqrt of new area
 	this.speed += 0.2;
 	g.dead = true;
 }
 
-
-function QuadtreeItem(x, y, w, h, r) {
-	this.x = x;
-	this.y = y;
-	this.w = w;
-	this.h = h;
+function AABB(xmin, ymin, xmax, ymax, r) {
+	this.xmin = xmin;
+	this.ymin = ymin;
+	this.xmax = xmax;
+	this.ymax = ymax;
 	//this.t = t; // type int
-	this.r = r; // reference to class?
+	this.r = r; // reference to object
 }
 
 var MAX_ITEMS = 10;
@@ -145,9 +143,9 @@ function Quadtree(x, y, w, h, level) {
 	this.items = [];
 }
 
-Quadtree.prototype.insert = function (qti) {
+Quadtree.prototype.insert = function (ab) {
 	if (this.children.length == 0) {
-		this.items.push(qti);
+		this.items.push(ab);
 
 		if (this.items.length > MAX_ITEMS && this.level < MAX_LEVEL) {
 			this.split();
@@ -160,20 +158,20 @@ Quadtree.prototype.insert = function (qti) {
 		let mx = this.x + this.w / 2.0;
 		let my = this.y + this.h / 2.0;
 
-		if (qti.y < my) {
-			if (qti.x < mx) {
-				this.children[0].insert(qti);
+		if (ab.ymin < my) {
+			if (ab.xmin < mx) {
+				this.children[0].insert(ab);
 			}
-			if (qti.x + qti.w >= mx) {
-				this.children[1].insert(qti);
+			if (ab.xmax >= mx) {
+				this.children[1].insert(ab);
 			}
 		}
-		if (qti.y + qti.h >= my) {
-			if (qti.x < mx) {
-				this.children[2].insert(qti);
+		if (ab.ymax >= my) {
+			if (ab.xmin < mx) {
+				this.children[2].insert(ab);
 			}
-			if (qti.x + qti.w >= mx) {
-				this.children[3].insert(qti);
+			if (ab.xmax >= mx) {
+				this.children[3].insert(ab);
 			}
 		}
 	}
@@ -213,7 +211,7 @@ Quadtree.prototype.checkCollision = function () {
 					continue;
 				}
 
-				let col = a.x <= b.x + b.w && a.y <= b.y + b.h && a.x + a.w >= b.x && a.y + a.h >= b.y;
+				let col = a.xmin <= b.xmax && a.ymin <= b.ymax && a.xmax >= b.xmin && a.ymax >= b.ymin;
 
 				if (col) {
 					if (a.r.size > b.r.size) {
