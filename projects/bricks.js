@@ -102,7 +102,7 @@ function mouseReleased() {
 			d = select('.content');
 			d.html(`
 				<h1>Laboratory</h1>
-				<p>You found my secret testing laboratory! Welcome!</p>
+				<p>You found my secret testing laboratory... Welcome!</p>
 				
 				<div class="linkm">
 					<a class="link" href="https://drive.google.com/uc?export=download&id=1Up0mS2ljgmbuu6SEsceZ4LxymH_6ASo2">Test DarkForest</a>
@@ -112,9 +112,14 @@ function mouseReleased() {
 				<div class="linkm">
 					<a class="link" href="https://drive.google.com/uc?export=download&id=1aVM_ceEvJVeuaUDu2VNis8dpWc_KMju2">Test FTL3D</a>
 					<span class="linki">20 mb <img src="/img/windows.png" title="windows"></span>
-				</div>`
+				</div>
 
-			);
+				<div class="linkm">
+					<a class="link" href="https://drive.google.com/uc?export=download&id=14C-5cEqV8q26Wl708vo-EzGFTzAnfHjQ">Test RPGNESS</a>
+					<span class="linki">15 mb <img src="/img/windows.png" title="windows"></span>
+				</div>
+
+			 `);
 
 			lab = true;
 			reset();
