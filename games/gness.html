@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="/icons/planet.ico">
+
+	<title>Gness</title>
+
+	<link href="/mystyle.css" rel="stylesheet">
+
+	<!-- Google Tag Manager -->
+	<script>(function (w, d, s, l, i) {
+			w[l] = w[l] || []; w[l].push({
+				'gtm.start':
+					new Date().getTime(), event: 'gtm.js'
+			}); var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+					'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-TC4FMXD');</script>
+	<!-- End Google Tag Manager -->
+
+</head>
+
+<body style="background-color: #282522; ">
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD" height="0" width="0"
+			style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	<div id="nav">
+		<ul>
+			<li><a href="/games.html">Games</a></li>
+			<li><a href="/projects.html">Projects</a></li>
+			<li><a href="/archive.html">Archive</a></li>
+			<li><a href="/resume.pdf">Resume</a></li>
+			<li class="rightFloat"><a href="/about.html">About</a></li>
+		</ul>
+	</div>
+	<div class="content">
+
+		<h1>Gness (WIP)</h1>
+
+		<h3>Overview</h3>
+		<p>
+			Gness is a sweet multiplayer online role playing game I am making with the Unity game engine. I
+			have been having a ton of fun with this project and have been learning a lot so far. I am really glad to
+			have finally gotten a decent networking system going and it is really fun being able to test and play with
+			my friends. Much of my early work was getting the networking systems up and running and now I have shifted
+			my focus to gameplay / ui stuff, using mainly World of Warcraft as inspiration. Once I get more systems
+			setup and fleshed out my designer friend will begin filling out the world and adding units and spells!
+		</p>
+
+		<h3>Current Game Features</h3>
+		<ul>
+			<li>Networking</li>
+			<ul class="nest">
+				<li>Authoritative server / client model</li>
+				<ul class="nest">
+					<li>Client sends inputs, server simulates and updates all clients</li>
+					<li>Server runs headless simulation, all gameplay code is compiled out for clients</li>
+				</ul>
+				<li>Using Unity's low level networking API (deprecated I know but their replacement isn't 100% ready
+					yet)</li>
+				<ul class="nest">
+					<li>unreliable channel for movement syncing / cooldown / casting updates</li>
+					<li>reliable ordered for spawn / despawn events</li>
+				</ul>
+				<li>Multiple different sync types, transform, rigidbody, static</li>
+				<li>Visibility system so each client only sees other network objects that are nearby</li>
+			</ul>
+			<li>Modular Ability System</li>
+
+		</ul>
+
+		<div class="basic_row">
+			<div class="basic_column">
+				<p>
+					For the game's Ability system I wrote a base Ability class that simply acts as a collection of
+					modules (using ScriptableObjects in Unity). There are various modules for triggering when the ability
+					happens, finding ability targets, specifying costs required, and effects to perform once triggered.
+					This custom editor script I made helps to create and draw each all these modules nicely on a single
+					ability object for great ease of use, and also has some pretty cool multiedit functionality to boot.
+					The server uses these modules to perform the ability calculations
+					and also send error messages to clients if the conditions aren't met. Here is an example of 
+					the CheckTargets function in the SingleTargeter module.
+				</p>
+
+				<img src="/img/abilityCode.png" alt="">
+
+				<p>
+					The good thing about this system is that each module is decoupled from the rest so it is easier to
+					add new effects and functionality while maintaining a pretty clean code structure. I still have many
+					modules I want to add like targeted AOEs not centered on caster, different AOE shapes, buffs /
+					debuffs / stat modifiers and such. Spawning new abilities / visual effects, etc.. But I am very
+					happy with what I have so far!
+				</p>
+			</div>
+			<div class="basic_column">
+				<img src="/img/gness_ability1.gif" style="padding:10px 20px;" alt="">
+			</div>
+		</div>
+
+
+		<div class="basic_row">
+			<div class="basic_column">
+				<p>
+					This is a test scene for the sprite shader I wrote. I wanted to use this
+					free sprite pack I found, but also wanted to make the game in 3D, so I went for this weird kind of
+					style. I was able to get the shadows and lighting to look pretty good actually even though each
+					sprite is just a billboarded quad. Eventually we will probably make/acquire some actual models but
+					for now
+					this looks pretty cool!
+				</p>
+
+			</div>
+			<div class="basic_column">
+				<img src="/img/gness_sprites.gif" style="padding:10px 20px;" alt="">
+
+			</div>
+		</div>
+
+
+		<p>
+			Lastly this is a screenshot of the spellbook and actionbar system. You can drag spells onto your bar
+			and cast them by clicking them (eww) or by using the keybindings on your bars (ignore my weird bindings).
+			There are also auto generated tooltips for each ability and cooldown overlays to show you how long before
+			you can use the ability again.
+		</p>
+		<img src="/img/gness_spellbook.png" style="padding:10px 20px;" alt="">
+
+	</div>
+	<footer>
+		Copyright ©️ John F. Collins III 2019
+	</footer>
+
+</body>
+
+</html>

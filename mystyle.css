@@ -46,7 +46,7 @@ body {
 	background-color: var(--bg-color);
 	
 	margin: auto;
-	//max-width: 83.25rem;
+	/* max-width: 83.25rem; */
 	overflow-y:scroll;
 	height:100%;
 }
@@ -203,7 +203,7 @@ a.link:active{
 .swagtext{
 	color: var(--text-color);
 	font-size: 3rem;
-	//font-weight: 700;
+	/* font-weight: 700; */
 	margin-right: 1rem;
 	float: right;
 	vertical-align: middle;
@@ -219,13 +219,13 @@ a.link:active{
 }
 
 .card{
-	//box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
-    //transition: opacity 0.1s;
+	/* box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2); */
+    /* transition: opacity 0.1s; */
 	width:100%;	
 	color: var(--text-color);
 	position:relative;	
 	background-color: var(--fg-color);
-	//border-radius: 40px 40px 0 0;
+	/* border-radius: 40px 40px 0 0; */
 }
 
 /* pre render the shadow then just transition the opacity */
@@ -240,13 +240,13 @@ a.link:active{
 	
 	box-shadow: 0 8px 16px 5px rgba(0,0,0,0.7);
 	
-	//border-style: solid;
-	//border-width: 3px;
-	//border-color: var(--text-color);
-	//border-color: rgba(120,120,0,0.7);
+	/* border-style: solid; */
+	/* border-width: 3px; */
+	/* border-color: var(--text-color); */
+	/* border-color: rgba(120,120,0,0.7); */
 	
 	opacity:0;
-	//transition: opacity 0.1s;
+	/* transition: opacity 0.1s; */
 }
 
 .card:hover::after{
@@ -255,7 +255,7 @@ a.link:active{
 
 .card img{
 	width:100%;
-	//border-radius: 40px;
+	/* border-radius: 40px; */
 }
 
 .flex-grid {
@@ -273,20 +273,29 @@ a.link:active{
 	overflow: hidden;
 	background-color:rgba(0,0,0,1.0);
 	
-	//border-radius: 40px;
+	/* border-radius: 40px; */
 }
 
 .banner{
-	//display:block;
-	//margin: 0 auto;
-	//max-width:100%;
-	//height:auto;
+	/* display:block; */
+	/* margin: 0 auto; */
+	/* max-width:100%; */
+	/* height:auto; */
 	
 	width:100%;
-	//margin-bottom: 1rem;
+	/* margin-bottom: 1rem; */
 }
 .card h3 {
 	margin-top:.5rem;
+}
+
+.basic_row {
+	display: flex;
+}
+  
+.basic_column {
+	flex: 50%;
+	align-content:left;
 }
 
 .rightFloat{
@@ -345,8 +354,8 @@ a.card:visited{
 	text-decoration: none;
 }
 a.card:hover{
-	//color:#ffffff;
-	//color: var(--accent-color);
+	/* color:#ffffff; */
+	/* color: var(--accent-color); */
 	text-decoration: none;
 }
 a.card:active {
@@ -357,7 +366,7 @@ a.card:active {
     margin: 0rem .6rem 0rem .6rem;
 }
 .card-inner h3{
-	//color: var(--accent-color)	
+	/* color: var(--accent-color)	 */
 }
 
 .image-text{
