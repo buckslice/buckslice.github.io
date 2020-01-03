@@ -44,7 +44,9 @@ body, button {
 
 body {
 	background-color: var(--bg-color);
-	
+	/*background-image: url("swage.gif");
+	background-repeat: repeat;
+	background-size: 200px 200px;*/
 	margin: auto;
 	/* max-width: 83.25rem; */
 	overflow-y:scroll;
@@ -298,6 +300,10 @@ a.link:active{
 	align-content:left;
 }
 
+.rFloat{ /* right float with no changes */
+	float: right;
+}
+
 .rightFloat{
 	float: right;
 }
@@ -365,12 +371,11 @@ a.card:active {
 .card-inner {
     margin: 0rem .6rem 0rem .6rem;
 }
-.card-inner h3{
-	/* color: var(--accent-color)	 */
-}
+/*.card-inner h3{
+	color: var(--accent-color)
+}*/
 
 .image-text{
-	vertical-align: top;
 	display: block;
 	text-align: center;
 	float: right;
