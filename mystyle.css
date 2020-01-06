@@ -3,8 +3,8 @@
 /*@import url("https://fonts.googleapis.com/css?family=Raleway");*/
 
 * {
-    margin:0;
-    padding:0;
+	margin:0;
+	padding:0;
 	box-sizing: border-box;
 }
 
@@ -161,6 +161,15 @@ iframe{
 	transform: translate(0, -50%);
 }
 
+.swagtext{
+	color: var(--text-color);
+	font-size: 3rem;
+	/* font-weight: 700; */
+	margin-right: 1rem;
+	float: right;
+	vertical-align: middle;
+}
+
 a.link {
 	text-decoration:none;
 }
@@ -178,42 +187,30 @@ a.link:active{
 	color: white;
 }
 
+
 #nav{
 	background-color: var(--fg-color);
 }
 
 #nav ul {
-	margin: 0;
-	
+	padding: 0;
 	max-width:60rem;
 	margin: auto;
-	
-    list-style-type: none;
-    overflow: hidden;
+	list-style-type: none;
+	overflow: hidden;
 	font-size: 1.35rem;
-	padding: 0;
 }
 #nav li a {
-	float: left;
-    display: block;
-    color: var(--text-color);
-    text-align: center;
-    padding: 1rem 1.2rem;
-    text-decoration: none;
+	padding:1rem 1.2rem;
+	float:left;
+	display:block;
+	color:var(--text-color);
+	text-align: center;
+	text-decoration: none;
 }
-
-.swagtext{
-	color: var(--text-color);
-	font-size: 3rem;
-	/* font-weight: 700; */
-	margin-right: 1rem;
-	float: right;
-	vertical-align: middle;
-}
-
 /* Change the link color to #111 (black) on hover */
 #nav li a:hover:not(.active) {
-    background-color: rgba(255,255,255,0.1);
+	background-color: rgba(255,255,255,0.1);
 }
 
 .active {
@@ -222,7 +219,7 @@ a.link:active{
 
 .card{
 	/* box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2); */
-    /* transition: opacity 0.1s; */
+	/* transition: opacity 0.1s; */
 	width:100%;	
 	color: var(--text-color);
 	position:relative;	
@@ -274,7 +271,6 @@ a.link:active{
 	height: 0;
 	overflow: hidden;
 	background-color:rgba(0,0,0,1.0);
-	
 	/* border-radius: 40px; */
 }
 
@@ -283,9 +279,9 @@ a.link:active{
 	/* margin: 0 auto; */
 	/* max-width:100%; */
 	/* height:auto; */
+	/* margin-bottom: 1rem; */
 	
 	width:100%;
-	/* margin-bottom: 1rem; */
 }
 .card h3 {
 	margin-top:.5rem;
@@ -332,9 +328,9 @@ https://www.w3schools.com/cSS/css_combinators.asp
 }
 #gameContainer button{
 	position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 	font-size:1.5rem;
 	background-color: var(--fg-color);
 	text-align:center;
@@ -365,11 +361,11 @@ a.card:hover{
 	text-decoration: none;
 }
 a.card:active {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .card-inner {
-    margin: 0rem .6rem 0rem .6rem;
+	margin: 0rem .6rem 0rem .6rem;
 }
 /*.card-inner h3{
 	color: var(--accent-color)
@@ -384,9 +380,9 @@ a.card:active {
 	background-color: var(--fg-color);
 	box-shadow: 
 	0 0 0 5px hsl(0, 0%, 40%),
-    0 0 0 10px hsl(0, 0%, 60%),
-    0 0 0 15px hsl(0, 0%, 80%),
-    0 0 0 20px hsl(0, 0%, 90%);
+	0 0 0 10px hsl(0, 0%, 60%),
+	0 0 0 15px hsl(0, 0%, 80%),
+	0 0 0 20px hsl(0, 0%, 90%);
 }
 
 .grid {
@@ -421,7 +417,7 @@ a.card:active {
 }
 
 @media only screen and (max-width: 62rem){
-    .content {
+	.content {
 		margin: 0 1rem;
 	}
 	.banner{
