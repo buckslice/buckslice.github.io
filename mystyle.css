@@ -14,6 +14,7 @@
 	--accent-color : #FFF1AF;
 	--text-color : #EEEEEE; 
 	--button-color : #006622;
+	--icon-bg: #0000CC;
 }
 
 .scrt{
@@ -163,6 +164,35 @@ iframe{
 	position:absolute;
 	top: 50%;
 	transform: translate(0, -50%);
+}
+.ico{
+	display:inline-block;
+	vertical-align: middle;
+	max-width:28px;
+	max-height:32px;
+	padding:4px;
+	background-color:var(--icon-bg);
+	border-radius: 5px;
+}
+.ico img{
+	filter: opacity(0.8);
+}
+
+.icopib {
+	display: inline-block;
+	font-size: .8rem;
+	padding:4px;
+	background-color:var(--icon-bg);
+	border-radius: 10px;
+	margin:.15rem 0;
+}
+.icowip {
+	display: inline-block;
+	filter: opacity(0.6);
+	padding:4px;
+	background-color:var(--icon-bg);
+	border-radius: 10px;
+	margin:.15rem 0;
 }
 
 .swagtext{
