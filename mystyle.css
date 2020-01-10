@@ -14,7 +14,6 @@
 	--accent-color : #FFF1AF;
 	--text-color : #EEEEEE; 
 	--button-color : #006622;
-	--icon-bg: #0000CC;
 }
 
 .scrt{
@@ -166,12 +165,13 @@ iframe{
 	transform: translate(0, -50%);
 }
 .ico{
-	display:inline-block;
+	float:right;
 	vertical-align: middle;
 	max-width:28px;
 	max-height:32px;
 	padding:4px;
-	background-color:var(--icon-bg);
+	margin:.1rem;
+	background-color:#0000CC;
 	border-radius: 5px;
 }
 .ico img{
@@ -179,18 +179,18 @@ iframe{
 }
 
 .icopib {
-	display: inline-block;
+	float:right;
 	font-size: .8rem;
 	padding:4px;
-	background-color:var(--icon-bg);
+	background-color:#0000CC;
 	border-radius: 10px;
 	margin:.15rem 0;
 }
 .icowip {
-	display: inline-block;
-	filter: opacity(0.6);
+	float:right;
+	color: #DDDDDD;
 	padding:4px;
-	background-color:var(--icon-bg);
+	background-color:#6622AA;
 	border-radius: 10px;
 	margin:.15rem 0;
 }

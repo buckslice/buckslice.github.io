@@ -2,116 +2,110 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<link rel="icon" href="/icons/planet.ico">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="/icons/planet.ico">
 
-	<title>Shardcraft</title>
+<title>Shardcraft</title>
 
-	<link href="/mystyle.css" rel="stylesheet">
+<link href="/mystyle.css" rel="stylesheet">
 
-	<!-- Google Tag Manager -->
-	<script>(function (w, d, s, l, i) {
-			w[l] = w[l] || []; w[l].push({
-				'gtm.start':
-					new Date().getTime(), event: 'gtm.js'
-			}); var f = d.getElementsByTagName(s)[0],
-				j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-					'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-		})(window, document, 'script', 'dataLayer', 'GTM-TC4FMXD');</script>
-	<!-- End Google Tag Manager -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TC4FMXD');</script>
+<!-- End Google Tag Manager -->
 
 </head>
 
 <body style="background-color: #201924; ">
-	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD" height="0" width="0"
-			style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
-	<div id="nav">
-		<ul>
-			<li><a href="/games.html">Games</a></li>
-			<li><a href="/projects.html">Projects</a></li>
-			<li><a href="/archive.html">Archive</a></li>
-			<li class="rFloat"><a href="/about.html">About</a></li>
-		</ul>
-	</div>
-	<div class="content">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD" height="0" width="0"
+	style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="nav">
+<ul>
+	<li><a href="/games.html">Games</a></li>
+	<li><a href="/projects.html">Projects</a></li>
+	<li><a href="/archive.html">Archive</a></li>
+	<li class="rFloat"><a href="/about.html">About</a></li>
+</ul>
+</div>
+<div class="content">
 
-		<h1>Shardcraft</h1>
+<h1>Shardcraft</h1>
 
-		<img src="/img/shardcraft.png">
+<img src="/img/shardcraft.png">
 
-		<h3>Overview</h3>
-		<p>
-			As I long time lover of Minecraft I always wanted to try working on my own voxel game and it was a ton of
-			fun! Also a ton of work though, and so much time was spent on optimizing things so it would even run at all.
-			I still work on it from time to time and plan to add creatures and crafting and inventory and all that... oh
-			boy!
-		</p>
+<h3>Overview</h3>
+<p>
+	As I long time lover of Minecraft I always wanted to try working on my own voxel game and it was a ton of
+	fun! Also a ton of work though, and so much time was spent on optimizing things so it would even run at all.
+	I still work on it from time to time and plan to add creatures and crafting and inventory and all that... oh
+	boy!
+</p>
 
-		<div class="rightFloat">
-				<img src="/img/shardcraft.gif">
-				<img src="/img/shardcraft2.gif">
-		</div>
+<div class="rightFloat">
+		<img src="/img/shardcraft.gif">
+		<img src="/img/shardcraft2.gif">
+</div>
 
-		<h3>Features</h3>
-		<ul>
-			<li>Multithreaded generation/meshing/lighting using Unity job system</li>
-			<li>Generation</li>
-			<ul class="nest">
-				<li>multifractal simplex noise generation, mountains and caves biome</li>
-				<li>structure system for trees and gemstone structures</li>
-			</ul>
-			<li>32x32x32 Chunk System</li>
-			<ul class="nest">
-				<li>chunks meshes are rebuilt whenever there is a change</li>
-				<li>can add and remove blocks of course</li>
-				<li>blocks are half the size of normal minecraft, so 8 times as much data :O</li>
-				<li>greedy meshing to reduce unnecessary polygons</li>
-			</ul>
-			<li>Block Light Calculations</li>
-			<ul class="nest">
-				<li>supports RGB coloring, as well as a sky light channel</li>
-				<li>ambient occlusion</li>
-			</ul>
-			<li>Voxel Physics</li>
-			<ul class="nest">
-				<li>voxel ray tracing</li>
-				<li>voxel collision detection and response</li>
-				<li>attempted this to be able to avoid expensive mesh colliders</li>
-			</ul>
-			<li>3D A* Pathfinding</li>
-			<li>Serialization system for saving and loading</li>
-		</ul>
-
-
-		<div class="linkm">
-			<a class="link" href="https://github.com/buckslice/shardcraft">Github Project</a>
-			<span style="font-size: .75rem;filter: opacity(0.5);">*would love to collaborate on this, hit me up!</span>
-		</div>
+<h3>Features</h3>
+<ul>
+	<li>Multithreaded generation/meshing/lighting using Unity job system</li>
+	<li>Generation</li>
+	<ul class="nest">
+		<li>multifractal simplex noise generation, mountains and caves biome</li>
+		<li>structure system for trees and gemstone structures</li>
+	</ul>
+	<li>32x32x32 Chunk System</li>
+	<ul class="nest">
+		<li>chunks meshes are rebuilt whenever there is a change</li>
+		<li>can add and remove blocks of course</li>
+		<li>blocks are half the size of normal minecraft, so 8 times as much data :O</li>
+		<li>greedy meshing to reduce unnecessary polygons</li>
+	</ul>
+	<li>Block Light Calculations</li>
+	<ul class="nest">
+		<li>supports RGB coloring, as well as a sky light channel</li>
+		<li>ambient occlusion</li>
+	</ul>
+	<li>Voxel Physics</li>
+	<ul class="nest">
+		<li>voxel ray tracing</li>
+		<li>voxel collision detection and response</li>
+		<li>attempted this to be able to avoid expensive mesh colliders</li>
+	</ul>
+	<li>3D A* Pathfinding</li>
+	<li>Serialization system for saving and loading</li>
+</ul>
 
 
-		<h3>Useful Links</h3>
-		<p>
-			Big thanks to my boy Ben and his work on <a class="link" href="https://www.seedofandromeda.com/">Seed of
-				Andromeda</a>, from whom I learned much from. Heres some writeups which really helped me out:
-			<ul>
-				<li><a class="link"
-						href="https://www.seedofandromeda.com/blogs/29-fast-flood-fill-lighting-in-a-blocky-voxel-game-pt-1">voxel
-						lighting</a></li>
-				<li><a class="link"
-						href="https://www.seedofandromeda.com/blogs/1-creating-a-region-file-system-for-a-voxel-game">region
-						file system</a></li>
-			</ul>
-		</p>
+<div class="linkm">
+	<a class="link" href="https://github.com/buckslice/shardcraft">Github Project</a>
+	<span style="font-size: .75rem;filter: opacity(0.5);">*would love to collaborate on this, hit me up!</span>
+</div>
 
-	</div>
-	<footer>
+
+<h3>Useful Links</h3>
+<p>
+	Big thanks to my boy Ben and his work on <a class="link" href="https://www.seedofandromeda.com/">Seed of
+		Andromeda</a>, from whom I have learned much. Here's some writeups which really helped me out:
+	<ul>
+		<li><a class="link" href="https://www.seedofandromeda.com/blogs/29-fast-flood-fill-lighting-in-a-blocky-voxel-game-pt-1">voxel lighting</a></li>
+		<li><a class="link"	href="https://www.seedofandromeda.com/blogs/1-creating-a-region-file-system-for-a-voxel-game">region file system</a></li>
+		<li><a class="link"	href="https://www.seedofandromeda.com/blogs/58-procedural-heightmap-terrain-generation">procedural heightmap terrain</a></li>
+	</ul>
+</p>
+
+</div>
+<footer>
 Copyright ©️ John F. Collins III 2020
-	</footer>
+</footer>
 
 </body>
 
