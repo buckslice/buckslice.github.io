@@ -50,35 +50,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 FILTERS
 <div id="myBtnContainer">
-<button class="btn active" onclick="showAll()">Show all</button>
-<!-- <button class="btn" onclick="setFilter('Windows',this)">Windows</button>
-<button class="btn" onclick="setFilter('Mac',this)">Mac</button>
-<button class="btn" onclick="setFilter('Linux',this)">Linux</button> -->
-<span class="btnGroup">
-	<button class="btn" onclick="setFilter('Game',this)">Game</button>
-	<!-- <button class="btn" onclick="setFilter('Prototype',this)">Prototype</button> -->
-	<button class="btn" onclick="setFilter('Project',this)">Project</button>
-</span>
-<button class="btn" onclick="setFilter('PlayInBrowser',this)">Play in browser</button>
-<button class="btn" onclick="setFilter('WIP',this)">WIP</button>
-<span class="btnGroup">
-	<button class="btn" onclick="setFilter('Unity',this)">Unity/C#</button>
-	<button class="btn" onclick="setFilter('C++',this)">C++</button>
-	<button class="btn" onclick="setFilter('Java',this)">Java</button>
-	<button class="btn" onclick="setFilter('Javascript',this)">Javascript</button>
-</span>
-<button class="btn" onclick="setFilter('GameJam',this)">Game Jam</button>
-<!-- <button class="btn" onclick="setFilter('School',this)" title="school project">School</button> -->
-<span class="btnGroup">
-	<button class="btn" onclick="setFilter('Solo',this)">Solo</button>
-	<button class="btn" onclick="setFilter('2man',this)">2 Man</button>
-	<button class="btn" onclick="setFilter('Group',this)">Group</button>
-</span>
+	<button class="btn active" onclick="showAll()">Show all</button>
+
+	<span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" data-tag="Game">Game</button>
+		<button class="btn" onclick="setFilter(this)" title="for things that aren't exactly games" data-tag="Project">Other</button>
+	</span>
+	<button class="btn" onclick="setFilter(this)" data-tag="PlayInBrowser">Play in browser</button>
+	<button class="btn" onclick="setFilter(this)" title="made during a short 2 day period" data-tag="GameJam">Game Jam</button>
+	<span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" data-tag="Unity">Unity/C#</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="C++">C++</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Java">Java</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Javascript">Javascript</button>
+	</span>
+	<button class="btn" onclick="setFilter(this)" title="contains link to source code" data-tag="OpenSource">Open Source</button>
+	<!-- <button class="btn" onclick="setFilter('School',this)" title="school project">School</button> -->
+	<!-- <span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" data-tag="Solo">Solo</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="2man">2 Man</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Group">Group</button>
+	</span> -->
+	<button class="btn" onclick="setFilter(this)" title="work in progress" data-tag="WIP">WIP</button>
+	<span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" title="Download for Windows" data-tag="Windows">Windows</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Mac" data-tag="Mac">Mac</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Linux" data-tag="Linux">Linux</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Android" data-tag="Android">Android</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Java" data-tag="Jar">Jar</button>
+	</span>
 </div>
 <br>
 
 <div class="grid">
-<a class="card Unity Windows Solo Game" href="games/mikes-fun-adventure.html">
+<a class="card" data-tag="Unity Windows Solo Game" href="games/mikes-fun-adventure.html">
 	<div class="imgc"><img class="lazy" data-src="img/mfa.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -86,7 +91,7 @@ FILTERS
 		<p>A nice little game made for my friend Mike</p>
 	</div>
 </a>
-<a class="card Unity WIP Solo Game" href="games/gness.html">
+<a class="card" data-tag="Unity WIP Solo Game" href="games/gness.html">
 	<div class="imgc"><img class="lazy" data-src="img/gness1.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icowip" title="Work in progress">WIP</span>
@@ -94,7 +99,7 @@ FILTERS
 		<p>An "M"MORPG experiment</p>
 	</div>
 </a>
-<a class="card Unity WIP Group Game" href="http://swordcerygame.com/">
+<a class="card" data-tag="Unity WIP Group Game" href="http://swordcerygame.com/">
 	<div class="imgc"><img class="lazy" data-src="img/swordcery.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icowip" title="Work in progress">WIP</span>
@@ -102,7 +107,7 @@ FILTERS
 		<p>Helping out on Mike's action-RPG based around epic swordplay</p>
 	</div>
 </a>
-<a class="card C++ Group School Game" href="games/downtown-bazooka.html">
+<a class="card" data-tag="C++ Group School Game Windows OpenSource" href="games/downtown-bazooka.html">
 	<div class="imgc"><img class="lazy" data-src="img/dtb.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -110,7 +115,7 @@ FILTERS
 		<p>Rocket jumping platformer made with custom C++ engine</p>
 	</div>
 </a>
-<a class="card Unity Solo School Game" href="games/get-there.html">
+<a class="card" data-tag="Unity Solo School Game Windows Mac" href="games/get-there.html">
 	<div class="imgc"><img class="lazy" data-src="img/gether.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -119,7 +124,7 @@ FILTERS
 		<p>A game where you run away from dudes (it's fun though trust me)</p>
 	</div>
 </a>
-<a class="card Unity GameJam Group Game" href="games/turtle-quest.html">
+<a class="card" data-tag="Unity GameJam Group Game Android OpenSource" href="games/turtle-quest.html">
 	<div class="imgc"><img class="lazy" data-src="img/turtleQuest.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/android.png" title="Download for Android"></span>
@@ -127,7 +132,7 @@ FILTERS
 		<p>3D turtle ocean cleanup game for android</p>
 	</div>
 </a>
-<a class="card Unity Solo School PlayInBrowser Game" href="games/wabbit-slide.html">
+<a class="card" data-tag="Unity Solo School PlayInBrowser Game" href="games/wabbit-slide.html">
 	<div class="imgc"><img class="lazy" data-src="img/wabbit.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -135,7 +140,7 @@ FILTERS
 		<p>My greatest masterpiece</p>
 	</div>
 </a>
-<a class="card Unity Group School Game" href="games/stacked.html">
+<a class="card" data-tag="Unity Group School Game OpenSource Windows" href="games/stacked.html">
 	<div class="imgc"><img class="lazy" data-src="img/spider.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -143,15 +148,16 @@ FILTERS
 		<p>Local co-op boss fighting game, my final project at UCI</p>
 	</div>
 </a>
-<a class="card Java Game GameJam Solo PlayInBrowser" href="games/betwixter.html">
+<a class="card" data-tag="Java Game GameJam Solo PlayInBrowser Jar" href="games/betwixter.html">
 	<div class="imgc"><img class="lazy" data-src="img/betwixter.gif" alt=""></div>
 	<div class="card-inner">
+		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
 		<span class="icopib">Play in browser</span>
 		<h3>Betwixter</h3>
 		<p>World swapping puzzle game made for Ludum Dare 30</p>
 	</div>
 </a>
-<a class="card Unity Game Solo WIP" href="games/shardcraft.html">
+<a class="card" data-tag="Unity Game Solo WIP OpenSource" href="games/shardcraft.html">
 	<div class="imgc"><img class="lazy" data-src="img/shardcraft3.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icowip" title="Work in progress">WIP</span>
@@ -159,7 +165,7 @@ FILTERS
 		<p>A voxel prototype with half-sized blocks and RGB lighting</p>
 	</div>
 </a>
-<a class="card Unity Game Group" href="games/sankofa.html">
+<a class="card" data-tag="Unity Game Group Windows Mac Linux" href="games/sankofa.html">
 	<div class="imgc"><img class="lazy" data-src="img/sankofa.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -169,7 +175,7 @@ FILTERS
 		<p>Educational game about the history and mythology of the Akan people</p>
 	</div>
 </a>
-<a class="card Javascript Game Solo PlayInBrowser" href="games/signal.html">
+<a class="card" data-tag="Javascript Game Solo PlayInBrowser" href="games/signal.html">
 	<div class="imgc"><img class="lazy" data-src="img/signal.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -177,7 +183,7 @@ FILTERS
 		<p>A clone of a game I played once and could never find again</p>
 	</div>
 </a>
-<a class="card Unity Game GameJam Solo" href="games/wildlife-simulator.html">
+<a class="card" data-tag="Unity Game GameJam Solo Windows" href="games/wildlife-simulator.html">
 	<div class="imgc"><img class="lazy" data-src="img/wsim.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -185,7 +191,7 @@ FILTERS
 		<p>When humans become animals</p>
 	</div>
 </a>
-<a class="card Unity Game GameJam Group PlayInBrowser" href="games/need-for-feed.html">
+<a class="card" data-tag="Unity Game GameJam Group PlayInBrowser" href="games/need-for-feed.html">
 	<div class="imgc"><img class="lazy" data-src="img/nffhctp.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -193,7 +199,7 @@ FILTERS
 		<p>3D eat 'em up (get it? lol)</p>
 	</div>
 </a>
-<a class="card Unity Game GameJam Group PlayInBrowser" href="games/statacus.html">
+<a class="card" data-tag="Unity Game GameJam Group PlayInBrowser OpenSource" href="games/statacus.html">
 	<div class="imgc"><img class="lazy" data-src="img/statacus.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -201,7 +207,7 @@ FILTERS
 		<p>Voxely shoot 'em up with randomized stat system</p>
 	</div>
 </a>
-<a class="card Unity Game Group" href="games/space-gods.html">
+<a class="card" data-tag="Unity Game Group OpenSource Windows Mac" href="games/space-gods.html">
 	<div class="imgc"><img class="lazy" data-src="img/spacegods.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -210,7 +216,7 @@ FILTERS
 		<p>God-fighting planet-slinging multiplayer brawler</p>
 	</div>
 </a>	
-<a class="card Unity Game Group GameJam" href="games/electrio.html">
+<a class="card" data-tag="Unity Game Group GameJam Windows" href="games/electrio.html">
 	<div class="imgc"><img class="lazy" data-src="img/electrio.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -218,7 +224,7 @@ FILTERS
 		<p>3 player co-op game built for Global Game Jam 2018</p>
 	</div>
 </a>
-<a class="card Unity Game GameJam Group" href="games/zomboat.html">
+<a class="card" data-tag="Unity Game GameJam Group Windows Mac Linux" href="games/zomboat.html">
 	<div class="imgc"><img class="lazy" data-src="img/zomboat.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -228,7 +234,7 @@ FILTERS
 		<p>Local co-op game where you try to escape from a zombie infested boat</p>
 	</div>
 </a>
-<a class="card Java Game Solo School" href="games/space-beasts.html">
+<a class="card" data-tag="Java Game Solo School Jar Android" href="games/space-beasts.html">
 	<div class="imgc"><img class="lazy" data-src="img/space-beasts.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/android.png" title="Download for Android"></span>
@@ -237,7 +243,7 @@ FILTERS
 		<p>2D platformer where you fight back against the swarm!</p>
 	</div>
 </a>
-<a class="card Unity Game Group GameJam" href="games/just-run.html">
+<a class="card" data-tag="Unity Game Group GameJam Windows" href="games/just-run.html">
 	<div class="imgc"><img class="lazy" data-src="img/just_run.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -245,7 +251,7 @@ FILTERS
 		<p>A horror survival game where there is only one way to survive</p>
 	</div>
 </a>
-<a class="card Java Game Group School" href="games/jaximus.html">
+<a class="card" data-tag="Java Game Group School" href="games/jaximus.html">
 	<div class="imgc"><img class="lazy" data-src="img/jax1.gif" alt=""></div>
 	<div class="card-inner">
 		<h3>The Adventures of Jaximus</h3>
@@ -253,7 +259,7 @@ FILTERS
 	</div>
 </a>
 
-<a class="card Solo Javascript Project PlayInBrowser" href="projects/p5-sketches.html">
+<a class="card" data-tag="Solo Javascript Project PlayInBrowser" href="projects/p5-sketches.html">
 	<div class="imgc"><img class="lazy" data-src="img/p5sketch.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -261,7 +267,7 @@ FILTERS
 		<p>Random visualizations made with the p5.js library</p>
 	</div>
 </a>
-<a class="card Javascript Solo Project School PlayInBrowser" href="projects/poor-mans-sky/planets.html">
+<a class="card" data-tag="Javascript Solo Project School PlayInBrowser" href="projects/poor-mans-sky/planets.html">
 	<div class="imgc"><img class="lazy" data-src="img/pms.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -269,7 +275,7 @@ FILTERS
 		<p>WebGL planet generator and level of detail system</p>
 	</div>
 </a>
-<a class="card Unity Solo Project PlayInBrowser" href="projects/boids.html">
+<a class="card" data-tag="Unity Solo Project PlayInBrowser" href="projects/boids.html">
 	<div class="imgc"><img class="lazy" data-src="img/boids.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
@@ -277,14 +283,14 @@ FILTERS
 		<p>A cool flocking simulation</p>
 	</div>
 </a>
-<a class="card Project School Solo" href="projects/computational-photography.html">
+<a class="card" data-tag="Project School Solo" href="projects/computational-photography.html">
 	<div class="imgc"><img class="lazy" data-src="img/cat2dog.gif" alt=""></div>
 	<div class="card-inner">
 		<h3>CS116 at UCI</h3>
 		<p>Projects from an awesome class about Computational Photography</p>
 	</div>
 </a>
-<a class="card Project Java Solo" href="projects/tree-image-generator.html">
+<a class="card" data-tag="Project Java Solo Jar" href="projects/tree-image-generator.html">
 	<div class="imgc"><img class="lazy" data-src="img/quadtree.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
@@ -292,21 +298,21 @@ FILTERS
 		<p>Cool recursive image filter app</p>
 	</div>
 </a>
-<a class="card Unity Solo Project" href="projects/planet-tech.html">
+<a class="card" data-tag="Unity Solo Project" href="projects/planet-tech.html">
 	<div class="imgc"><img class="lazy" data-src="img/culling_example.gif" alt=""></div>
 	<div class="card-inner">
 		<h3>Planet Rendering</h3>
 		<p>Examples of various planet rendering tech I've made</p>
 	</div>
 </a>
-<a class="card Unity GameJam Group Project" href="projects/arvr-prototypes.html">
+<a class="card" data-tag="Unity GameJam Group Project OpenSource" href="projects/arvr-prototypes.html">
 	<div class="imgc"><img class="lazy" data-src="img/godvr.gif" alt=""></div>
 	<div class="card-inner">
 		<h3>AR/VR God Head</h3>
 		<p>Networked multiplayer educational asymmetric game prototype</p>
 	</div>
 </a>
-<a class="card Unity GameJam Group Project" href="projects/music-simulator.html">
+<a class="card" data-tag="Unity GameJam Group Project OpenSource Windows" href="projects/music-simulator.html">
 	<div class="imgc"><img class="lazy" data-src="img/musim.gif" alt=""></div>
 	<div class="card-inner">
 		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
@@ -314,33 +320,33 @@ FILTERS
 		<p>3D music visualizer (great with VR!) Built during 2016 HackUCI</p>
 	</div>
 </a>
-<a class="card" href="https://www.youtube.com/watch?v=Fd2bR1E9mGU">
+<a class="card" data-tag=" " href="https://www.youtube.com/watch?v=Fd2bR1E9mGU">
 	<div class="imgc"><img class="lazy" data-src="img/minecraftvid.png" alt=""></div>
 	<div class="card-inner">
 		<h3>Minecraft Video</h3>
 		<p>Heres a link to my popular minecraft video! I love redstone omg</p>
 	</div>
 </a>
-<a class="card Java Project" href="projects/zeradun.html">
+<a class="card" data-tag="School PlayInBrowser Game" href="https://scratch.mit.edu/users/buckslice/projects/">
+	<div class="imgc"><img class="lazy" data-src="img/scratch.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>My Sweet Scratch Games</h3>
+		<p>Three games I made using Scratch while studying at UC Irvine</p>
+	</div>
+</a>
+<a class="card" data-tag="Java Project" href="projects/zeradun.html">
 	<div class="imgc"><img class="lazy" data-src="img/zeradun4.png" alt=""></div>
 	<div class="card-inner">
 		<h3>Zeradun</h3>
 		<p>My first experiments with 3D graphics</p>
 	</div>
 </a>
-<a class="card Java Project" href="projects/fluid_sim.html">
+<a class="card" data-tag="Java Project" href="projects/fluid_sim.html">
 	<div class="imgc"><img class="lazy" data-src="img/fluid.gif" alt=""></div>
 	<div class="card-inner">
 		<h3>Fluid Simulator</h3>
 		<p>Simple 2D prototype built with Java</p>
-	</div>
-</a>
-<a class="card School PlayInBrowser Game" href="https://scratch.mit.edu/users/buckslice/projects/">
-	<div class="imgc"><img class="lazy" data-src="img/scratch.gif" alt=""></div>
-	<div class="card-inner">
-		<span class="icopib">Play in browser</span>
-		<h3>My Sweet Scratch Games</h3>
-		<p>Three games I made using Scratch while studying at UC Irvine</p>
 	</div>
 </a>
 
