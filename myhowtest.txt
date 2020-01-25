@@ -1,6 +1,9 @@
 writing this down because im stupid
 
 open cmd here
+
+just do python myserver.py
+OLD WAY
 python -m http.server
 
 then use this url to see site
