@@ -260,33 +260,30 @@ a.link:active{
 	color: var(--text-color);
 	position:relative;	
 	background-color: var(--fg-color);
-	/* border-radius: 40px 40px 0 0; */
 	display:none; /*hidden by default for filters*/
-	//visibility: hidden;
-	//transition: visibility 0s, opacity 0.5s linear;
-	//opacity: 0;
-	//transition: opacity 1s, height 0;
-	//height:0;
-	
+	/* border-radius: 40px 40px 0 0; */
+	/* visibility: hidden;
+	transition: visibility 0s, opacity 0.5s linear;
+	opacity: 0;
+	transition: opacity 1s, height 0;
+	height:0; */
 }
 /* The "show" class is added to the filtered elements */
 .show {
 	display: block;
-	//visibility: visible;
-	//transition: opacity 1s, height 0 1s;
-	//opacity: 1;
+	/* visibility: visible;
+	transition: opacity 1s, height 0 1s;
+	opacity: 1; */
 }
 /* Style the buttons */
 .btn {
 	border: none;
 	outline: none;
-	padding: 12px 16px;
 	background-color: #777;
 	cursor: pointer;
 	font-size: .8rem;
 	padding:4px;
 	border-radius: 10px;
-	margin:.15rem 0;
   }
 .btn:hover {
 	background-color: #555;
@@ -295,9 +292,10 @@ a.link:active{
 	background-color:#0000CC;
 }
 .btnGroup{
+	border-radius: 16px;
 	border-color: #777;
 	display:inline-block;
-	padding:.1rem .1rem;
+	margin:.1rem 0rem;
 	border-style: solid; 
 	border-width: 2px;
 }
