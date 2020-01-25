@@ -113,14 +113,15 @@ iframe{
 }
 
 .hueRotate {
-	animation: colorchange 200s;
+	animation: colorchange 100s;
 	animation-iteration-count: infinite;
 }
 
 @keyframes colorchange {
 	0%   {filter: hue-rotate(0deg);}
-	33%  {filter: hue-rotate(90deg);}
-	66%  {filter: hue-rotate(270deg);}
+	25%  {filter: hue-rotate(65deg);}
+ 	50%  {filter: hue-rotate(180deg);}
+	75%  {filter: hue-rotate(240deg);}
 	100% {filter: hue-rotate(360deg);}
 }
 

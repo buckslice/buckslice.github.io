@@ -1,7 +1,367 @@
-<html>
-<head>
-<meta http-equiv="refresh" content="0; url=games.html" />
-</head>
-<body>
+<!doctype html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="/icons/planet.ico">
+
+	<title>Games</title>
+
+	<link href="mystyle.css" rel="stylesheet">
+	
+	<style type="text/css">
+	p{
+	margin: 0.5rem 0;
+	}
+	</style>
+	
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TC4FMXD');</script>
+<!-- End Google Tag Manager -->
+  </head>
+  
+  <body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="nav"><ul>
+	<li><a href="/" class="active" style="background-color: #302393">Home</a></li> <!--302393 54228E-->
+	<li><a href="/archive.html">Archive</a></li>
+	<li class="rFloat"><a href="/about.html">About</a></li>
+</ul></div>
+<div class="content">
+	
+<h1>Portfolio</h1>
+<p>
+	Welcome to the game development portfolio of <a class="link" href="about.html">John Francis Collins III.</a>
+	Please browse, enjoy and let me know what you think!
+</p>
+<br>
+
+FILTERS
+<div id="myBtnContainer">
+	<button class="btn active" onclick="showAll()">Show all</button>
+
+	<span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" data-tag="Game">Game</button>
+		<button class="btn" onclick="setFilter(this)" title="for things that aren't exactly games" data-tag="Project">Other</button>
+	</span>
+	<button class="btn" onclick="setFilter(this)" data-tag="PlayInBrowser">Play in browser</button>
+	<button class="btn" onclick="setFilter(this)" title="made during a short 2 day period" data-tag="GameJam">Game Jam</button>
+	<span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" data-tag="Unity">Unity/C#</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="C++">C++</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Java">Java</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Javascript">Javascript</button>
+	</span>
+	<button class="btn" onclick="setFilter(this)" title="contains link to source code" data-tag="OpenSource">Open Source</button>
+	<!-- <button class="btn" onclick="setFilter('School',this)" title="school project">School</button> -->
+	<!-- <span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" data-tag="Solo">Solo</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="2man">2 Man</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Group">Group</button>
+	</span> -->
+	<button class="btn" onclick="setFilter(this)" title="work in progress" data-tag="WIP">WIP</button>
+	<span class="btnGroup">
+		<button class="btn" onclick="setFilter(this)" title="Download for Windows" data-tag="Windows">Windows</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Mac" data-tag="Mac">Mac</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Linux" data-tag="Linux">Linux</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Android" data-tag="Android">Android</button>
+		<button class="btn" onclick="setFilter(this)" title="Download for Java" data-tag="Jar">Jar</button>
+	</span>
+</div>
+<br>
+
+<div class="grid">
+<a class="card" data-tag="Unity Windows Solo Game" href="games/mikes-fun-adventure.html">
+	<div class="imgc"><img class="lazy" data-src="img/mfa.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Mike's Adventure</h3>
+		<p>A nice little game made for my friend Mike</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity WIP Solo Game" href="games/gness.html">
+	<div class="imgc"><img class="lazy" data-src="img/gness1.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icowip" title="Work in progress">WIP</span>
+		<h3>Gness</h3>
+		<p>An "M"MORPG experiment</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity WIP Group Game" href="http://swordcerygame.com/">
+	<div class="imgc"><img class="lazy" data-src="img/swordcery.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icowip" title="Work in progress">WIP</span>
+		<h3>Swordcery</h3>
+		<p>Helping out on Mike's action-RPG based around epic swordplay</p>
+	</div>
+</a>
+<a class="card" data-tag="C++ Group School Game Windows OpenSource" href="games/downtown-bazooka.html">
+	<div class="imgc"><img class="lazy" data-src="img/dtb.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Downtown Bazooka</h3>
+		<p>Rocket jumping platformer made with custom C++ engine</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Solo School Game Windows Mac" href="games/get-there.html">
+	<div class="imgc"><img class="lazy" data-src="img/gether.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<span class="ico"><img src="/img/mac.png" title="Download for Mac"></span>
+		<h3>Get There</h3>
+		<p>A game where you run away from dudes (it's fun though trust me)</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity GameJam Group Game Android OpenSource" href="games/turtle-quest.html">
+	<div class="imgc"><img class="lazy" data-src="img/turtleQuest.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/android.png" title="Download for Android"></span>
+		<h3>Turtle Quest</h3>
+		<p>3D turtle ocean cleanup game for android</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Solo School PlayInBrowser Game" href="games/wabbit-slide.html">
+	<div class="imgc"><img class="lazy" data-src="img/wabbit.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Wabbit Slide</h3>
+		<p>My greatest masterpiece</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Group School Game OpenSource Windows" href="games/stacked.html">
+	<div class="imgc"><img class="lazy" data-src="img/spider.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Stacked</h3>
+		<p>Local co-op boss fighting game, my final project at UCI</p>
+	</div>
+</a>
+<a class="card" data-tag="Solo Javascript Project PlayInBrowser" href="projects/p5-sketches.html">
+	<div class="imgc"><img class="lazy" data-src="img/p5sketch.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Cool p5 sketches</h3>
+		<p>Random visualizations made with the p5.js library</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game Solo WIP OpenSource" href="games/shardcraft.html">
+	<div class="imgc"><img class="lazy" data-src="img/shardcraft3.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icowip" title="Work in progress">WIP</span>
+		<h3>Shardcraft</h3>
+		<p>A voxel prototype with half-sized blocks and RGB lighting</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game Group Windows Mac Linux" href="games/sankofa.html">
+	<div class="imgc"><img class="lazy" data-src="img/sankofa.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<span class="ico"><img src="/img/mac.png" title="Download for Mac"></span>
+		<span class="ico"><img src="/img/linux.png" title="Download for Linux"></span>
+		<h3>Sankofa</h3>
+		<p>Educational game about the history and mythology of the Akan people</p>
+	</div>
+</a>
+<a class="card" data-tag="Javascript Solo Project School PlayInBrowser" href="projects/poor-mans-sky/planets.html">
+	<div class="imgc"><img class="lazy" data-src="img/pms.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Poor Man's Sky</h3>
+		<p>WebGL planet generator and level of detail system</p>
+	</div>
+</a>
+<a class="card" data-tag="Project Java Solo Jar" href="projects/tree-image-generator.html">
+	<div class="imgc"><img class="lazy" data-src="img/quadtree.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
+		<h3>Tree Image Generator</h3>
+		<p>Cool recursive image filter app</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Solo Project PlayInBrowser" href="projects/boids.html">
+	<div class="imgc"><img class="lazy" data-src="img/boids.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Boids</h3>
+		<p>A cool flocking simulation</p>
+	</div>
+</a>
+<a class="card" data-tag="Java Game GameJam Solo PlayInBrowser Jar" href="games/betwixter.html">
+	<div class="imgc"><img class="lazy" data-src="img/betwixter.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
+		<span class="icopib">Play in browser</span>
+		<h3>Betwixter</h3>
+		<p>World swapping puzzle game made for Ludum Dare 30</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game GameJam Group PlayInBrowser OpenSource" href="games/statacus.html">
+	<div class="imgc"><img class="lazy" data-src="img/statacus.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Statacus</h3>
+		<p>Voxely shoot 'em up with randomized stat system</p>
+	</div>
+</a>
+<a class="card" data-tag="Javascript Game Solo PlayInBrowser" href="games/signal.html">
+	<div class="imgc"><img class="lazy" data-src="img/signal.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Signal</h3>
+		<p>A clone of a game I played once and could never find again</p>
+	</div>
+</a>
+
+<a class="card" data-tag="Unity Game GameJam Solo Windows" href="games/wildlife-simulator.html">
+	<div class="imgc"><img class="lazy" data-src="img/wsim.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Wildlife Simulator</h3>
+		<p>When humans become animals</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Solo Project" href="projects/planet-tech.html">
+	<div class="imgc"><img class="lazy" data-src="img/culling_example.gif" alt=""></div>
+	<div class="card-inner">
+		<h3>Planet Rendering</h3>
+		<p>Examples of various planet rendering tech I've made</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity GameJam Group Project OpenSource Windows" href="projects/music-simulator.html">
+	<div class="imgc"><img class="lazy" data-src="img/musim.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Music Simulator</h3>
+		<p>3D music visualizer (great with VR!) Built during 2016 HackUCI</p>
+	</div>
+</a>
+<a class="card" data-tag="Project School Solo" href="projects/computational-photography.html">
+	<div class="imgc"><img class="lazy" data-src="img/cat2dog.gif" alt=""></div>
+	<div class="card-inner">
+		<h3>CS116 at UCI</h3>
+		<p>Projects from an awesome class about Computational Photography</p>
+	</div>
+</a>
+<a class="card" data-tag=" " href="https://www.youtube.com/watch?v=Fd2bR1E9mGU">
+	<div class="imgc"><img class="lazy" data-src="img/minecraftvid.png" alt=""></div>
+	<div class="card-inner">
+		<h3>Minecraft Video</h3>
+		<p>Heres a link to my popular minecraft video! I love redstone omg</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game GameJam Group PlayInBrowser" href="games/need-for-feed.html">
+	<div class="imgc"><img class="lazy" data-src="img/nffhctp.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>Need for Feed: Here Crumbs the Pain</h3>
+		<p>3D eat 'em up (get it? lol)</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game Group OpenSource Windows Mac" href="games/space-gods.html">
+	<div class="imgc"><img class="lazy" data-src="img/spacegods.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<span class="ico"><img src="/img/mac.png" title="Download for Mac"></span>
+		<h3>Space Gods</h3>
+		<p>God-fighting planet-slinging multiplayer brawler</p>
+	</div>
+</a>	
+<a class="card" data-tag="Unity Game Group GameJam Windows" href="games/electrio.html">
+	<div class="imgc"><img class="lazy" data-src="img/electrio.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Electrio</h3>
+		<p>3 player co-op game built for Global Game Jam 2018</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game GameJam Group Windows Mac Linux" href="games/zomboat.html">
+	<div class="imgc"><img class="lazy" data-src="img/zomboat.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<span class="ico"><img src="/img/mac.png" title="Download for Mac"></span>
+		<span class="ico"><img src="/img/linux.png" title="Download for Linux"></span>
+		<h3>Zomboat</h3>
+		<p>Local co-op game where you try to escape from a zombie infested boat</p>
+	</div>
+</a>
+<a class="card" data-tag="Java Game Solo School Jar Android" href="games/space-beasts.html">
+	<div class="imgc"><img class="lazy" data-src="img/space-beasts.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/android.png" title="Download for Android"></span>
+		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
+		<h3>Return of the Space Beasts</h3>
+		<p>2D platformer where you fight back against the swarm!</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity Game Group GameJam Windows" href="games/just-run.html">
+	<div class="imgc"><img class="lazy" data-src="img/just_run.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Just Run</h3>
+		<p>A horror survival game where there is only one way to survive</p>
+	</div>
+</a>
+<a class="card" data-tag="Java Game Group School" href="games/jaximus.html">
+	<div class="imgc"><img class="lazy" data-src="img/jax1.gif" alt=""></div>
+	<div class="card-inner">
+		<h3>The Adventures of Jaximus</h3>
+		<p>My first real game, soon it will be rebuilt and live once again...</p>
+	</div>
+</a>
+<a class="card" data-tag="Unity GameJam Group Project OpenSource" href="projects/arvr-prototypes.html">
+	<div class="imgc"><img class="lazy" data-src="img/godvr.gif" alt=""></div>
+	<div class="card-inner">
+		<h3>AR/VR God Head</h3>
+		<p>Networked multiplayer educational asymmetric game prototype</p>
+	</div>
+</a>
+<a class="card" data-tag="School PlayInBrowser Game" href="https://scratch.mit.edu/users/buckslice/projects/">
+	<div class="imgc"><img class="lazy" data-src="img/scratch.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="icopib">Play in browser</span>
+		<h3>My Sweet Scratch Games</h3>
+		<p>Three games I made using Scratch while studying at UC Irvine</p>
+	</div>
+</a>
+<a class="card" data-tag="Java Project" href="projects/zeradun.html">
+	<div class="imgc"><img class="lazy" data-src="img/zeradun4.png" alt=""></div>
+	<div class="card-inner">
+		<h3>Zeradun</h3>
+		<p>My first experiments with 3D graphics</p>
+	</div>
+</a>
+<a class="card" data-tag="Java Project" href="projects/fluid_sim.html">
+	<div class="imgc"><img class="lazy" data-src="img/fluid.gif" alt=""></div>
+	<div class="card-inner">
+		<h3>Fluid Simulator</h3>
+		<p>Simple 2D prototype built with Java</p>
+	</div>
+</a>
+
+</div>
+	
+	
+</div>	
+<footer>
+Copyright ©️ John F. Collins III 2020
+</footer>	
+
+<script src="libs/yall.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function(){
+	yall({
+		threshold: 0
+	});
+});</script>
+<script src="libs/myfilterer.js"></script>
 </body>
 </html>

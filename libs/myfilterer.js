@@ -45,7 +45,6 @@ function shouldCardBeShown(card) {
 function loadFromHash(){
     if(location.hash){
         let hf = location.hash.substring(1).split("_");
-        console.log(hf);
         for(let i = 0; i < buttons.length; ++i){
             if(hf.indexOf(buttons[i].getAttribute("data-tag")) > -1){
                 setFilter(buttons[i]);
