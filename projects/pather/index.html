@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script language="javascript" type="text/javascript" src="../../libs/p5.min.js"></script>
+  <script language="javascript" type="text/javascript" src="../../libs/seedrandom.min.js"></script>
+  <!-- uncomment lines below to include extra p5 libraries -->
+  <!--<script language="javascript" src="libs/p5.dom.js"></script>-->
+  <!--<script language="javascript" src="libs/p5.sound.js"></script>-->
+  <link type="text/css" rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+  <div id="sidenav">
+    <div class="padded">
+      <p>
+        Welcome to Bucky's cool p5thfinder
+      </p>
+      <h3>G R I D</h3>
+      <div>grid dims:<span class="fr" id="gridDimsText">370x127</div></span>
+      <div>
+        <div>grid size:<span class="fr" id="gridSizeText">12</span></div>
+        <span class="slidecontainer">
+          <input type="range" min="2" max="32" value="12" class="slider" id="gridSizeSlider">
+        </span>
+      </div>
+
+      <button type="button" id="clearGridButton" style="margin: 4px 0;">Clear Grid</button>
+      <label class="container">Outline Blocks
+        <input type="checkbox" checked id="drawOutlinesCheckbox">
+        <span class="checkmark"></span>
+      </label>
+      <br>
+      <h3>G E N</h3>
+      <select id="genAlgoSelect">
+        <option value="RandomLines">Random Lines</option>
+        <option value="DepthFirstMaze">Depth First Maze</option>
+      </select>
+      <div>seed :<input class="inputBox" id="seedInputBox" type="text" placeholder=""></div>
+      <label class="container">Randomize Seed
+        <input type="checkbox" checked id="randomSeedCheckbox">
+        <span class="checkmark"></span>
+      </label>
+      
+      <label class="container">Instant
+        <input type="checkbox" id="genInstantCheckbox">
+        <span class="checkmark"></span>
+      </label>
+      <button type="button" id="regenGridButton">Generate</button>
+      <div id="genOptions">
+
+        <div>~ ops/sec:<span class="fr" id="genOpsPerSecondText">1000</span></div>
+        <span class="slidecontainer">
+          <input type="range" min="0" max="100" value="63" class="slider" step=".5" id="genOpsPerSecondSlider">
+        </span>
+
+      </div>
+      <div>operations :<span class="fr" id="genOpsText">0</span></div>
+      <div>time taken :<span class="fr" id="genTimeTakenText">0.00 s</span></div>
+      <p id="genInfoText"></p>
+
+
+      <h3>P A T H</h3>
+      <select id="pathAlgoSelect">
+        <option value="Dijkstra's">Dijkstra's</option>
+        <option value="A* search">A* search</option>
+      </select>
+      <label class="container">Instant
+        <input type="checkbox" id="pathInstantCheckbox">
+        <span class="checkmark"></span>
+      </label>
+      <div id="pathOptions">
+        <div>~ ops/sec:<span class="fr" id="pathOpsPerSecondText">100</span></div>
+        <span class="slidecontainer">
+          <input type="range" min="0" max="100" value="50" class="slider" step=".5" id="pathOpsPerSecondSlider">
+        </span>
+        <!-- <label class="container">Defaults
+        <input type="checkbox" checked id="defaultCheckbox">
+        <span class="checkmark"></span>
+      </label>
+      <div id="mainOptionsInternal" class="mydis">
+      </div>-->
+
+      </div>
+
+      <div>operations :<span class="fr" id="pathOpsText">0</span></div>
+      <div>time taken :<span class="fr" id="pathTimeTakenText">0.00 s</span></div>
+      <div>path length:<span class="fr" id="pathLengthText">0</span></div>
+      <p id="pathInfoText"></p>
+
+    </div>
+  </div>
+  <!--end sidenav-->
+
+  <div id="main"></div>
+  <script language="javascript" type="text/javascript" src="pather.js"></script>
+</body>
+
+</html>
