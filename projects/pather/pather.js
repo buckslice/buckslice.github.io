@@ -1,12 +1,8 @@
 // todo
-// add timers for everything
 // astar / other algo support
 // maybe try adding circles for nodes that change colors depending on if they are closed / open
-// maze generator
 // make path length calc diagonals correctly
 // add zoom in and out capability (lets you have super huge maps this way!!!)
-// change path color from start to end so makes more sense in the mazes
-// add generation swap option in ui
 // calc 2 second path drawer like the other path and gen await functions to work properly
 //      otherwise its still way too slow on large mazes to do lost sleep time
 // add line grid draw tool so users can make their own designs easier
@@ -15,9 +11,17 @@
 // maybe draw circle under currently opened node or something. then have to redraw neighbors blech
 // add bias slider for depth first maze, horizontal or vertical bias
 // redo everything to use HSB color mode
+// make the draw functions not retardode
+// try green to red for path coloring
 
 //code.iamkate.com
 function Queue() { var a = [], b = 0; this.getLength = function () { return a.length - b }; this.isEmpty = function () { return 0 == a.length }; this.enqueue = function (b) { a.push(b) }; this.dequeue = function () { if (0 != a.length) { var c = a[b]; 2 * ++b >= a.length && (a = a.slice(b), b = 0); return c } }; this.peek = function () { return 0 < a.length ? a[b] : void 0 } };
+function shiffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
 const FLOOR = 0;
 const WALL = 1;
@@ -70,6 +74,9 @@ let _operating = false; // finding a path or generating a grid
 let gridDirty = false; // gets set when a path is drawn on grid
 
 let backgroundColor = 51; // 255 for other mazo
+const pathColor = "#FFFF00";
+const wallColor = 150;
+
 
 let _cancel = false;
 let _ops = 0; // current ops counter
@@ -256,7 +263,7 @@ async function depthFirstMaze(rng) {
 
     let setGridSquareD = function (x, y, g) {
         grid[y][x] = g;
-        drawOnGridTest(x, y, g);
+        drawOnGridMAZE(x, y, g);
     }
 
     let startNode = new PathNode(startX, startY, null)
@@ -303,7 +310,7 @@ async function depthFirstMaze(rng) {
         }
         if (deadEnd) {
             stack.pop();
-            drawOnGridTest(n.x, n.y, BACKTRACK);
+            drawOnGridMAZE(n.x, n.y, BACKTRACK);
             ++_ops;
             if (!options.genInstant && --_opfAllowance <= 0 && !await _wait()) {
                 return false;
@@ -311,7 +318,7 @@ async function depthFirstMaze(rng) {
             if (n.parent != null) {
                 let dirx = n.parent.x - n.x;
                 let diry = n.parent.y - n.y;
-                drawOnGridTest(n.x + dirx / 2, n.y + diry / 2, BACKTRACK);
+                drawOnGridMAZE(n.x + dirx / 2, n.y + diry / 2, BACKTRACK);
                 ++_ops;
                 if (!options.genInstant && --_opfAllowance <= 0 && !await _wait()) {
                     return false;
@@ -383,13 +390,82 @@ function drawBackground() {
     line(w, 0, w, h);
 }
 
-function redrawGrid() {
+async function redrawGrid() {
+    let starter = performance.now();
     drawBackground();
-    for (let x = 0; x < GRIDX; x++) {
-        for (let y = 0; y < GRIDY; y++) {
-            drawGridSquare(x, y);
+    strokeWeight(1);
+    // this is more optimized than using the functions, bout twice as fast this way
+    // biggest maze 270ms
+    if (!drawOutlinesCheckbox.checked) {
+        stroke(wallColor);
+        fill(wallColor);
+        for (let y = 0; y < GRIDY; ++y) {
+            for (let x = 0; x < GRIDX; ++x) {
+                //drawGridSquare(x, y);
+                if (grid[y][x] == WALL) {
+                    square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE - 1);
+                }
+            }
+        }
+    }else{
+        stroke(0);
+        fill(wallColor);
+        for (let y = 0; y < GRIDY; ++y) {
+            for (let x = 0; x < GRIDX; ++x) {
+                //drawGridSquare(x, y);
+                if (grid[y][x] == WALL) {
+                    square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE);
+                }
+            }
         }
     }
+
+    // draw random y rows until refreshed
+    // randoList = [];
+    // for (let y = 0; y < GRIDY; ++y) {
+    //     randoList.push(y);
+    // }
+    // shiffle(randoList);
+    // for (let i = 0; i < GRIDY; ++i) {
+    //     let y = randoList[i];
+    //     for (let x = 0; x < GRIDX; ++x) {
+    //         drawGridSquare(x, y);
+    //     }
+    //     if (i % 100 == 0) {
+    //         await wait(0);
+    //     }
+    // }
+
+    // draw it out with some noise? kinda scuffed
+    // let drawPerFrame = 13789;
+    // let squares = Math.floor(GRIDX * GRIDY / drawPerFrame); // how many times u need to draw to complete
+    // if (squares < 1) {
+    //     squares = 1;
+    // }
+    // // each time draw a random square!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // let randoList = [];
+    // for (let i = 0; i < squares; ++i) {
+    //     randoList.push(i);
+    // }
+    // shiffle(randoList);
+
+    // for (let s = 0; s < squares; ++s) {
+    //     for (let i = randoList[s]; true; i += squares) {
+    //         if (i >= GRIDX * GRIDY) {
+    //             i -= GRIDX * GRIDY;
+    //             let x = Math.floor(i % GRIDX);
+    //             let y = Math.floor(i / GRIDX);
+    //             drawGridSquare(x, y);
+    //             break;
+    //         }
+    //         let x = Math.floor(i % GRIDX);
+    //         let y = Math.floor(i / GRIDX);
+    //         drawGridSquare(x, y);
+    //     }
+    //     await wait(0);
+    // }
+
+    //console.log(performance.now() - starter);
     gridDirty = false;
 }
 
@@ -418,7 +494,7 @@ function drawOnGridOutline(x, y, g) {
     strokeWeight(1);
     stroke(0);
     switch (g) {
-        case WALL: fill(150); break;
+        case WALL: fill(wallColor); break;
         case FLOOR: stroke(255); fill(255); break;
         case SELECT: fill(255, 0, 0); break;
         case SELECT2: fill(0, 0, 255); break;
@@ -431,7 +507,7 @@ function drawOnGridOutline(x, y, g) {
 function drawOnGridRegular(x, y, g) {
     strokeWeight(1);
     switch (g) {
-        case WALL: stroke(150); fill(150); break;
+        case WALL: stroke(wallColor); fill(wallColor); break;
         case FLOOR: stroke(255); fill(255); break;
         case SELECT: stroke(255, 0, 0); fill(255, 0, 0); break;
         case SELECT2: stroke(0, 0, 255); fill(0, 0, 255); break;
@@ -442,10 +518,10 @@ function drawOnGridRegular(x, y, g) {
     square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE - 1);
 }
 
-function drawOnGridTest(x, y, g) {
+function drawOnGridMAZE(x, y, g) {
     strokeWeight(1);
     switch (g) {
-        case WALL: stroke(0); fill(150); break;
+        case WALL: stroke(0); fill(wallColor); break;
         case BACKTRACK: stroke(0, 0, 255); fill(0, 0, 255); break;
         case FLOOR: stroke(255); fill(255); break;
         case VISITED: stroke(150, 255, 150); fill(150, 255, 150); break;
@@ -455,7 +531,7 @@ function drawOnGridTest(x, y, g) {
     square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE - 1);
 }
 
-function eraseGrid(x, y) {
+function eraseOnGrid(x, y) {
     grid[y][x] = FLOOR;
     strokeWeight(1);
     stroke(backgroundColor);
@@ -513,24 +589,24 @@ function draw() {
                     redrawGrid();
                 }
                 if (wasHoldingShiftWhenMousePressed) {
-                    eraseGrid(x, y);
+                    eraseOnGrid(x, y);
                 } else {
                     setGridSquare(x, y, WALL);
                 }
             } else if (lastMouseButton == RIGHTMOUSE && mouseJustPressed && grid[y][x] == FLOOR) {
                 //console.log(x + ' ' + y);
-                if (pathStartX == -1 && pathStartY == -1) {
+                if (pathStartX == -1 && pathStartY == -1) { // first time you right click
                     clearPathUI();
 
-                    drawOnGrid(x, y, SELECT);
+                    drawOnGrid(x, y, SELECT); // doing this just to place it in grid actually so when redrawn its there
                     redrawGrid();
                     //setGridSquare(x, y, SELECT);
-                    drawOnGrid(x, y, SELECT);
+                    drawOnGrid(x, y, SELECT);   // draw again after redraw just incase i dunno
                     pathStartX = x;
                     pathStartY = y;
                 } else if (pathEndX == -1 && pathEndY == -1) {
                     if (pathStartX == x && pathStartY == y) { // turn off then
-                        eraseGrid(x, y);
+                        eraseOnGrid(x, y);
                         pathStartX = pathStartY = -1;
                     } else {
                         drawOnGrid(x, y, SELECT);
@@ -564,7 +640,7 @@ async function findPath() {
     _timeTakenText = pathTimeTakenText;
     _msPerOpStr = "pathMsPerOp";
 
-    stroke(0, 200, 0); // 200
+    stroke(pathColor); // 200
     strokeWeight(LINE_WIDTH);
     let drawLineToParentPath;
     if (LINE_WIDTH % 2 == 0) {
@@ -609,7 +685,7 @@ async function findPath() {
             drawLineToParentPath(n);
             if (n.parent.x == pathStartX && n.parent.y == pathStartY) { // keep starting point above the green lines
                 drawOnGrid(n.parent.x, n.parent.y, SELECT);
-                stroke(0, 200, 0); // for path coloring
+                stroke(pathColor); // for path coloring
                 strokeWeight(LINE_WIDTH);
             }
         }
@@ -634,9 +710,10 @@ async function findPath() {
             let counter = 0;
             colorMode(HSB, 100);
             let first = true;
+            let widener = GRID_SIZE > 2 ? 2 : 1;
             while (n.parent != null && !_cancel) {
                 let t = counter / pathLength;
-                drawLineToParent(n, lerp(65, 100, t), 100, 100, LINE_WIDTH + 1);
+                drawLineToParent(n, lerp(65, 100, t), 100, 100, LINE_WIDTH + widener);
                 if (first) { // omg this is PUKE, todo convert everything to 100 hsb
                     first = false;
                     colorMode(RGB, 255);
@@ -836,7 +913,7 @@ clearGridButton.onclick = function () {
 let drawOutlinesCheckbox = document.getElementById("drawOutlinesCheckbox");
 drawOutlinesCheckbox.onchange = function () {
     drawOnGrid = this.checked ? drawOnGridOutline : drawOnGridRegular;
-    if(!_operating){
+    if (!_operating) {
         redrawGrid();
     }
 }
