@@ -39,12 +39,13 @@ class AStarNode {
         this.y = y;
 
         this.parent = null;
-        this.g = 0;
-        this.h = 0;
-        this.f = 0;
 
-        this.closed = false; // was in openList and has been considered
+        this.g = 0;  // distance from start to this node
+        this.h = 0;  // estimate to the end node (must be equal or underestimate to guarantee shortest path)
+        this.f = 0;  // combo of g and h
+
         this.open = false;   // is in openList
+        this.closed = false; // was in openList and has been considered
         this.invalid = false; // set to true when updating priority
     }
 
@@ -77,9 +78,11 @@ let LINE_WIDTH;
 
 let options = {}
 options.pathInstant = false;
+options.pathPaused = false;
 options.pathMsPerOp = 1000.0 / 100;
 options.genInstant = false;
 options.genMsPerOp = 1.0;
+options.crossProdTie = true;
 
 let canvas;
 const canvasWidth = window.innerWidth - 160;
@@ -116,15 +119,13 @@ function resetPath() {
     _operating = false;
     _cancel = true;
 
-    //grid = [];
-    //frontier = [];
     frontier = new Queue();
-    openList = new TinyQueue();
+    frontierQ = new TinyQueue();
     clearPathUI();
 }
 
 // init grid
-let grid, frontier, openList;
+let grid, frontier, frontierQ;
 function initGrid() {
 
     resetPath();
@@ -149,15 +150,9 @@ function initGrid() {
 
     clearGenUI();
 
-    // GRIDX = 200; // width of grid
-    // GRIDY = 100; // height of grid
     GRIDX = Math.floor((canvasWidth - 1) / GRID_SIZE);
     GRIDY = Math.floor((canvasHeight - 1) / GRID_SIZE);
     gridDimsText.innerHTML = `${GRIDX}x${GRIDY}`
-    //console.log('grid ' + GRIDX + ',' + GRIDY);
-    // origX = Math.floor(canvasWidth / 2 - GRIDX * GRID_SIZE / 2) - 1.5;
-    // origY = Math.floor(canvasHeight / 2 - GRIDY * GRID_SIZE / 2) - 1.5;
-    //origX = origY = 0.5;
     origX = origY = 0.5;
 
     // based off grid (only want to round the line if the stroke is even numbered???)
@@ -165,8 +160,6 @@ function initGrid() {
     pixOffYEven = Math.floor(origY + GRID_SIZE / 2.0);
     pixOffXOdd = pixOffXEven - 0.5;
     pixOffYOdd = pixOffYEven - 0.5;
-    // console.log(pixOffXOdd + " " + pixOffYOdd);
-    // console.log(pixOffXEven + " " + pixOffYEven);
 
     pathStartX = pathStartY = pathEndX = pathEndY = -1;
 
@@ -228,7 +221,7 @@ function getStrSeed(length) {
 
 async function _wait() {
     _opsText.innerHTML = _ops;
-    while (_opfAllowance <= 0) {
+    while (_opfAllowance <= 0 || options.pathPaused) {
         _setTimeTakenText();
         _lastFrameTime = performance.now();
         await new Promise(resolve => { setTimeout(resolve, 0) }); // wait one frame
@@ -245,7 +238,7 @@ async function _wait() {
     return true;
 }
 async function _waitNoText() {
-    while (_opfAllowance <= 0) {
+    while (_opfAllowance <= 0 || options.pathPaused) {
         _lastFrameTime = performance.now();
         await new Promise(resolve => { setTimeout(resolve, 0) }); // wait one frame
         if (_cancel) {
@@ -263,6 +256,9 @@ async function _waitNoText() {
 
 function _setTimeTakenText() {
     _timeTakenText.innerHTML = ((performance.now() - _startTime) / 1000.0).toFixed(2) + " s";
+    if (options.pathPaused) {
+        _startTime += performance.now() - _lastFrameTime;
+    }
 }
 
 async function genRandomLines(rng) {
@@ -469,6 +465,13 @@ async function redrawGrid() {
         }
     }
 
+    if (pathStartX != -1 && pathStartY != -1) {
+        drawOnGrid(pathStartX, pathStartY, SELECT);
+    }
+    if (pathEndX != -1 && pathEndY != -1) {
+        drawOnGrid(pathEndX, pathEndY, SELECT);
+    }
+
     // draw random y rows until refreshed
     // randoList = [];
     // for (let y = 0; y < GRIDY; ++y) {
@@ -567,6 +570,12 @@ function drawOnGridRegular(x, y, g) {
     square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE - 1);
 }
 
+function drawGridCircle(x, y, r, g, b) {
+    strokeWeight(1);
+    noFill();
+    circle(x * GRID_SIZE + origX + GRID_SIZE / 2, y * GRID_SIZE + origY + GRID_SIZE / 2, GRID_SIZE / 2);
+}
+
 function drawOnGridMAZE(x, y, g) {
     strokeWeight(1);
     switch (g) {
@@ -650,13 +659,9 @@ function draw() {
                 //console.log(x + ' ' + y);
                 if (pathStartX == -1 && pathStartY == -1) { // first time you right click
                     clearPathUI();
-
-                    drawOnGrid(x, y, SELECT); // doing this just to place it in grid actually so when redrawn its there
-                    redrawGrid();
-                    //setGridSquare(x, y, SELECT);
-                    drawOnGrid(x, y, SELECT);   // draw again after redraw just incase i dunno
                     pathStartX = x;
                     pathStartY = y;
+                    redrawGrid();
                 } else if (pathEndX == -1 && pathEndY == -1) {
                     if (pathStartX == x && pathStartY == y) { // turn off then
                         eraseOnGrid(x, y);
@@ -681,6 +686,7 @@ async function backTracePath(n) {   // given current node n, backtrace and rende
     _setTimeTakenText();
     pathInfoText.innerHTML = "Found path! backtracking..."
     pathOpsText.innerHTML = _ops;
+    pathNodesText.innerHTML = _nodes;
 
     _opfAllowance = 1;
     _msPerOpStr = "backtrackMsPerOp";
@@ -803,50 +809,60 @@ async function dijkstras() {
     }
 }
 
+// update prio by setting node as invalid and adding a new node in its place
 function updateNodePrio(n) {
     n.invalid = true;
     let nn = new AStarNode(n.x, n.y);
     nn.parent = n.parent;
-    nn.f = n.f;
     nn.g = n.g;
     nn.h = n.h;
-    nn.closed = n.closed;
+    nn.f = n.f;
     nn.opened = n.opened;
-    openList.push(nn);
+    nn.closed = n.closed;
+    frontierQ.push(nn);
+}
+
+function checkDrewOverSelect(n) {
+    if ((n.x == pathStartX && n.y == pathStartY) || (n.x == pathEndX && n.y == pathEndY)) { // keep starting point above the green lines
+        drawOnGrid(n.x, n.y, SELECT);
+    }
+    stroke(pathColor); // for path coloring
+    strokeWeight(LINE_WIDTH);
 }
 
 async function astar(sX, sY, eX, eY) {
     let startNode = new AStarNode(sX, sY);
     startNode.opened = true;
-    openList = new TinyQueue();
-    openList.compare = function (a, b) { return a.f - b.f; }
+    frontierQ = new TinyQueue();
+    frontierQ.compare = function (a, b) { return a.f - b.f; }
     let visited = new Map();
-    openList.push(startNode);
+    frontierQ.push(startNode);
 
     let chebyshev = (dx, dy) => {
         return dx + dy + (root2 - 2) * Math.min(dx, dy);
     }
+    let euclidean = (dx, dy) => {
+        return dx * dx + dy * dy;
+        //return Math.sqrt(dx * dx + dy * dy);
+    }
     const pathDX = sX - eX;
     const pathDY = sY - eY;
     let crossProductTieBreaker = (xc, yc) => {
-        return Math.abs((xc - eX) * pathDY - (yc - eY) * pathDX) * 0.001;
+        return Math.abs((xc - eX) * pathDY - (yc - eY) * pathDX) * 0.000001;
     }
 
-    while (openList.length) {
-        let n = openList.pop();
+    while (frontierQ.length) {
+        let n = frontierQ.pop(); // pop node with min f value
         if (n.invalid) {
             continue;
         }
         ++_ops;
+        n.closed = true;
 
         if (n.parent != null) {
             // drawLineToParent(n, 0, 200, 0, LINE_WIDTH);
             drawLineToParentPath(n);
-            if (n.parent.x == pathStartX && n.parent.y == pathStartY) { // keep starting point above the green lines
-                drawOnGrid(n.parent.x, n.parent.y, SELECT);
-                stroke(pathColor); // for path coloring
-                strokeWeight(LINE_WIDTH);
-            }
+            checkDrewOverSelect(n.parent);
         }
         if (n.x == pathEndX && n.y == pathEndY) {
             await backTracePath(n);
@@ -854,8 +870,6 @@ async function astar(sX, sY, eX, eY) {
         }
 
         // check each neighbor
-        // check if they are in visited dict
-
         let nbors = getNeighbors(n.x, n.y);
         for (let i = 0; i < nbors.length; ++i) {
             let nbc = nbors[i];
@@ -863,6 +877,12 @@ async function astar(sX, sY, eX, eY) {
             let nb;
             if (!visited.has(h)) { // hasnt been visited so make new node and add it
                 nb = new AStarNode(nbc.x, nbc.y);
+                // stroke('#FFFFFF');
+                //nb.parent = n;
+                // drawLineToParentPath(nb);
+                stroke('#00FF00');
+                drawGridCircle(nb.x, nb.y, 0, 200, 0);
+                checkDrewOverSelect(nb);
                 visited.set(h, nb);
                 ++_nodes;
             } else {    // get the visited
@@ -876,24 +896,35 @@ async function astar(sX, sY, eX, eY) {
             // calculate next g score from that
             let nextg = n.g + (nb.x - n.x == 0 || nb.y - n.y == 0 ? 1 : root2);
 
-            // check if neighbor has not been inspected yet or if it 
+            // check if neighbor node has not been inspected yet or if it 
             // can be reached with a smaller cost from current node
             if (!nb.opened || nextg < nb.g) {
                 nb.g = nextg;
 
                 if (nb.h == 0) { // set heuristic
                     nb.h = chebyshev(Math.abs(nb.x - eX), Math.abs(nb.y - eY));
-                    nb.h += crossProductTieBreaker(nb.x, nb.y);
+                    // make lines look more natural by adding slight bias when going in direction of endNode
+                    if (options.crossProdTie) {
+                        nb.h += crossProductTieBreaker(nb.x, nb.y);
+                    }
                 }
 
                 nb.f = nb.g + nb.h; // f score is what we sort by
-                nb.parent = n;
+                let oldParent = nb.parent;
+                nb.parent = n; // n is now nb parent
 
                 if (!nb.opened) {
-                    openList.push(nb);
+                    frontierQ.push(nb);
                     nb.opened = true;
                 } else {
                     updateNodePrio(nb);
+                    // if (oldParent != null) {
+                    //     stroke('#FF0000');
+                    //     nb.parent = oldParent;
+                    //     drawLineToParentPath(nb);
+                    //     checkDrewOverSelect(nb.parent);
+                    //     // dont need to restore nb since it got replaced in updateNodePrio
+                    // }
                 }
             }
         }
@@ -917,11 +948,12 @@ async function findPath() {
     _operating = true;
     _cancel = false;
     _ops = 0;
-    _nodes = 1; // so u dont have to remember to add start node
+    _nodes = 0; // so u dont have to remember to add start node
     _opfAllowance = 1;
     _msAccum = 0;
     _lastFrameTime = 0;
     _startTime = performance.now();
+    _lastFrameTime = _startTime;
     _opsText = pathOpsText;
     _timeTakenText = pathTimeTakenText;
     _msPerOpStr = "pathMsPerOp";
@@ -947,6 +979,7 @@ async function findPath() {
         clearPathUI();
     } else {
         pathOpsText.innerHTML = _ops;
+        pathNodesText.innerHTML = _nodes;
         if (pathInfoText.innerHTML.includes("Found")) {
             pathInfoText.innerHTML = "Path Complete";
         } else {
@@ -954,6 +987,8 @@ async function findPath() {
             _setTimeTakenText();
         }
     }
+    options.pathInstant = pathInstantCheckbox.cb.checked; // reset incase used finished button
+    pathFinishButton.classList.remove("mydis");
     _operating = false;
 }
 
@@ -1027,9 +1062,9 @@ class OpsSlider {
 
 class CheckboxOptionDivToggle {
     constructor(checkboxName, divName, optionName) {
-        let cb = document.getElementById(checkboxName);
+        this.cb = document.getElementById(checkboxName);
         let div = document.getElementById(divName);
-        cb.onchange = function () {
+        this.cb.onchange = function () {
             options[optionName] = this.checked;
             if (this.checked) {
                 div.classList.add("mydis");
@@ -1078,8 +1113,12 @@ let genTimeTakenText = document.getElementById("genTimeTakenText");
 let genInfoText = document.getElementById("genInfoText");
 
 let pathAlgoSelect = document.getElementById("pathAlgoSelect");
+let aStarOptions = document.getElementById("aStarOptions");
+let crossProdTieCheckbox = document.getElementById("crossProdTieCheckbox");
 let pathInstantCheckbox = new CheckboxOptionDivToggle("pathInstantCheckbox", "pathOptions", "pathInstant");
 let pathOpsSlider = new OpsSlider("pathOpsPerSecond", "pathMsPerOp");
+let pathPauseButton = document.getElementById("pathPauseButton");
+let pathFinishButton = document.getElementById("pathFinishButton");
 let calculatePathButton = document.getElementById("calculatePathButton");
 let pathOpsText = document.getElementById("pathOpsText");
 let pathNodesText = document.getElementById("pathNodesText");
@@ -1110,8 +1149,30 @@ calculatePathButton.onclick = function () {
     if (pathStartX != -1 && pathStartY != -1 && pathEndX != -1 && pathEndY != -1) {
         resetPath();
         redrawGrid();
-        drawOnGrid(pathStartX, pathStartY, SELECT);
-        drawOnGrid(pathEndX, pathEndY, SELECT);
         setTimeout(findPath, 5);
+    }
+}
+
+pathPauseButton.onclick = function () {
+    options.pathPaused = !options.pathPaused;
+    pathPauseButton.innerHTML = options.pathPaused ? "Resume" : "Pause";
+}
+
+pathFinishButton.onclick = function () {
+    if (_operating) {
+        pathFinishButton.classList.add("mydis");
+        setTimeout(() => { options.pathInstant = true; }, 0);
+    }
+}
+
+crossProdTieCheckbox.onclick = function () {
+    options.crossProdTie = crossProdTieCheckbox.checked;
+}
+
+pathAlgoSelect.onchange = function () {
+    if (this.value == "A* search") {
+        aStarOptions.classList.remove("hidden");
+    } else {
+        aStarOptions.classList.add("hidden");
     }
 }

@@ -18,6 +18,19 @@ button {
   width:100%;
 }
 
+.row {
+  display: flex;
+  margin: 4px 0;
+}
+
+.row button {
+  margin:0;
+}
+
+.column {
+  flex: 50%;
+}
+
 button:hover{
   background-color: var(--accent-color);
 }
@@ -51,6 +64,10 @@ h3 {
 .mydis{
   pointer-events: none;
   opacity: 0.4;
+}
+
+.hidden {
+  display:none;
 }
 
 .slidecontainer {

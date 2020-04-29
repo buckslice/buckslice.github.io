@@ -42,7 +42,7 @@
         <input type="checkbox" checked id="randomSeedCheckbox">
         <span class="checkmark"></span>
       </label>
-      
+
       <label class="container">Instant
         <input type="checkbox" id="genInstantCheckbox">
         <span class="checkmark"></span>
@@ -70,6 +70,12 @@
         <input type="checkbox" id="pathInstantCheckbox">
         <span class="checkmark"></span>
       </label>
+      <div id="aStarOptions" class="hidden">
+        <label class="container">Cross Prod Tie
+          <input type="checkbox" checked id="crossProdTieCheckbox">
+          <span class="checkmark"></span>
+        </label>
+      </div>
       <div id="pathOptions">
         <div>~ ops/sec:<span class="fr" id="pathOpsPerSecondText">100</span></div>
         <span class="slidecontainer">
@@ -81,7 +87,10 @@
         </label>
         <div id="mainOptionsInternal" class="mydis">
         </div>-->
-        
+        <div class="row">
+          <div class="column" style="margin-right:2px;"><button type="button" id="pathPauseButton">Pause</button></div>
+          <div class="column" style="margin-left:2px;"><button type="button" id="pathFinishButton">Finish</button></div>
+        </div>
       </div>
       <button type="button" id="calculatePathButton">Calculate Path</button>
 
