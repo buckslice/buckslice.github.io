@@ -73,6 +73,8 @@ let pathStartX, pathStartY, pathEndX, pathEndY; // tracks first and second pathf
 let _operating = false; // finding a path or generating a grid
 let gridDirty = false; // gets set when a path is drawn on grid
 
+let drawLineToParentPath;
+
 let backgroundColor = 51; // 255 for other mazo
 const pathColor = "#FFFF00";
 const wallColor = 150;
@@ -98,6 +100,21 @@ function initGrid() {
     //frontier = [];
     frontier = new Queue();
     LINE_WIDTH = Math.floor(GRID_SIZE / 8.0) + 1;
+    if (LINE_WIDTH % 2 == 0) {
+        drawLineToParentPath = (n) => {
+            line(n.x * GRID_SIZE + pixOffXEven,
+                n.y * GRID_SIZE + pixOffYEven,
+                n.parent.x * GRID_SIZE + pixOffXEven,
+                n.parent.y * GRID_SIZE + pixOffYEven);
+        }
+    } else {
+        drawLineToParentPath = (n) => {
+            line(n.x * GRID_SIZE + pixOffXOdd,
+                n.y * GRID_SIZE + pixOffYOdd,
+                n.parent.x * GRID_SIZE + pixOffXOdd,
+                n.parent.y * GRID_SIZE + pixOffYOdd);
+        }
+    }
 
     clearPathUI();
     clearGenUI();
@@ -407,7 +424,7 @@ async function redrawGrid() {
                 }
             }
         }
-    }else{
+    } else {
         stroke(0);
         fill(wallColor);
         for (let y = 0; y < GRIDY; ++y) {
@@ -623,51 +640,60 @@ function draw() {
     mouseJustPressed = false;
 }
 
-// finds path between 
-async function findPath() {
-    if (_operating) {
-        console.log("thats weird...");
-        return;
-    }
-    _operating = true;
-    _cancel = false;
-    _ops = 0;
+async function backTracePath(n) {   // given current node n, backtrace and render out path
+    _setTimeTakenText();
+    pathInfoText.innerHTML = "Found path! backtracking..."
+    pathOpsText.innerHTML = _ops;
+
     _opfAllowance = 1;
-    _msAccum = 0;
-    _lastFrameTime = 0;
-    _startTime = performance.now();
-    _opsText = pathOpsText;
-    _timeTakenText = pathTimeTakenText;
-    _msPerOpStr = "pathMsPerOp";
+    _msPerOpStr = "backtrackMsPerOp";
 
-    stroke(pathColor); // 200
-    strokeWeight(LINE_WIDTH);
-    let drawLineToParentPath;
-    if (LINE_WIDTH % 2 == 0) {
-        drawLineToParentPath = (n) => {
-            line(n.x * GRID_SIZE + pixOffXEven,
-                n.y * GRID_SIZE + pixOffYEven,
-                n.parent.x * GRID_SIZE + pixOffXEven,
-                n.parent.y * GRID_SIZE + pixOffYEven);
-        }
-    } else {
-        drawLineToParentPath = (n) => {
-            line(n.x * GRID_SIZE + pixOffXOdd,
-                n.y * GRID_SIZE + pixOffYOdd,
-                n.parent.x * GRID_SIZE + pixOffXOdd,
-                n.parent.y * GRID_SIZE + pixOffYOdd);
-        }
+    let pathLength = 0;
+    let endNode = n; // save this so can reset
+    while (n.parent != null) { // calc path length real quick then reset it to animate it
+        ++pathLength;
+        n = n.parent;
     }
+    n = endNode;
 
-    clearPathUI();
-    pathInfoText.innerHTML = "Finding path...";
+    // always trace path in 2 seconds but also a little slower if the path is long
+    options.backtrackMsPerOp = 1000.0 / Math.pow(pathLength, .85);
+    let counter = 0;
+    colorMode(HSB, 100);
+    let first = true;
+    let widener = GRID_SIZE > 2 ? 2 : 1;
+    while (n.parent != null && !_cancel) {
+        let t = counter / pathLength;
+        drawLineToParent(n, lerp(65, 100, t), 100, 100, LINE_WIDTH + widener);
+        if (first) { // omg this is PUKE, todo convert everything to 100 hsb
+            first = false;
+            colorMode(RGB, 255);
+            drawOnGrid(n.x, n.y, SELECT);
+            colorMode(HSB, 100);
+        }
+        ++counter;
+        n = n.parent;
+        if (!options.pathInstant && --_opfAllowance <= 0) {
+            pathLengthText.innerHTML = counter;
+            if (!await _waitNoText()) {
+                return;
+            }
+        }
 
-    gridDirty = true;
+    }
+    pathLengthText.innerHTML = counter;
+    colorMode(RGB, 255);
+}
 
-    let startNode = new PathNode(pathStartX, pathStartY, null);
-    frontier = new Queue();
+async function astar(startNode) {
+    let openList = TinyQueue();
+    
+}
+
+async function dijkstras(startNode) {
+    let frontier = new Queue();
     frontier.enqueue(startNode);
-    visited = new Set();
+    let visited = new Set();
     visited.add(startNode.hash());
     while (!frontier.isEmpty()) {
         let n = frontier.dequeue();
@@ -690,48 +716,7 @@ async function findPath() {
             }
         }
         if (n.x == pathEndX && n.y == pathEndY) {
-            _setTimeTakenText();
-            pathInfoText.innerHTML = "Found path! backtracking..."
-            pathOpsText.innerHTML = _ops;
-
-            _opfAllowance = 1;
-            _msPerOpStr = "backtrackMsPerOp";
-
-            let pathLength = 0;
-            let endNode = n; // save this so can reset
-            while (n.parent != null) { // calc path length real quick then reset it to animate it
-                ++pathLength;
-                n = n.parent;
-            }
-            n = endNode;
-
-            // always trace path in 2 seconds but also a little slower if the path is long
-            options.backtrackMsPerOp = 1000.0 / Math.pow(pathLength, .85);
-            let counter = 0;
-            colorMode(HSB, 100);
-            let first = true;
-            let widener = GRID_SIZE > 2 ? 2 : 1;
-            while (n.parent != null && !_cancel) {
-                let t = counter / pathLength;
-                drawLineToParent(n, lerp(65, 100, t), 100, 100, LINE_WIDTH + widener);
-                if (first) { // omg this is PUKE, todo convert everything to 100 hsb
-                    first = false;
-                    colorMode(RGB, 255);
-                    drawOnGrid(n.x, n.y, SELECT);
-                    colorMode(HSB, 100);
-                }
-                ++counter;
-                n = n.parent;
-                if (!options.pathInstant && --_opfAllowance <= 0) {
-                    pathLengthText.innerHTML = counter;
-                    if (!await _waitNoText()) {
-                        break;
-                    }
-                }
-
-            }
-            pathLengthText.innerHTML = counter;
-            colorMode(RGB, 255);
+            await backTracePath(n);
             break;
         }
 
@@ -782,6 +767,43 @@ async function findPath() {
             break;
         }
 
+    }
+}
+
+// finds path between 
+async function findPath() {
+    if (_operating) {
+        console.log("thats weird...");
+        return;
+    }
+    _operating = true;
+    _cancel = false;
+    _ops = 0;
+    _opfAllowance = 1;
+    _msAccum = 0;
+    _lastFrameTime = 0;
+    _startTime = performance.now();
+    _opsText = pathOpsText;
+    _timeTakenText = pathTimeTakenText;
+    _msPerOpStr = "pathMsPerOp";
+
+    stroke(pathColor); // 200
+    strokeWeight(LINE_WIDTH);
+
+    clearPathUI();
+    pathInfoText.innerHTML = "Finding path...";
+
+    gridDirty = true;
+
+    let startNode = new PathNode(pathStartX, pathStartY, null);
+
+    let pathAlgo = pathAlgoSelect.value;
+    if (pathAlgo == "Dijkstra's") {
+        await dijkstras(startNode);
+    } else if (pathAlgo == "A* search") {
+        await astar(startNode);
+    } else {
+        console.log("wtf");
     }
 
     if (_cancel) {
@@ -928,6 +950,7 @@ let genOpsText = document.getElementById("genOpsText");
 let genTimeTakenText = document.getElementById("genTimeTakenText");
 let genInfoText = document.getElementById("genInfoText");
 
+let pathAlgoSelect = document.getElementById("pathAlgoSelect");
 let pathInstantCheckbox = new CheckboxOptionDivToggle("pathInstantCheckbox", "pathOptions", "pathInstant");
 let pathOpsSlider = new OpsSlider("pathOpsPerSecond", "pathMsPerOp");
 let pathOpsText = document.getElementById("pathOpsText");
