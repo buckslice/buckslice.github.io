@@ -47,7 +47,7 @@
         <input type="checkbox" id="genInstantCheckbox">
         <span class="checkmark"></span>
       </label>
-      <button type="button" id="regenGridButton">Generate</button>
+      <button type="button" id="generateButton">Generate</button>
       <div id="genOptions">
 
         <div>~ ops/sec:<span class="fr" id="genOpsPerSecondText">1000</span></div>
@@ -76,15 +76,17 @@
           <input type="range" min="0" max="100" value="50" class="slider" step=".5" id="pathOpsPerSecondSlider">
         </span>
         <!-- <label class="container">Defaults
-        <input type="checkbox" checked id="defaultCheckbox">
-        <span class="checkmark"></span>
-      </label>
-      <div id="mainOptionsInternal" class="mydis">
-      </div>-->
-
+          <input type="checkbox" checked id="defaultCheckbox">
+          <span class="checkmark"></span>
+        </label>
+        <div id="mainOptionsInternal" class="mydis">
+        </div>-->
+        
       </div>
+      <button type="button" id="calculatePathButton">Calculate Path</button>
 
       <div>operations :<span class="fr" id="pathOpsText">0</span></div>
+      <div>node count :<span class="fr" id="pathNodesText">0</span></div>
       <div>time taken :<span class="fr" id="pathTimeTakenText">0.00 s</span></div>
       <div>path length:<span class="fr" id="pathLengthText">0</span></div>
       <p id="pathInfoText"></p>
