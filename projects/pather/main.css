@@ -20,7 +20,7 @@ button {
 
 .row {
   display: flex;
-  margin: 4px 0;
+  margin: 8px 0;
 }
 
 .row button {

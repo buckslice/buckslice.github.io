@@ -78,7 +78,6 @@ let LINE_WIDTH;
 
 let options = {}
 options.pathInstant = false;
-options.pathPaused = false;
 options.pathMsPerOp = 1000.0 / 100;
 options.genInstant = false;
 options.genMsPerOp = 1.0;
@@ -105,6 +104,7 @@ const wallColor = 150;
 const root2 = 1.41421356237
 
 let _cancel = false;
+let _paused = false;
 let _ops = 0; // current ops counter
 let _nodes = 0;
 let _opfAllowance = 0;
@@ -221,7 +221,7 @@ function getStrSeed(length) {
 
 async function _wait() {
     _opsText.innerHTML = _ops;
-    while (_opfAllowance <= 0 || options.pathPaused) {
+    while (_opfAllowance <= 0 || _paused) {
         _setTimeTakenText();
         _lastFrameTime = performance.now();
         await new Promise(resolve => { setTimeout(resolve, 0) }); // wait one frame
@@ -238,7 +238,7 @@ async function _wait() {
     return true;
 }
 async function _waitNoText() {
-    while (_opfAllowance <= 0 || options.pathPaused) {
+    while (_opfAllowance <= 0 || _paused) {
         _lastFrameTime = performance.now();
         await new Promise(resolve => { setTimeout(resolve, 0) }); // wait one frame
         if (_cancel) {
@@ -256,7 +256,7 @@ async function _waitNoText() {
 
 function _setTimeTakenText() {
     _timeTakenText.innerHTML = ((performance.now() - _startTime) / 1000.0).toFixed(2) + " s";
-    if (options.pathPaused) {
+    if (_paused) {
         _startTime += performance.now() - _lastFrameTime;
     }
 }
@@ -375,6 +375,16 @@ async function depthFirstMaze(rng) {
     return true;
 }
 
+async function cellularAutomata(rng) {
+    for (let y = 0; y < GRIDY; y++) {
+        for (let x = 0; x < GRIDX; x++) {
+            if (rng() < 0.02) {
+                grid[y][x] = WALL;
+            }
+        }
+    }
+}
+
 async function genGrid() { // randomly draws lines on the grid
     if (_operating) {
         console.log("thats weird...");
@@ -390,6 +400,8 @@ async function genGrid() { // randomly draws lines on the grid
     _opsText = genOpsText;
     _timeTakenText = genTimeTakenText;
     _msPerOpStr = "genMsPerOp";
+
+    toggleGenButtons(true);
 
     clearGenUI();
     genInfoText.innerHTML = "Generating grid...";
@@ -419,6 +431,9 @@ async function genGrid() { // randomly draws lines on the grid
     } else {
         clearGenUI();
     }
+    options.genInstant = genInstantCheckbox.cb.checked; // reset incase used finished button
+    toggleGenButtons(false);
+    genFinishButton.classList.remove("mydis");
     _operating = false;
 }
 
@@ -958,6 +973,7 @@ async function findPath() {
     _timeTakenText = pathTimeTakenText;
     _msPerOpStr = "pathMsPerOp";
 
+    togglePathButtons(true);
     stroke(pathColor); // 200
     strokeWeight(LINE_WIDTH);
 
@@ -988,6 +1004,7 @@ async function findPath() {
         }
     }
     options.pathInstant = pathInstantCheckbox.cb.checked; // reset incase used finished button
+    togglePathButtons(false);
     pathFinishButton.classList.remove("mydis");
     _operating = false;
 }
@@ -1106,6 +1123,9 @@ let seedInputBox = document.getElementById("seedInputBox");
 seedInputBox.maxLength = 64;
 let randomSeedCheckbox = document.getElementById("randomSeedCheckbox");
 let genInstantCheckbox = new CheckboxOptionDivToggle("genInstantCheckbox", "genOptions", "genInstant");
+let genPauseButton = document.getElementById("genPauseButton");
+let genFinishButton = document.getElementById("genFinishButton");
+let genButtonsDiv = document.getElementById("genButtons");
 let generateButton = document.getElementById("generateButton");
 let genOpsSlider = new OpsSlider("genOpsPerSecond", "genMsPerOp");
 let genOpsText = document.getElementById("genOpsText");
@@ -1119,6 +1139,7 @@ let pathInstantCheckbox = new CheckboxOptionDivToggle("pathInstantCheckbox", "pa
 let pathOpsSlider = new OpsSlider("pathOpsPerSecond", "pathMsPerOp");
 let pathPauseButton = document.getElementById("pathPauseButton");
 let pathFinishButton = document.getElementById("pathFinishButton");
+let pathButtonsDiv = document.getElementById("pathButtons");
 let calculatePathButton = document.getElementById("calculatePathButton");
 let pathOpsText = document.getElementById("pathOpsText");
 let pathNodesText = document.getElementById("pathNodesText");
@@ -1153,15 +1174,53 @@ calculatePathButton.onclick = function () {
     }
 }
 
+function togglePathButtons(showButtons) {
+    _paused = false;
+    pathPauseButton.innerHTML = "Pause";
+    if (showButtons) {
+        pathButtonsDiv.classList.remove("hidden");
+        calculatePathButton.classList.add("hidden");
+    } else {
+        pathButtonsDiv.classList.add("hidden");
+        calculatePathButton.classList.remove("hidden");
+    }
+}
+
+function toggleGenButtons(showButtons) {
+    _paused = false;
+    genPauseButton.innerHTML = "Pause";
+    if (showButtons) {
+        genButtonsDiv.classList.remove("hidden");
+        generateButton.classList.add("hidden");
+    } else {
+        genButtonsDiv.classList.add("hidden");
+        generateButton.classList.remove("hidden");
+    }
+}
+
 pathPauseButton.onclick = function () {
-    options.pathPaused = !options.pathPaused;
-    pathPauseButton.innerHTML = options.pathPaused ? "Resume" : "Pause";
+    _paused = !_paused;
+    pathPauseButton.innerHTML = _paused ? "Resume" : "Pause";
+}
+
+genPauseButton.onclick = function () {
+    _paused = !_paused;
+    genPauseButton.innerHTML = _paused ? "Resume" : "Pause";
 }
 
 pathFinishButton.onclick = function () {
     if (_operating) {
         pathFinishButton.classList.add("mydis");
+        _paused = false;
         setTimeout(() => { options.pathInstant = true; }, 0);
+    }
+}
+
+genFinishButton.onclick = function () {
+    if (_operating) {
+        genFinishButton.classList.add("mydis");
+        _paused = false;
+        setTimeout(() => { options.genInstant = true; }, 0);
     }
 }
 

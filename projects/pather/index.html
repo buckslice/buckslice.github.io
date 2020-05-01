@@ -47,15 +47,19 @@
         <input type="checkbox" id="genInstantCheckbox">
         <span class="checkmark"></span>
       </label>
-      <button type="button" id="generateButton">Generate</button>
       <div id="genOptions">
 
         <div>~ ops/sec:<span class="fr" id="genOpsPerSecondText">1000</span></div>
         <span class="slidecontainer">
           <input type="range" min="0" max="100" value="63" class="slider" step=".5" id="genOpsPerSecondSlider">
         </span>
-
+        <div class="row hidden" id="genButtons">
+          <div class="column" style="margin-right:2px;"><button type="button" id="genPauseButton">Pause</button></div>
+          <div class="column" style="margin-left:2px;"><button type="button" id="genFinishButton">Finish</button></div>
+        </div>
       </div>
+      <button type="button" id="generateButton">Generate</button>
+      
       <div>operations :<span class="fr" id="genOpsText">0</span></div>
       <div>time taken :<span class="fr" id="genTimeTakenText">0.00 s</span></div>
       <p id="genInfoText"></p>
@@ -81,13 +85,7 @@
         <span class="slidecontainer">
           <input type="range" min="0" max="100" value="50" class="slider" step=".5" id="pathOpsPerSecondSlider">
         </span>
-        <!-- <label class="container">Defaults
-          <input type="checkbox" checked id="defaultCheckbox">
-          <span class="checkmark"></span>
-        </label>
-        <div id="mainOptionsInternal" class="mydis">
-        </div>-->
-        <div class="row">
+        <div class="row hidden" id="pathButtons">
           <div class="column" style="margin-right:2px;"><button type="button" id="pathPauseButton">Pause</button></div>
           <div class="column" style="margin-left:2px;"><button type="button" id="pathFinishButton">Finish</button></div>
         </div>
