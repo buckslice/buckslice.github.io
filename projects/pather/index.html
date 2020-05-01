@@ -36,6 +36,7 @@
       <select id="genAlgoSelect">
         <option value="RandomLines">Random Lines</option>
         <option value="DepthFirstMaze">Depth First Maze</option>
+        <option value="CellularAutomata">Cellular Automata</option>
       </select>
       <div>seed :<input class="inputBox" id="seedInputBox" type="text" placeholder=""></div>
       <label class="container">Randomize Seed
@@ -55,7 +56,7 @@
         </span>
         <div class="row hidden" id="genButtons">
           <div class="column" style="margin-right:2px;"><button type="button" id="genPauseButton">Pause</button></div>
-          <div class="column" style="margin-left:2px;"><button type="button" id="genFinishButton">Finish</button></div>
+          <div class="column" style="margin-left:2px;"><button type="button" id="genFinishButton">Restart</button></div>
         </div>
       </div>
       <button type="button" id="generateButton">Generate</button>
@@ -70,16 +71,16 @@
         <option value="Dijkstra's">Dijkstra's</option>
         <option value="A* search">A* search</option>
       </select>
-      <label class="container">Instant
-        <input type="checkbox" id="pathInstantCheckbox">
-        <span class="checkmark"></span>
-      </label>
       <div id="aStarOptions" class="hidden">
         <label class="container">Cross Prod Tie
           <input type="checkbox" checked id="crossProdTieCheckbox">
           <span class="checkmark"></span>
         </label>
       </div>
+      <label class="container">Instant
+        <input type="checkbox" id="pathInstantCheckbox">
+        <span class="checkmark"></span>
+      </label>
       <div id="pathOptions">
         <div>~ ops/sec:<span class="fr" id="pathOpsPerSecondText">100</span></div>
         <span class="slidecontainer">
@@ -87,7 +88,7 @@
         </span>
         <div class="row hidden" id="pathButtons">
           <div class="column" style="margin-right:2px;"><button type="button" id="pathPauseButton">Pause</button></div>
-          <div class="column" style="margin-left:2px;"><button type="button" id="pathFinishButton">Finish</button></div>
+          <div class="column" style="margin-left:2px;"><button type="button" id="pathFinishButton">Restart</button></div>
         </div>
       </div>
       <button type="button" id="calculatePathButton">Calculate Path</button>

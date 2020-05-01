@@ -29,6 +29,7 @@ const VISITED = 2;
 const SELECT = 3;
 const BACKTRACK = 4;
 const SELECT2 = 5; // dont ask
+const BACKGROUND = 6;
 
 const LEFTMOUSE = 0;
 const RIGHTMOUSE = 2;
@@ -375,17 +376,85 @@ async function depthFirstMaze(rng) {
     return true;
 }
 
+// start with randomly filled grid based on some fillPercent
+// then perform a certain number of smoothing steps with various criteria
 async function cellularAutomata(rng) {
+    const smoothSteps = 4;
+    const fillPercent = 0.45;
+
+    let gridBuff = [];
+    for (let y = 0; y < GRIDY; y++) {
+        gridBuff.push(new Array(GRIDX).fill(FLOOR));
+    }
+    // you want final result to end up in grid without extra copying
+    // so if even number of smoothing then start fromBuffer as grid else gridBuff
+    let fromBuff, toBuff;
+    if (smoothSteps % 2 == 0) {
+        fromBuff = grid;
+        toBuff = gridBuff;
+    } else {
+        fromBuff = gridBuff;
+        toBuff = grid;
+    }
+
     for (let y = 0; y < GRIDY; y++) {
         for (let x = 0; x < GRIDX; x++) {
-            if (rng() < 0.02) {
-                grid[y][x] = WALL;
+            if (x == 0 || x == GRIDX - 1 || y == 0 || y == GRIDY - 1) {
+                fromBuff[y][x] = WALL;
+                drawOnGrid(x, y, WALL);
+            } else if (rng() < fillPercent) {
+                fromBuff[y][x] = WALL;
+                drawOnGrid(x, y, WALL);
+            }
+            ++_ops;
+            if (!options.genInstant && --_opfAllowance <= 0 && !await _wait()) {
+                return false;
             }
         }
     }
+
+    // do a certain number of smoothing phases
+    for (let s = 0; s < smoothSteps; ++s) {
+        for (let y = 0; y < GRIDY; ++y) {
+            for (let x = 0; x < GRIDX; ++x) {
+                let neighbors = 0;
+                for (let yy = y - 1; yy <= y + 1; ++yy) {
+                    for (let xx = x - 1; xx <= x + 1; ++xx) {
+                        if (xx >= 0 && yy >= 0 && xx < GRIDX && yy < GRIDY) {
+                            if (xx != x || yy != y) {
+                                neighbors += fromBuff[yy][xx];
+                            }
+                        } else {
+                            neighbors++;
+                        }
+                    }
+                }
+                if (neighbors > 4) {
+                    toBuff[y][x] = WALL;
+                    drawOnGrid(x, y, WALL);
+                } else if (neighbors < 4) {
+                    toBuff[y][x] = FLOOR;
+                    drawOnGrid(x, y, BACKGROUND);
+                } else {
+                    toBuff[y][x] = fromBuff[y][x]; // dont need to redraw if stayed same
+                }
+                ++_ops;
+                if (!options.genInstant && --_opfAllowance <= 0 && !await _wait()) {
+                    return false;
+                }
+            }
+        }
+        // swap buffers
+        let temp = toBuff;
+        toBuff = fromBuff;
+        fromBuff = temp;
+    }
+
+    return true;
+
 }
 
-async function genGrid() { // randomly draws lines on the grid
+async function genGrid(sameSeed) { // randomly draws lines on the grid
     if (_operating) {
         console.log("thats weird...");
         return;
@@ -407,7 +476,7 @@ async function genGrid() { // randomly draws lines on the grid
     genInfoText.innerHTML = "Generating grid...";
     // calculate seed
     let seed;
-    if (randomSeedCheckbox.checked || seedInputBox.value == "") {
+    if (!sameSeed && (randomSeedCheckbox.checked || seedInputBox.value == "")) {
         seed = getStrSeed(10);
         seedInputBox.value = seed;
     } else {
@@ -421,9 +490,12 @@ async function genGrid() { // randomly draws lines on the grid
         finished = await genRandomLines(rng);
     } else if (genAlgo == "DepthFirstMaze") {
         finished = await depthFirstMaze(rng);
+    } else if (genAlgo == "CellularAutomata") {
+        finished = await cellularAutomata(rng);
     } else {
         console.log("wtf");
     }
+
     if (finished) {
         _setTimeTakenText();
         genInfoText.innerHTML = "Done!";
@@ -567,6 +639,7 @@ function drawOnGridOutline(x, y, g) {
         case SELECT2: fill(0, 0, 255); break;
         case VISITED: stroke(150, 255, 150); fill(150, 255, 150); break;
         case BACKTRACK: stroke(0, 0, 255); fill(0, 0, 255); break;
+        case BACKGROUND: stroke(backgroundColor); fill(backgroundColor); break;
         default: fill(255, 0, 255); break; // unknown?
     }
     square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE);
@@ -580,6 +653,7 @@ function drawOnGridRegular(x, y, g) {
         case SELECT2: stroke(0, 0, 255); fill(0, 0, 255); break;
         case VISITED: stroke(150, 255, 150); fill(150, 255, 150); break;
         case BACKTRACK: stroke(0, 0, 255); fill(0, 0, 255); break;
+        case BACKGROUND: stroke(backgroundColor); fill(backgroundColor); break;
         default: fill(255, 0, 255); break; // unknown?
     }
     square(x * GRID_SIZE + origX, y * GRID_SIZE + origY, GRID_SIZE - 1);
@@ -1167,6 +1241,10 @@ generateButton.onclick = function () {
 }
 
 calculatePathButton.onclick = function () {
+    calcPath();
+}
+
+function calcPath(){
     if (pathStartX != -1 && pathStartY != -1 && pathEndX != -1 && pathEndY != -1) {
         resetPath();
         redrawGrid();
@@ -1208,21 +1286,30 @@ genPauseButton.onclick = function () {
     genPauseButton.innerHTML = _paused ? "Resume" : "Pause";
 }
 
-pathFinishButton.onclick = function () {
-    if (_operating) {
-        pathFinishButton.classList.add("mydis");
-        _paused = false;
-        setTimeout(() => { options.pathInstant = true; }, 0);
-    }
+// changing the finishes to work as restart again, seems more useful
+pathFinishButton.onclick = function(){
+    calcPath();
+}
+genFinishButton.onclick = function(){
+    initGrid();
+    setTimeout(genGrid, 5, true);
 }
 
-genFinishButton.onclick = function () {
-    if (_operating) {
-        genFinishButton.classList.add("mydis");
-        _paused = false;
-        setTimeout(() => { options.genInstant = true; }, 0);
-    }
-}
+// pathFinishButton.onclick = function () {
+//     if (_operating) {
+//         pathFinishButton.classList.add("mydis");
+//         _paused = false;
+//         setTimeout(() => { options.pathInstant = true; }, 0);
+//     }
+// }
+
+// genFinishButton.onclick = function () {
+//     if (_operating) {
+//         genFinishButton.classList.add("mydis");
+//         _paused = false;
+//         setTimeout(() => { options.genInstant = true; }, 0);
+//     }
+// }
 
 crossProdTieCheckbox.onclick = function () {
     options.crossProdTie = crossProdTieCheckbox.checked;
