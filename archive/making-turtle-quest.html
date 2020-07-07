@@ -40,10 +40,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		The Making of Turtle Quest
 	</h1>
 	
-	<h3 style="color:#FF0000">THIS ARTICLE IS A WORK IN PROGRESS</h3>
-		<h3 style="color:#FF0000">(IM GONA ADD MORE PICTURES DONT WORRY)</h3>
-	<br>
-	
 	<img src="/img/turtleQuest.png" alt="">
 	
 	<p>
@@ -54,7 +50,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</p>
 	<h2>Talkin' bout NOISE</h2>
 	
-	<p>Turtle Quest uses procedural noise for pretty much all of the art. From the textures on every object, to the shape of the terrain/rocks/coral/kelp, to the rippling water refraction effect. Its all noise babeyyyy.
+	<p>Turtle Quest uses procedural noise for pretty much all of the art. From the textures on every object, to the shape and placement of the terrain/rocks/coral/kelp, to the rippling water refraction effect. Its all noise babeyyyy.
 	</p>
 	
 	<p>
@@ -82,19 +78,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</p>
 	
 	<p>
-	It's okay if you don't understand exactly what these functions do. The main way I learn is by just trying random stuff and seeing what happens. Eventually you kind of get a vague idea on what parameters to change first and you'll get faster at it. Additionally when learning it's great to test noise in shaders because you don't even have to stop the game to see the changes as shaders can recompile while the games running!
+	It's okay if you don't understand exactly what these functions do. The main way I learn is by just trying random stuff and seeing what happens. Eventually you kind of get a vague idea on what parameters to change first and you'll get better at it. Additionally when learning it's great to test noise in shaders because you don't even have to stop the game to see the changes as shaders can recompile while the games running!
 	</p>
 	
 	<h2>Terrain Generation</h2>
 	
 	<p>
-	I made code that generates a grid mesh in the xz plane and then offset it on the y based on noise generation. Hopefully you read the second link about fractal brownian motion as well. Here is the fbm function.
-	</p>
+    I made code that generates a simple grid mesh in the xz plane and then I offset it in the y direction based on random noise generation. Here is the main noise calculations for the terrain:
+    </p>
+    <pre><code class="language-csharp">Vector3 position = new Vector3(x, 0.0f, y);
+
+float mountains = Noise.Ridged(position + offset1, 6, 0.0075f);
+mountains *= .5f;
+mountains += .5f;
+
+float hills = Noise.Billow(position + offset1, 5, 0.005f);
+hills *= .25f;
+hills -= .25f;
+
+float blendNoise = Noise.Fractal(position + offset2, 5, 0.003f);
+float total = Noise.Blend(mountains, hills, blendNoise, -0.5f, 0.5f);
+
+total = (total + 1) / 2.0f;
+total = total * 0.8f;
+
+return new Vector3(x, total * 60.0f, y);</code></pre>
+<p>
+So I make a position variable that stores the world position of each vertex that I then send into the noise functions. I take 2 noise samples, one more spikey type of noise (ridged) with lower frequency and higher applitude for big mountain shapes, then another more soft hilly noise (billow) with higher frequency but lower amplitude. I then take a 3rd simple noise sample (fractal) that I use to blend between the two types so theres two biomes kinda. Then I do some rescaling and return the same vertex positions but with a y based on all these noise functions!
+</p>
 
 	<h2>Rock/Coral Generation</h2>
 	
 	<p>
-	Talk about icospheres! vertex displacement (not in shader though)
+	For the rock and corals I generate an <a class="link" href="https://en.wikipedia.org/wiki/Geodesic_polyhedron">icosphere</a>, which is a type of sphere mesh where the vertices are very nicely spread out. And then I displace each vertex of the sphere with some random noise raising or lowering that vertex along its normal. Using lower frequency kinda slower noise I can make the rocks and using high frequency, very noisy noise I can make the corals. Both rocks and corals also use procedural textures like everything else, the rocks are some boring brown noise but the corals are a wacky shader function I wrote that makes a high frequency crazy bright pinkish colors!
 	</p>
 	
 	
@@ -114,11 +130,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }</code></pre>
 
 	<p>
-	I will explain each piece of this glorious one liner ripples function. The first part '0.5 + 0.5 *' is to make the effect be lighter, because the worley noise function returns a value between 0 and 1, so this part rescales the total value to around 0.5-1.0, this is good because the ripple value is being multiplied with the albedo of all our objects and we dont want to want to make anything go full dark. 'wp' this part is providing our coordinate into the noise function which is the world position of the object. This world position is calculated in the vertex shader of all of our shaders and this is good because it makes the ripple effect look good on static and moving objects. Otherwise the ripples would still be going slow on fast moving objects and would look weird. The '+ float3(_Time...' part is basically making it so the ripples slowly scroll across all the objects, otherwise they wouldn't move at all on static objects. Each axis is just going at a different speed using the global _Time shader variable. The rest of the values are just the various parameters of the noise function to give it the right frequency/complexity/shape.
-	</p>
-	
-	<p>	
-	In hindsight it would probably be more performant to just use a scrolling light cookie texture so refraction shadows are cast via the light instead, but I wasn't sure how to make a scrolling texture through code and the ripple function was super easy to just add to every shader.
+	I will explain each piece of this glorious one liner ripples function. The first part '0.5 + 0.5 *' is to make the effect be lighter, because the worley noise function returns a value between 0 and 1, so this part rescales the total value to around 0.5-1.0, this is good because the ripple value is being multiplied with the albedo in all our objects and we dont want to want to make anything go full dark. 'wp' this part is providing our coordinate into the noise function which is the world position of the object. This world position is calculated in the vertex shader of all of our shaders and this is good because it makes the ripple effect look good on static and moving objects. Otherwise the ripples would still be going slow on fast moving objects and would look weird. The '+ float3(_Time...' part is basically making it so the ripples slowly scroll across all the objects, otherwise they wouldn't move at all on static objects. Each axis is just going at a different speed using the global _Time shader variable. The 3 is the number of octaves so basically how detailed the noise is, so thats not super detailed because they are just supposed to be blurry ripples, the rest of the function is pretty standard defaults for noise so its normal frequency and scales normally with higher octaves. The last two are cellType, which is when calculating the cellular noise (worley) distance we use just the first cell, and then distance function is using the max absolute distance in any dimension. <a class="link" href="https://thebookofshaders.com/12/">Here</a> is a good reference on worley noise that explains this better lol! Again though basically with noise you can just play around with values and see what happens, as long as you kinda understand what each parameter does you're golden.
 	</p>
 	
 	</div>
