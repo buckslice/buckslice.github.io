@@ -3,12 +3,12 @@
 
 # update app to work with any arbitrary string
 
-year = 2020
+year = 2021
 
 import os
 import io
 
-def getFilePaths(rootDir='.'): # default to local dir
+def getFilePaths(rootDir='..'): # default to local dir
 	files = []
 	for dirpath, dirnames, filenames in os.walk(rootDir):
 		for s in filenames:

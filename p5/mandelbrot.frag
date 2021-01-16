@@ -95,6 +95,9 @@ void main() {
 // but couldnt get it working with panning by the mouse. it messes it up no matter wat i do, tried some float addition calcs
 //https://www.shadertoy.com/view/XdsXWN
 
+// another good example with better looking functions, i dunno tho kinda lot of work for just another 15 seconds of zoom lol and will be way slower
+// https://www.shadertoy.com/view/WsXGzj
+
 // // These are necessary definitions that let you graphics card know how to render the shader
 // #ifdef GL_ES
 // precision highp float;
