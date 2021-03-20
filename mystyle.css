@@ -20,6 +20,20 @@
 	color:#FFCCCC;
 }
 
+.tdcmd{
+    font-size: 1.5rem;
+    color:#EE00EE;   
+}
+.tdcoord{
+    font-size: 1.5rem;
+    color:#00CC33;   
+}
+.tdcost{
+    font-size: 1.5rem;
+    color:#EEEE55;
+}
+
+
 html{
 	height: 100%;
 }
