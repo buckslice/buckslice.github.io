@@ -15,14 +15,11 @@
 
 <body style="background-color: #13101d">  
 	    <style>
-        h1 {
-            color: rgb(255, 248, 171);
-        }
         h2 {
-            color: rgb(255, 193, 85);
-        }
-		h3 {
 			color: rgb(255, 243, 108);
+		}
+		h3 {
+			color: rgb(255, 193, 85);
 		}
 		</style>
 
@@ -37,12 +34,12 @@
 	
 	<h2>Overview</h2>
 	<p>
-	I worked at Intrepid Studios for 5 and a half years. I started out as a generalist designer with the rest of the associate hires helping with our Alpha 1 launch. I then worked on player built cities: Nodes, and other related systems for some time, but it wasn't long until I gravated towards the Combat team and found my home. I primarily worked on that team through Alpha 2 launch and Early Access launch.
+	I worked at Intrepid Studios for 5 and a half years. I started out as a generalist designer with the rest of the associate hires helping out with the Alpha 1 launch. I then worked on the Systems team supporting the features around player built cities: Nodes, and other related systems for some time. But it wasn't long until I gravated towards the Combat team and found my home. I worked on that team through our Alpha 2 and Steam Early Access launches.
 	</p>
 
-	<h2>Archetype (Class) Design</h2>
+	<h2 id="arch">Archetype (Class) Design</h2>
 	<p>
-		I was the primary design owner of the <b><span style="color: rgb(255, 70, 215);">Bard</span></b> and <b><span style="color: rgb(195, 145, 241);">Rogue</span></b> archetypes. These archetypes were well received by the community for being fun to play with interesting and thematic interactions. I also worked on the rest of the archetypes in various ways.
+		I was the primary design owner of the <b><span style="color: rgb(255, 70, 215);">Bard</span></b> and <b><span style="color: rgb(195, 145, 241);">Rogue</span></b> archetypes, both of which were well received by the community for their fun, thematic gameplay and compelling mechanical interactions. I also contributed in various ways to the rest of the archetypes. I helped with the initial designs for our earlier ones and then later helped maintain implementation quality and balance of our abilities across the board.
 	</p>
 
 	<div class="video-row">
@@ -53,7 +50,7 @@
 	    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	    allowfullscreen></iframe>
 
-		<iframe  width="250" height="400" src="https://www.youtube.com/embed/83nvmF38Jik?si=7ZUqEbFus3G-NjV9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<iframe width="250" height="400" src="https://www.youtube.com/embed/83nvmF38Jik?si=7ZUqEbFus3G-NjV9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 	</div>
 	<div class="video-row">
   		<iframe width="500" height="400" 
@@ -73,38 +70,82 @@
 
 	<h2>Combat Stat Formulas / Overall Balance</h2>
 	<p>
-		I was the primary design owner of all the combat stats and many other stat formulas in the game. I built and managed the main combat stat spreadsheet that had a full combat calculator where you could load up a player / npc in variety of gear sets, archetypes, elite rank, etc. And get a full view of what their stats would be in game and relative DPS / TTK.
+		I was the primary design owner for all combat stats and many core stat formulas in the game. I built and maintained the main combat stat spreadsheet, including an attribute to waterfall conversions chart, and a full combat calculator that allowed designers to configure players or NPCs with different gear sets, archetypes, and elite ranks, and see their resulting in-game stats, DPS, and TTK across levels 1-50. The sheet also contained an archetype ability analysis section that modeled costs, cooldowns, relative power, and burst vs efficiency charts to help us identify abilities that were generally too lacking or exceeding over the rest.
 	</p>
 	<p>
-		There were also tabs for each archetype ability evaluating their costs, relative power, cooldown, burst vs efficiency ratios and a variety of graphs and charts for all this data. I also managed the consumable items balance and frequenty interfaced with the Econ team and helped advise on gear updates.
+		Beyond this I also regularly collaborated with the Economy team, managed consumable item implementation, item set bonus implentation, player XP curves, monster/elite XP rewards, and advised on gear passes and related stat updates.
 	</p>
+		<div class="video-row">
+			<img style="max-width: 58%;" src="/img/stat_charts.png" alt="">
+			<img style="max-width: 40%;" src="/img/ability_balance.png" alt="">
+		</div>
 
-	<h2>Tools and Tech</h2>
+	<h2 id="tools">Tools and Tech</h2>
+	<p>
+		I built a variety of scripts and tools to support my own and the rest of my teams work over the years. Here are some of the main ones:
+	</p>
 	<h3>Damage Meter</h3>
 		<p>
-			I built the internal damage meters that could be used to track all hit events in the game, and how much damage/healing/other was being done by various instigators and towards various targets in the game.
+			I built an internal damage meter tool to track hit events during combat. It worked similarly to damage meter addons in games like World of Warcraft. The system reported damage, healing, mana gained, DPS, and other combat metrics by instigator and target, and proved invaluable for playtest analysis given the team's limited BI capabilities.
 		</p>
-	<h3>Stat Inspector</h3>
-		<p>
-			The stat inspector allowed devs to track any stat on any target and view their true values. Most of these things weren't replicated normally for optimization/security reasons, but this allowed us to see them anyways to help us debug issues and assess our designs.		
-		</p>
+		<div class="video-row">
+			<img style="max-width: 50%;" src="/img/damage_meter_1.gif" alt="">
+			<img style="max-width: 50%;" src="/img/damage_meter_2.gif" alt="">
+		</div>
+		<br>
+
 	<h3>Dynamic Tooltip System</h3>
 	<p>
-		I built a parser for our string ability description data that could find keywords and replace text with rich text data descriptions for the various tooltips in our game. It supported Abilities, Effects (buffs/debuffs), and Items. I a big proponent of "single source of truth" designs and this allowed us to iterate fast and have always up to date and informative tooltips in the game.
+		I built a feature-rich text parser for our tooltip description data that could isolate various keywords and arguments and replace them with auto formatted rich text that referenced other data. The system supported tooltips for Abilities, Effects (buffs/debuffs), and Items. I'm a big proponent of "single source of truth" data management and this allowed us to iterate fast and have always up to date, informative, and accurate tooltips in the game.
 	</p>
+	<img src="/img/tooltip1.png" alt="">
+
+	<div class="video-row">
+		<div style="width:37.5%;">
+			<img src="/img/tooltip_saga.png" alt="">
+		</div>
+	<div class="basic_column">
+		<img src="/img/tooltip_stab.gif" alt="">
+		<br><br>
+		<img src="/img/tooltip_communal.png" alt="">
+		</div>
+	</div>
+
+		<br>
+
 	<h3>Floating Damage Text System</h3>
 	<p>
-		For a long time our damage floater system was lacking so I took the time to rework it. The UI team had a lot on their plate and I am of the opinion that the combat floaters are very important to the feeling of combat in general. You gotta see those big juicy numbers pop on your screen and they need to be customizable and look just right. So I implemented my own version that were also dynamically spaced and had a variety of nice features.
+		I took ownership of reworking the damage floater system when it became clear it needed more attention. I implemented a new, customizable and optimized solution that featured dynamically spaced floaters, relative magnitude sizing, recent floater concatenation, effect application popups, and more punchy animations, overall resulting in better communication of the impactful moments in our combat.
 	</p>
-	
-	<h2>Livestream Recordings</h2>
-	<p>
-		I was featured on a number of livestreams you can see all my appearances here:
 
-		<div class="linkm">
+	<div class="video-row">
+		<img style="max-width: 50%;" src="/img/floaters1.gif" alt="">
+		<img style="max-width: 50%;" src="/img/floaters2.gif" alt="">
+	</div>
+	<br>
+
+	<h3>Stat Inspector</h3>
+		<p>
+			I built an internal stat inspector tool that developers could use to inspector any target's stats or owned effects (buffs/debuffs). This tool bypassed normal data replication rules since most of these stats weren't replicated to other clients normally. The tool was used across the team to help debug issues.
+		</p>
+		<img style="max-width: 50%;" src="/img/stat_inspector_1.gif" alt="">
+		<br><br>
+
+	<h2>Relevant Links</h2>
+		<p>
+			I was featured on a number of livestreams but this was one of the main ones where we revealed the Bard archetype:
+		</p>
+		<div class="linkm" style="margin-top:0">
 			<a class="link" href="https://www.youtube.com/watch?v=xQOIz8nUHIA">Bard Livestream</a>
 		</div>
-	</p>
+		<br>
+		<p>
+			Here's my developer page link on the wiki with more links (may be inactive soon as the company is shutting down):
+		</p>
+		<div class="linkm" style="margin-top:0">
+			<a class="link" href="https://ashesofcreation.wiki/Archive:John_Collins">Intrepid Developer Page</a>
+		</div>
+
 
 	</div>
 	<footer>

@@ -17,20 +17,9 @@
 	}
 	</style>
 	
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TC4FMXD');</script>
-<!-- End Google Tag Manager -->
   </head>
   
   <body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TC4FMXD"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 <div id="nav"><ul>
 	<li><a href="/" class="active" style="background-color: #0000AA">Home</a></li>
@@ -57,6 +46,7 @@ Please browse, enjoy and let me know what you think!
 	<button class="btn" onclick="setFilter(this)" title="made during a short 2 day period" data-tag="GameJam">Game Jam</button>
 	<span class="btnGroup">
 		<button class="btn" onclick="setFilter(this)" data-tag="Unity">Unity/C#</button>
+		<button class="btn" onclick="setFilter(this)" data-tag="Unreal">Unreal</button>
 		<button class="btn" onclick="setFilter(this)" data-tag="C++">C++</button>
 		<button class="btn" onclick="setFilter(this)" data-tag="Java">Java</button>
 		<button class="btn" onclick="setFilter(this)" data-tag="Javascript">Javascript</button>
@@ -68,20 +58,20 @@ Please browse, enjoy and let me know what you think!
 		<button class="btn" onclick="setFilter(this)" data-tag="2man">2 Man</button>
 		<button class="btn" onclick="setFilter(this)" data-tag="Group">Group</button>
 	</span> -->
-	<button class="btn" onclick="setFilter(this)" title="work in progress" data-tag="WIP">WIP</button>
+	<!-- <button class="btn" onclick="setFilter(this)" title="work in progress" data-tag="WIP">WIP</button>
 	<span class="btnGroup">
 		<button class="btn" onclick="setFilter(this)" title="Download for Windows" data-tag="Windows">Windows</button>
 		<button class="btn" onclick="setFilter(this)" title="Download for Mac" data-tag="Mac">Mac</button>
 		<button class="btn" onclick="setFilter(this)" title="Download for Linux" data-tag="Linux">Linux</button>
 		<button class="btn" onclick="setFilter(this)" title="Download for Android" data-tag="Android">Android</button>
 		<button class="btn" onclick="setFilter(this)" title="Download for Java" data-tag="Jar">Jar</button>
-	</span>
+	</span> -->
 </div>
 <br>
 
 <div class="grid">
 
-<a class="card" data-tag="Game" href="/ashes">
+<a class="card" data-tag="Game Unreal" href="/ashes">
 	<div class="imgc"><img class="lazy" data-src="img/ashes.gif" alt=""></div>
 	<div class="card-inner">
 		<h3>Ashes of Creation</h3>
@@ -130,7 +120,7 @@ Please browse, enjoy and let me know what you think!
 	<div class="card-inner">
 		<span class="icopib">Play in browser</span>
 		<h3>Mandelbrot Explorer</h3>
-		<p>Zoom around in the mandelbrot fractal! (avoid this if on phone lol)</p>
+		<p>Zoom around in the mandelbrot fractal!</p>
 	</div>
 </a>
 
@@ -142,6 +132,7 @@ Please browse, enjoy and let me know what you think!
 		<p>3D turtle ocean cleanup game for android</p>
 	</div>
 </a>
+
 <a class="card" data-tag="Unity Solo School Game Windows Mac" href="/get-there">
 	<div class="imgc"><img class="lazy" data-src="img/gether.gif" alt=""></div>
 	<div class="card-inner">
@@ -185,6 +176,13 @@ Please browse, enjoy and let me know what you think!
 		<p>My greatest masterpiece</p>
 	</div>
 </a>
+<a class="card" data-tag="Unity GameJam Group Game OpenSource" href="/twitchtd">
+	<div class="imgc"><img class="lazy" data-src="img/twitchtd.gif" alt=""></div>
+	<div class="card-inner">
+		<h3>Twitch TD</h3>
+		<p>Streamed tower defense game played through twitch chat</p>
+	</div>
+</a>
 <a class="card" data-tag="Unity Game Solo OpenSource" href="/shardcraft">
 	<div class="imgc"><img class="lazy" data-src="img/shardcraft3.gif" alt=""></div>
 	<div class="card-inner">
@@ -199,10 +197,9 @@ Please browse, enjoy and let me know what you think!
 		<p>Examples of various planet rendering tech I've made</p>
 	</div>
 </a>
-<a class="card" data-tag="Unity WIP Solo Game" href="/gness">
+<a class="card" data-tag="Unity Solo Game" href="/gness">
 	<div class="imgc"><img class="lazy" data-src="img/gness1.gif" alt=""></div>
 	<div class="card-inner">
-		<span class="icowip" title="Work in progress">WIP</span>
 		<h3>Gness</h3>
 		<p>An "M"MORPG experiment</p>
 	</div>
@@ -233,12 +230,12 @@ Please browse, enjoy and let me know what you think!
 		<p>A cool flocking simulation</p>
 	</div>
 </a>
-<a class="card" data-tag="Project Java Solo Jar" href="/tree-image-generator">
-	<div class="imgc"><img class="lazy" data-src="img/quadtree.gif" alt=""></div>
+<a class="card" data-tag="Javascript Game Solo PlayInBrowser" href="/signal">
+	<div class="imgc"><img class="lazy" data-src="img/signal.gif" alt=""></div>
 	<div class="card-inner">
-		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
-		<h3>Tree Image Generator</h3>
-		<p>Cool recursive image filter app</p>
+		<span class="icopib">Play in browser</span>
+		<h3>Signal</h3>
+		<p>A clone of a game I played once and could never find again</p>
 	</div>
 </a>
 <a class="card" data-tag="Unity Game Group Windows Mac Linux" href="/sankofa">
@@ -251,15 +248,6 @@ Please browse, enjoy and let me know what you think!
 		<p>Educational game about the history and mythology of the Akan people</p>
 	</div>
 </a>
-<a class="card" data-tag="Javascript Game Solo PlayInBrowser" href="/signal">
-	<div class="imgc"><img class="lazy" data-src="img/signal.gif" alt=""></div>
-	<div class="card-inner">
-		<span class="icopib">Play in browser</span>
-		<h3>Signal</h3>
-		<p>A clone of a game I played once and could never find again</p>
-	</div>
-</a>
-
 <a class="card" data-tag="Unity Game GameJam Solo Windows" href="/wildlife-simulator">
 	<div class="imgc"><img class="lazy" data-src="img/wsim.gif" alt=""></div>
 	<div class="card-inner">
@@ -276,14 +264,6 @@ Please browse, enjoy and let me know what you think!
 		<p>Voxely shoot 'em up with randomized stat system</p>
 	</div>
 </a>
-<a class="card" data-tag="Unity GameJam Group Project OpenSource Windows" href="/music-simulator">
-	<div class="imgc"><img class="lazy" data-src="img/musim.gif" alt=""></div>
-	<div class="card-inner">
-		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
-		<h3>Music Simulator</h3>
-		<p>3D music visualizer (great with VR!) Built during 2016 HackUCI</p>
-	</div>
-</a>
 <a class="card" data-tag="Unity Game Group OpenSource Windows Mac" href="/space-gods">
 	<div class="imgc"><img class="lazy" data-src="img/spacegods.gif" alt=""></div>
 	<div class="card-inner">
@@ -293,6 +273,22 @@ Please browse, enjoy and let me know what you think!
 		<p>God-fighting planet-slinging multiplayer brawler</p>
 	</div>
 </a>	
+<a class="card" data-tag="Unity GameJam Group Project OpenSource Windows" href="/music-simulator">
+	<div class="imgc"><img class="lazy" data-src="img/musim.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/windows.png" title="Download for Windows"></span>
+		<h3>Music Simulator</h3>
+		<p>3D music visualizer (great with VR!) Built during 2016 HackUCI</p>
+	</div>
+</a>
+<a class="card" data-tag="Project Java Solo Jar" href="/tree-image-generator">
+	<div class="imgc"><img class="lazy" data-src="img/quadtree.gif" alt=""></div>
+	<div class="card-inner">
+		<span class="ico"><img src="/img/java.png" title="Download for Java"></span>
+		<h3>Tree Image Generator</h3>
+		<p>Cool recursive image filter app</p>
+	</div>
+</a>
 <a class="card" data-tag=" " href="https://www.youtube.com/watch?v=Fd2bR1E9mGU">
 	<div class="imgc"><img class="lazy" data-src="img/minecraftvid.png" alt=""></div>
 	<div class="card-inner">

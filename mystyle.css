@@ -136,6 +136,21 @@ iframe{
 	50%  {filter: hue-rotate(-200deg);}
 }
 
+@keyframes fadeToBlack {
+  from {
+    background-color: #272727;
+  }
+  to {
+    background-color: #000000;
+  }
+}
+
+body.fadeToBlack {
+  animation: fadeToBlack 120s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
 .content{
 	min-height: calc(100vh - 14rem);
 	max-width: 60rem;
@@ -484,6 +499,7 @@ a.card:active {
   display: flex;
   gap: 16px;
   width: 100%;
+  margin-top: 16px;
   margin-bottom: 16px;
 }
 
