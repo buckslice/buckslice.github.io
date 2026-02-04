@@ -3,7 +3,7 @@
 
 # update app to work with any arbitrary string
 
-year = 2025
+year = 2026
 
 import os
 import io
