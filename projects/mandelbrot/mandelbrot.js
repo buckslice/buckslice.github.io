@@ -3,7 +3,7 @@ let theShader;
 
 function preload() {
     // load the shader
-    theShader = loadShader('mandelbrot.vert', 'mandelbrot.frag');
+    theShader = loadShader('/projects/mandelbrot/mandelbrot.vert', '/projects/mandelbrot/mandelbrot.frag');
 }
 
 let firstFrame = true;
@@ -67,17 +67,7 @@ function draw() {
             posY -= my * abs(preZoom - zoom);
         }
 
-
-        // only clear and redraw if mouse moves that way shader wont run!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // time += 1 / 60.0;
-        // theShader.setUniform('iTime', time);
-
-        //console.log(posX + " " + posY);
-
-        // theShader.setUniform('pos', splitDouble(posX))
-        // theShader.setUniform('pos2', splitDouble(posY))
-
-        theShader.setUniform('pos', [posX, posY]);
+        theShader.setUniform('pos', [posX*2, posY*2]);
         theShader.setUniform('resolution', [windowWidth, windowHeight]);
         theShader.setUniform('zoom', zoom);
 
