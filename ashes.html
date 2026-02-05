@@ -68,8 +68,7 @@
 		allowfullscreen></iframe>
 	</div>
 <br>
-	<h2>Combat Stat Formulas / Overall Balance</h2>
-
+	<h2 id="stats">Combat Stat Formulas / Overall Balance</h2>
 	<p>
 		I was the primary design owner for all combat stats and many of the game's core stat formulas. I built and maintained the central combat stat spreadsheet, which included attribute-to-waterfall conversion modeling and a full combat calculator used to configure player and NPC builds across gear sets, archetypes, elite ranks, and levels 1-50, with outputs for in-game stats, DPS, and time-to-kill. The system also featured archetype ability analysis, modeling costs, cooldowns, relative power, and burst-versus-efficiency tradeoffs through a chart to identify outliers and balance issues.
 	</p>
@@ -83,7 +82,7 @@
 <br>
 	<h2 id="tech">Technical Design</h2>
 
-	<h3>Dynamic Tooltip System</h3>
+	<h3 id="tooltips">Dynamic Tooltip System</h3>
 	<p>
 		I architected a feature-rich text parser for dynamic in-game tooltips that could isolate inline keywords and arguments from data and replace them with auto formatted rich text. Supported tooltips for abilities, effects (buffs/debuffs), and items. This enabled developers to build informative, up-to-date, and accurate tooltips through a single source of truth data scheme.
 	</p>
@@ -102,7 +101,7 @@
 
 		<br>
 
-	<h3>Floating Damage Text System</h3>
+	<h3 id="floaters">Floating Damage Text System</h3>
 	<p>
 		I took ownership of reworking the damage floater system when it became clear it needed more attention. I built a new, customizable, and optimized floating combat text system, featuring dynamically spaced floaters, relative magnitude sizing, recent floater concatenation, effect application popups, and more punchy animations, overall resulting in better communication of the impactful moments in our combat.
 	</p>
@@ -117,7 +116,7 @@
 		<p>
 		I built a variety of scripts and tools to support my own and the rest of my teams work over the years. Here are some of the main ones:
 	</p>
-		<h3>Damage Meter</h3>
+		<h3 id="dmg">Damage Meter</h3>
 		<p>
 			I built an internal damage meter tool to track hit events during combat. It worked similarly to damage meter addons in games like World of Warcraft. The system reported damage, healing, mana gained, DPS, and other combat metrics by instigator and target, and proved invaluable for playtest analysis given the team's limited BI capabilities.
 		</p>
@@ -127,7 +126,7 @@
 		</div>
 		<br>
 
-	<h3>Stat Inspector</h3>
+	<h3 id="inspector">Stat Inspector</h3>
 		<p>
 			I built an internal stat inspector tool that developers could use to inspector any target's stats or owned effects (buffs/debuffs). This tool bypassed normal data replication rules since most of these stats weren't replicated to other clients normally. The tool was used across the team to help debug issues.
 		</p>
