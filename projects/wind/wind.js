@@ -260,7 +260,7 @@ function render(deltaTime) {
 							w.multiplyScalar((td * cns) * (td * cns)); // scale it by mouse speed but quadratic works better somehow cuz update rate shite i dunno
 							grid[yy][xx].add(w);
 						} else if (mouseRight){ // eraser mode
-							grid[yy][xx].multiplyScalar(0.8);
+							grid[yy][xx].multiplyScalar(0.98);
 						}
 					}
 				}
