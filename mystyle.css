@@ -540,3 +540,17 @@ a.card:active {
 		width:calc(100% + 2rem);
 	} */
 }
+
+#unity-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.6;   /* change if your game isn't 16:9 */
+  background: black;
+  overflow: hidden;
+}
+
+#unity-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Overlapse</title>
+
+  <link rel="icon" href="/icons/planet.ico">
+  <link href="/mystyle.css" rel="stylesheet">
+  <link rel="stylesheet" href="/projects/overlapsed/TemplateData/style.css">
+</head>
+
+<body style="background-color: #150f1a; ">
+
+<div id="nav">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/archive">Archive</a></li>
+    <li class="rFloat"><a href="/about">About</a></li>
+  </ul>
+</div>
+
+<div class="content">
+
+  <h1>Overlapsed</h1>
+
+  <div id="gameContainer">
+
+    <!-- PLAY BUTTON -->
+    <div id="gameContents">
+      <button id="playButton" type="button">Play</button>
+    </div>
+
+    <!-- UNITY PLAYER -->
+    <div id="unity-container" class="unity-desktop" style="display:none;">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+
+      <div id="unity-loading-bar">
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+
+      <div id="unity-warning"></div>
+    </div>
+
+    <!-- FULLSCREEN -->
+    <div class="fullscreen"
+         onclick="unityInstance && unityInstance.SetFullscreen(1)">
+    </div>
+
+  </div>
+
+  <h3>Instructions</h3>
+  <p>
+    See how high you can climb! Use your masks to reveal hidden platforms and powerups.
+
+    This game is best played with 2 players, one on keyboard and one on the controller, each controlling one mask! But its playable as a single player too, just click LMB to switch between your masks! If 2 player you can hold RMB or B to give the lower player low gravity so they can catch up. Have fun!
+  </p>
+
+	<div class="linkm">
+		<a class="link" href="https://globalgamejam.org/games/2026/overlapse-5">Game Jam Page</a>
+	</div>
+
+</div>
+
+<footer>
+  Copyright © John F. Collins III 2026
+</footer>
+
+<script>
+let unityInstance = null;
+let unityLoaded = false;
+
+function runUnity() {
+  if (unityLoaded) return;
+  unityLoaded = true;
+
+  document.getElementById("playButton").style.display = "none";
+  document.getElementById("unity-container").style.display = "block";
+  document.getElementById("unity-loading-bar").style.display = "block";
+
+  const canvas = document.getElementById("unity-canvas");
+
+  const buildUrl = "/projects/overlapsed/Build";
+  const loaderUrl = buildUrl + "/Overlapsed_Web.loader.js";
+
+  const config = {
+    dataUrl: buildUrl + "/Overlapsed_Web.data",
+    frameworkUrl: buildUrl + "/Overlapsed_Web.framework.js",
+    codeUrl: buildUrl + "/Overlapsed_Web.wasm",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "TeamTikiTotemz",
+    productName: "Overlapse",
+    productVersion: "1.0",
+  };
+
+  const script = document.createElement("script");
+  script.src = loaderUrl;
+  script.onload = () => {
+    createUnityInstance(canvas, config, (progress) => {
+      document.getElementById("unity-progress-bar-full").style.width =
+        (progress * 100) + "%";
+    }).then((instance) => {
+      unityInstance = instance;
+      document.getElementById("unity-loading-bar").style.display = "none";
+    }).catch((message) => {
+      alert(message);
+    });
+  };
+
+  document.body.appendChild(script);
+}
+
+document.getElementById("playButton").onclick = runUnity;
+</script>
+
+</body>
+</html>
