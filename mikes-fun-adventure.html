@@ -1,31 +1,59 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="/icons/mikehead.ico">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<title>Mike's Fun Adventure</title>
+	<link rel="icon" href="/icons/mikehead.ico">
 
-<link href="/mystyle.css" rel="stylesheet">
+	<title>Mike's Fun Adventure</title>
 
+  <link href="/mystyle.css" rel="stylesheet">
+  <link rel="stylesheet" href="/projects/mike-game/TemplateData/style.css">
 </head>
 
-<body class="fadeToBlack">  	
+<body style="background-color: #0b0b0d; ">
 
-<div id="nav"><ul>
-	<li><a href="/">Home</a></li>
-	<li><a href="/archive">Archive</a></li>
-	<li class="rFloat"><a href="/about">About</a></li>
-</ul></div>
+<div id="nav">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/archive">Archive</a></li>
+    <li class="rFloat"><a href="/about">About</a></li>
+  </ul>
+</div>
+
 <div class="content">
 
 <h1>Mike's Fun Adventure</h1>
 
+  <div id="gameContainer">
 
+    <!-- PLAY BUTTON -->
+    <div id="gameContents">
+      <button id="playButton" type="button">Play</button>
+    </div>
+
+    <!-- UNITY PLAYER -->
+    <div id="unity-container" class="unity-desktop" style="display:none;">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+
+      <div id="unity-loading-bar">
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+
+      <div id="unity-warning"></div>
+    </div>
+
+    <!-- FULLSCREEN -->
+    <div class="fullscreen"
+         onclick="unityInstance && unityInstance.SetFullscreen(1)">
+    </div>
+
+  </div>
+
+  <br><br>
 <div class="rightFloat" style="width:400px;">
 	<img src="/img/mikehadfun.png" alt="">
 </div>
@@ -33,25 +61,66 @@
 <h3>Overview</h3>
 <p>
 	This is a game I made for my fr<span class="scrt">i</span>end Mike for a secre<span class="scrt">t</span> santa pre<span class="scrt">s</span>ent exchange we had on <span class="scrt">C</span>hristmas 2019.
-	It was really fun to work on because I have a lot of silly pict<span class="scrt">u</span>res of him and the game references that in a few ways. It ended up being an enjoyably challenging game
-	as well. He played it in front of eve<span class="scrt">r</span>yone and we all had a good time. Here i<span class="scrt">s</span> a pic of him playing
+	It was really fun to work on because I have a lot of silly pict<span class="scrt">u</span>res of him and the game references that in a few ways. He played it in front of eve<span class="scrt">r</span>yone and we all had a good time. Here i<span class="scrt">s</span> a pic of him playing
 	it and having a blast!
 </p>
 <p>
 	 This is one of those game that is best <span class="scrt">e</span>xperienced rather than explaine<span class="scrt">d</span>, so I would just dive right in!
 </p>
 
-<div class="linkm">
-	<a class="link"
-		href="https://drive.google.com/uc?export=download&id=1hcEP5jTjHnH0jV4lOeOOjeWJ00uFNAVZ">Download</a>
-	<span class="linki">34 mb <img src="/img/windows.png" title="windows"></span>
 </div>
 
-</div>
+<br><br><br>
 <footer>
 Copyright ©️ John F. Collins III 2026
 </footer>
 
-</body>
+<script>
+let unityInstance = null;
+let unityLoaded = false;
 
+function runUnity() {
+  if (unityLoaded) return;
+  unityLoaded = true;
+
+  document.getElementById("playButton").style.display = "none";
+  document.getElementById("unity-container").style.display = "block";
+  document.getElementById("unity-loading-bar").style.display = "block";
+
+  const canvas = document.getElementById("unity-canvas");
+
+  const buildUrl = "/projects/mike-game/Build";
+  const loaderUrl = buildUrl + "/MikeGame.loader.js";
+
+  const config = {
+    dataUrl: buildUrl + "/MikeGame.data",
+    frameworkUrl: buildUrl + "/MikeGame.framework.js",
+    codeUrl: buildUrl + "/MikeGame.wasm",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "BuckyBoy",
+    productName: "Mike's Fun Adventure",
+    productVersion: "1.0",
+  };
+
+  const script = document.createElement("script");
+  script.src = loaderUrl;
+  script.onload = () => {
+    createUnityInstance(canvas, config, (progress) => {
+      document.getElementById("unity-progress-bar-full").style.width =
+        (progress * 100) + "%";
+    }).then((instance) => {
+      unityInstance = instance;
+      document.getElementById("unity-loading-bar").style.display = "none";
+    }).catch((message) => {
+      alert(message);
+    });
+  };
+
+  document.body.appendChild(script);
+}
+
+document.getElementById("playButton").onclick = runUnity;
+</script>
+
+</body>
 </html>
