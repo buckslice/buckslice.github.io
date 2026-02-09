@@ -1,0 +1,140 @@
+body {
+    font-family: system-ui, sans-serif;
+    padding: 20px;
+	zoom: 1.5;
+}
+
+body,
+html {
+    overflow-x: hidden;
+    /* color: #999; */
+}
+
+.year {
+    clear: both;
+    margin-top: 24px;
+}
+
+.year-label {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+h1{
+    margin:0;
+}
+
+.week {
+    position: relative;
+    display: inline-block;
+    min-width: 14px;
+    /* square size */
+    height: 14px;
+    border: 1px solid #bbb;
+    margin: 2px;
+    padding: 1px 2px;
+    font-size: 12px;
+    line-height: 14px;
+    vertical-align: top;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.week.event {
+    background: #e8f5ec;
+    border-color: #4caf51;
+}
+
+.week.event.birthday {
+    background: #fcfcc7;
+    border-color: #c1bb47;
+}
+
+.week-label-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.week-label {
+    display: inline-block;
+}
+
+.tooltip {
+    position: absolute;
+    display: inline-block;
+    width: max-content;
+    left: 50%;
+    bottom: 120%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    z-index: 1000;
+    /* ensures tooltip is at least this wide */
+    max-width: 200px;
+    /* limits max width, wraps text nicely */
+    word-wrap: break-word;
+    /* break long words if needed */
+    padding: 10px 14px;
+    /* a bit more padding */
+}
+
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* border-width: 6px;
+    border-style: solid;
+    border-color: #222 transparent transparent transparent; */
+    border: none !important;
+}
+
+.week:hover .tooltip {
+    opacity: 1;
+}
+
+.tooltip-date {
+    opacity: 0.8;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.tooltip-divider {
+    border: none;
+    border-top: 1px solid #444;
+    margin: 6px 0;
+}
+
+.birthday-event {
+    color: #fdf0ba;
+    /* bright highlight color for birthdays */
+    font-weight: 600;
+}
+
+.future {
+    background: #eee;
+}
+
+.future-week {
+    background-color: #eee;
+    color: #999;
+    border-color: #ccc;
+}
+
+.decade-header {
+    clear: both;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem;
+    padding-top: 8px;
+    /* border-top: 2px solid #ddd; */
+}
