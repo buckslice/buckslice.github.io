@@ -38,11 +38,34 @@ h1{
     vertical-align: top;
     white-space: nowrap;
     overflow: visible;
+    background-color: color-mix(
+        in srgb,
+        var(--phase-color) 35%,
+        white
+    );
 }
 
 .week.event {
-    background: #e8f5ec;
-    border-color: #4caf51;
+    background-color: var(--phase-color, #eee);
+
+}
+
+.future {
+    background-color: color-mix(
+        in srgb,
+        var(--phase-color) 8%,
+        #eee
+    );
+    color: #777;
+    border-color: #ccc;
+}
+
+.week.event.future {
+        background-color: color-mix(
+        in srgb,
+        var(--phase-color) 50%,
+        #eee
+    );
 }
 
 .week.event.birthday {
@@ -118,16 +141,6 @@ h1{
     color: #fdf0ba;
     /* bright highlight color for birthdays */
     font-weight: 600;
-}
-
-.future {
-    background: #eee;
-}
-
-.future-week {
-    background-color: #eee;
-    color: #999;
-    border-color: #ccc;
 }
 
 .decade-header {

@@ -62,11 +62,8 @@ async function loadEventsFromSheet() {
     );
 
     const rows = json.table.rows;
-
-    const events = {};
-
     const cols = json.table.cols;
-
+    
     // Build { date: 0, name: 1, desc: 2, ... }
     const colIndex = {};
     cols.forEach((col, i) => {
@@ -74,7 +71,8 @@ async function loadEventsFromSheet() {
             colIndex[col.label.trim()] = i;
         }
     });
-
+    
+    const events = {};
     rows.forEach(row => {
         const get = (row, key) => row.c[colIndex[key]]?.v;
 
@@ -94,11 +92,52 @@ async function loadEventsFromSheet() {
     return events;
 }
 
-let EVENTS = {};
+async function loadPhasesFromSheet() {
+    const url =
+        `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}Phases`;
 
-loadEventsFromSheet().then(data => {
-    EVENTS = data;
-    buildTimeLine(); // move your big timeline loop into a function
+    const res = await fetch(url);
+    const text = await res.text();
+
+    const json = JSON.parse(
+        text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1)
+    );
+
+    const rows = json.table.rows;
+    const cols = json.table.cols;
+
+    const colIndex = {};
+    cols.forEach((c, i) => colIndex[c.label.trim()] = i);
+
+    return rows.map(r => {
+        const get = key => r.c[colIndex[key]]?.v;
+
+        return {
+            key: get("key"),
+            start: parseLocalDate(normalizeSheetDate(get("start"))),
+            end: get("end")
+                ? parseLocalDate(normalizeSheetDate(get("end")))
+                : null,
+            color: "#"+get("color"),
+            eventColor: get("eventColor")
+        };
+    });
+}
+
+function getPhaseForDate(date) {
+    return PHASES.find(p => date >= p.start && (!p.end || date <= p.end));
+}
+
+let EVENTS = {};
+let PHASES = [];
+
+Promise.all([
+    loadEventsFromSheet(),
+    loadPhasesFromSheet()
+]).then(([events, phases]) => {
+    EVENTS = events;
+    PHASES = phases;
+    buildTimeLine();
 });
 
 function buildTimeLine() {
@@ -130,6 +169,13 @@ function buildTimeLine() {
 
             const weekDiv = document.createElement("div");
 
+            const phase = getPhaseForDate(weekDate);
+
+            if (phase) {
+                weekDiv.dataset.phase = phase.key;
+                weekDiv.style.setProperty("--phase-color", phase.color);
+            }
+
             weekDiv.addEventListener('mouseenter', () => {
                 const tooltip = weekDiv.querySelector('.tooltip');
                 if (!tooltip) return;
@@ -160,7 +206,7 @@ function buildTimeLine() {
 
             const today = new Date();
             if (weekDate > today) {
-                weekDiv.classList.add("future-week");
+                weekDiv.classList.add("future");
             }
 
             // Collect all events in this week (loop days)
@@ -180,7 +226,8 @@ function buildTimeLine() {
             weekEnd.setDate(weekEnd.getDate() + 6);
 
             if (birthdayThisYear >= weekStart && birthdayThisYear <= weekEnd) {
-                weekDiv.classList.add("birthday");
+                //weekDiv.classList.add("birthday");
+                weekDiv.classList.add("event");
                 const birthdayAge = year - startDate.getFullYear();
                 // Add birthday label as an event with special flag
                 eventsThisWeek.unshift({
