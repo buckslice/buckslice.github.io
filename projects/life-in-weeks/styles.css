@@ -53,7 +53,7 @@ h1{
 .future {
     background-color: color-mix(
         in srgb,
-        var(--phase-color) 8%,
+        var(--phase-color) 15%,
         #eee
     );
     color: #777;
