@@ -471,12 +471,12 @@ a.card:active {
 	color: var(--accent-color)
 }*/
 
-.image-text{
-	display: block;
+.aboutmeimage{
+	/* display: block; */
 	text-align: center;
 	float: right;
 	padding: .5rem;
-	margin: 5rem;
+	margin: 1.5rem 3rem 3rem;
 	background-color: var(--fg-color);
 	box-shadow: 
 	0 0 0 5px hsl(0, 0%, 40%),
@@ -521,6 +521,9 @@ a.card:active {
 	}
 	.rightFloat img{
 		margin-left:0;
+	}
+	.aboutmeimage{
+		float:none;
 	}
 }
 @media only screen and (max-width: 500px){
