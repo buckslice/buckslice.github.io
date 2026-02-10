@@ -1,5 +1,5 @@
 html {
-  font-size: 150%;
+  font-size: clamp(18px, 4vw, 24px);
 }
 
 body {
@@ -10,7 +10,6 @@ body {
 body,
 html {
     overflow-x: hidden;
-    /* color: #999; */
 }
 
 .year {
