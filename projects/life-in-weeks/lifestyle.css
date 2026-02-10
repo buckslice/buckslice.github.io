@@ -1,13 +1,10 @@
-body {
-    font-family: system-ui, sans-serif;
-    padding: 20px;
-	zoom: 1.5;
+html {
+  font-size: 150%;
 }
 
-@media screen and (min-resolution: 2dppx) {
-	.body{
-        zoom: 2.5;
-    }
+body {
+    font-family: system-ui, sans-serif;
+    padding: 1.25rem;
 }
 
 body,
@@ -18,12 +15,12 @@ html {
 
 .year {
     clear: both;
-    margin-top: 24px;
+    margin-top: 1.5rem;
 }
 
 .year-label {
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 0.375rem;
 }
 
 h1{
@@ -33,14 +30,14 @@ h1{
 .week {
     position: relative;
     display: inline-block;
-    min-width: 14px;
+    min-width: 0.875rem;
     /* square size */
-    height: 14px;
-    border: 1px solid #bbb;
-    margin: 2px;
-    padding: 1px 2px;
-    font-size: 12px;
-    line-height: 14px;
+    height: 0.875rem;
+    border: 0.063rem solid #bbb;
+    margin: 0.125rem;
+    padding: 0.063rem 0.125rem;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
     vertical-align: top;
     white-space: nowrap;
     overflow: visible;
@@ -97,21 +94,21 @@ h1{
     transform: translateX(-50%);
     background: #222;
     color: #fff;
-    padding: 8px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 1.4;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
     white-space: normal;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.15s ease;
     z-index: 1000;
     /* ensures tooltip is at least this wide */
-    max-width: 200px;
+    max-width: 14rem;
     /* limits max width, wraps text nicely */
     word-wrap: break-word;
     /* break long words if needed */
-    padding: 10px 14px;
+    padding: 0.625rem 0.875rem;
     /* a bit more padding */
 }
 
@@ -121,9 +118,6 @@ h1{
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    /* border-width: 6px;
-    border-style: solid;
-    border-color: #222 transparent transparent transparent; */
     border: none !important;
 }
 
@@ -133,14 +127,14 @@ h1{
 
 .tooltip-date {
     opacity: 0.8;
-    font-size: 12px;
-    margin-bottom: 4px;
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
 }
 
 .tooltip-divider {
     border: none;
-    border-top: 1px solid #444;
-    margin: 6px 0;
+    border-top: 0.063rem solid #444;
+    margin: 0.375rem 0;
 }
 
 .birthday-event {
@@ -151,9 +145,8 @@ h1{
 
 .decade-header {
     clear: both;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 600;
     margin: 1.5rem 0 1rem;
-    padding-top: 8px;
-    /* border-top: 2px solid #ddd; */
+    padding-top: 0.5rem;
 }
