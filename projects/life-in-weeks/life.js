@@ -169,11 +169,20 @@ function buildTimeLine() {
 
             const weekDiv = document.createElement("div");
 
+            weekDiv.className = "week";
+
+            const today = new Date();
+            if (weekDate > today) {
+                weekDiv.classList.add("future");
+            }
+
             const phase = getPhaseForDate(weekDate);
 
             if (phase) {
                 weekDiv.dataset.phase = phase.key;
                 weekDiv.style.setProperty("--phase-color", phase.color);
+            }else if(weekDate > today){
+                weekDiv.style.setProperty("--phase-color", "#ccc");
             }
 
             weekDiv.addEventListener('mouseenter', () => {
@@ -202,12 +211,6 @@ function buildTimeLine() {
 
             });
 
-            weekDiv.className = "week";
-
-            const today = new Date();
-            if (weekDate > today) {
-                weekDiv.classList.add("future");
-            }
 
             // Collect all events in this week (loop days)
             const eventsThisWeek = [];
@@ -250,7 +253,6 @@ function buildTimeLine() {
                 const label = document.createElement("div");
                 label.className = "week-label";
 
-                // Show first event name inside box if exists, else blank or week number etc.
                 for(let i = 0; i < eventsThisWeek.length; ++i){
                     const event = eventsThisWeek[i].event;
                     const eventLink = event.link;
@@ -258,11 +260,29 @@ function buildTimeLine() {
                         continue;
                     }
                     if (eventLink) {
+                        const match = event.name.match(/^(.*)<(.*)>(.*)$/);
+
                         const link = document.createElement("a");
                         link.href = eventLink;
                         link.target = "_blank";
-                        link.textContent = event.name;
-                        label.appendChild(link);
+
+                        if (!match) {
+                            link.textContent = event.name;
+                            label.appendChild(link);
+                        }else{
+                            const [, before, linkText, after] = match;
+
+                            const beforeSpan = document.createElement("span");
+                            beforeSpan.textContent = before;
+                            label.appendChild(beforeSpan)
+
+                            link.textContent = linkText;
+                            label.appendChild(link);
+
+                            const afterSpan = document.createElement("span");
+                            afterSpan.textContent = after;
+                            label.appendChild(afterSpan)
+                        }
                     } else {
                         const reg = document.createElement("span");
                         reg.textContent = i > 0 ? " + " + event.name : event.name;
@@ -292,7 +312,7 @@ function buildTimeLine() {
 
                         // Build event HTML with CSS classes instead of inline styles
                         const eventsHtml = events.map(e => {
-                            return `<strong class="${e.isBirthday ? 'birthday-event' : ''}">${e.name}</strong>` +
+                            return `<strong class="${e.isBirthday ? 'birthday-event' : ''}">${e.name.replace(/[<>]/g, '')}</strong>` +
                                 (e.desc ? `<div class="event-desc">${e.desc}</div>` : '');
                         }).join("<hr class='tooltip-divider'>");
 
