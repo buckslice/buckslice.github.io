@@ -2,14 +2,22 @@ html {
   font-size: 150%;
 }
 
+
+@media (max-width: 500px){
+	html {
+		font-size: 110%;
+	}
+}
+
 body {
     font-family: system-ui, sans-serif;
-    padding: 1.25rem;
+    padding: 1rem;
 }
 
 body,
 html {
     overflow-x: hidden;
+    margin:0;
 }
 
 .year {
