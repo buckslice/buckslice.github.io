@@ -2,12 +2,6 @@ html {
   font-size: 150%;
 }
 
-@media only screen and (max-width: 500px){
-	html {
-		font-size: 250%;
-	}
-}
-
 body {
     font-family: system-ui, sans-serif;
     padding: 1.25rem;
