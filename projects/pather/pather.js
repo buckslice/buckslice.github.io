@@ -599,7 +599,8 @@ function drawOnGridRegular(x, y, g) {
 function drawGridCircle(x, y, r, g, b) {
     strokeWeight(1);
     noFill();
-    circle(x * GRID_SIZE + origX + GRID_SIZE / 2, y * GRID_SIZE + origY + GRID_SIZE / 2, GRID_SIZE / 2);
+    let offset = 1-GRID_SIZE%2;
+    circle(x * GRID_SIZE + origX + GRID_SIZE / 2-offset, y * GRID_SIZE + origY + GRID_SIZE / 2-offset, GRID_SIZE / 2);
 }
 
 function drawOnGridMAZE(x, y, g) {
