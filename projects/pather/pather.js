@@ -133,7 +133,7 @@ function initGrid() {
 
     clearGenUI();
 
-    GRIDX = Math.floor((canvasWidth - 1) / GRID_SIZE)+1;
+    GRIDX = Math.floor((canvasWidth - 1) / GRID_SIZE);
     GRIDY = Math.floor((canvasHeight - 1) / GRID_SIZE);
     gridDimsText.innerHTML = `${GRIDX}x${GRIDY}`
     origX = origY = 0.5;
@@ -669,7 +669,7 @@ function draw() {
         }
 
         if (x >= 0 && x < GRIDX && y >= 0 && y < GRIDY) {
-            if (lastMouseButton == LEFTMOUSE) {
+            if (lastMouseButton == RIGHTMOUSE) {
                 if (gridDirty) {
                     redrawGrid();
                 }
@@ -678,7 +678,7 @@ function draw() {
                 } else {
                     setGridSquare(x, y, WALL);
                 }
-            } else if (lastMouseButton == RIGHTMOUSE && mouseJustPressed && grid[y][x] == FLOOR) {
+            } else if (lastMouseButton == LEFTMOUSE && mouseJustPressed && grid[y][x] == FLOOR) {
                 if (pathStartX != -1 && pathStartY != -1 && pathEndX != -1 && pathEndY != -1) {
                     pathStartX = pathStartY = pathEndX = pathEndY = -1; // reset them
                 }
@@ -961,7 +961,7 @@ function mousePressed(event) {
 let touchPressed = false;
 function touchStarted(event) {
     lastMouseStartX = event.x;
-    lastMouseButton = 2;
+    lastMouseButton = 0;
     mouseJustPressed = true;
     touchPressed = true;
 }
