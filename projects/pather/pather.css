@@ -62,17 +62,17 @@ h3 {
 }
 .app {
   display: flex;
-  height: 100vh;   /* This is crucial */
+  height: 100svh; 
   overflow:hidden;
 }
 #main {
-  flex: 1;         /* take remaining space */
+  flex: 1; 
   display: flex;
   flex-direction: column;
   padding: 0 0;
 }
 #canvas-container {
-  flex: 1;         /* fill vertical space */
+  flex: 1; 
   position: relative;
 }
 
