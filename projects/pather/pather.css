@@ -7,10 +7,6 @@
     }
 } */
 
-html,body{
-  overflow: hidden;
-}
-
 body, button, .inputBox, select {
   padding: 0;
   color: #fff;
@@ -62,16 +58,12 @@ h3 {
 #sidenav {
   height: 100%;
   width: 10rem;
-  /* position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  overflow-x: hidden; */
   overflow-y: auto; 
 }
 .app {
   display: flex;
   height: 100vh;   /* This is crucial */
+  overflow:hidden;
 }
 #main {
   flex: 1;         /* take remaining space */
