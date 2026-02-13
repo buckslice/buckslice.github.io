@@ -178,7 +178,6 @@ function setup() {
     genGrid();
 }
 
-
 function safeset(x, y, g) {
     if (x < 0 || x >= GRIDX || y < 0 || y >= GRIDY) {
         return;

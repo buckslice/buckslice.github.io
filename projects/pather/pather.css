@@ -1,11 +1,11 @@
 html {
   font-size: 100%;
 }
-/* @media (max-width: 800px){
+@media (max-width: 800px){
 	html {
-		font-size: 150%;
+		font-size: 80%;
     }
-} */
+}
 
 body, button, .inputBox, select {
   padding: 0;
