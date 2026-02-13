@@ -41,13 +41,11 @@ class AStarNode {
 
         this.parent = null;
 
-        this.g = 0;  // distance from start to this node
+        this.g = Infinity;  // distance from start to this node
         this.h = 0;  // estimate to the end node (must be equal or underestimate to guarantee shortest path)
-        this.f = 0;  // combo of g and h
+        this.f = Infinity;  // combo of g and h
 
-        this.open = false;   // is in openList
-        this.closed = false; // was in openList and has been considered
-        this.invalid = false; // set to true when updating priority
+        this.closed = false; // has already been considered
     }
 
     hash() { // perfect hash in range to 0 -> 65535
@@ -71,7 +69,6 @@ class PathNode {
 
 function bhash(x, y) {
     return y << 16 | x;
-    //return this.x + ',' + this.y;
 }
 
 let GRID_SIZE = 12;
@@ -559,52 +556,6 @@ async function redrawGrid() {
         drawOnGrid(pathEndX, pathEndY, SELECT);
     }
 
-    // draw random y rows until refreshed
-    // randoList = [];
-    // for (let y = 0; y < GRIDY; ++y) {
-    //     randoList.push(y);
-    // }
-    // shiffle(randoList);
-    // for (let i = 0; i < GRIDY; ++i) {
-    //     let y = randoList[i];
-    //     for (let x = 0; x < GRIDX; ++x) {
-    //         drawGridSquare(x, y);
-    //     }
-    //     if (i % 100 == 0) {
-    //         await wait(0);
-    //     }
-    // }
-
-    // draw it out with some noise? kinda scuffed
-    // let drawPerFrame = 13789;
-    // let squares = Math.floor(GRIDX * GRIDY / drawPerFrame); // how many times u need to draw to complete
-    // if (squares < 1) {
-    //     squares = 1;
-    // }
-    // // each time draw a random square!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // let randoList = [];
-    // for (let i = 0; i < squares; ++i) {
-    //     randoList.push(i);
-    // }
-    // shiffle(randoList);
-
-    // for (let s = 0; s < squares; ++s) {
-    //     for (let i = randoList[s]; true; i += squares) {
-    //         if (i >= GRIDX * GRIDY) {
-    //             i -= GRIDX * GRIDY;
-    //             let x = Math.floor(i % GRIDX);
-    //             let y = Math.floor(i / GRIDX);
-    //             drawGridSquare(x, y);
-    //             break;
-    //         }
-    //         let x = Math.floor(i % GRIDX);
-    //         let y = Math.floor(i / GRIDX);
-    //         drawGridSquare(x, y);
-    //     }
-    //     await wait(0);
-    // }
-
-    //console.log(performance.now() - starter);
     gridDirty = false;
 }
 
@@ -853,64 +804,6 @@ function getNeighbors(nx, ny) {
     return nbors;
 }
 
-async function dijkstras() {
-    let startNode = new PathNode(pathStartX, pathStartY, null);
-    frontier = new Queue();
-    frontier.enqueue(startNode);
-    let visited = new Set();
-    visited.add(startNode.hash());
-    while (!frontier.isEmpty()) {
-        let n = frontier.dequeue();
-        ++_ops;
-
-        if (n.parent != null) {
-            // drawLineToParent(n, 0, 200, 0, LINE_WIDTH);
-            drawLineToParentPath(n);
-            if (n.parent.x == pathStartX && n.parent.y == pathStartY) { // keep starting point above the green lines
-                drawOnGrid(n.parent.x, n.parent.y, SELECT);
-                stroke(pathColor); // for path coloring
-                strokeWeight(LINE_WIDTH);
-            }
-        }
-        if (n.x == pathEndX && n.y == pathEndY) {
-            await backTracePath(n);
-            break;
-        }
-
-        let nbors = getNeighbors(n.x, n.y);
-        for (let i = 0; i < nbors.length; ++i) {
-            let nbor = nbors[i];
-            let h = bhash(nbor.x, nbor.y);
-            if (!visited.has(h)) {
-                visited.add(h);
-                frontier.enqueue(new PathNode(nbor.x, nbor.y, n));
-                ++_nodes;
-            }
-        }
-
-        if (!options.pathInstant && --_opfAllowance <= 0) {
-            if (!await _wait()) {
-                break;
-            }
-            pathNodesText.innerHTML = _nodes;
-        }
-
-    }
-}
-
-// update prio by setting node as invalid and adding a new node in its place
-function updateNodePrio(n) {
-    n.invalid = true;
-    let nn = new AStarNode(n.x, n.y);
-    nn.parent = n.parent;
-    nn.g = n.g;
-    nn.h = n.h;
-    nn.f = n.f;
-    nn.opened = n.opened;
-    nn.closed = n.closed;
-    frontierQ.push(nn);
-}
-
 function checkDrewOverSelect(n) {
     if ((n.x == pathStartX && n.y == pathStartY) || (n.x == pathEndX && n.y == pathEndY)) { // keep starting point above the green lines
         drawOnGrid(n.x, n.y, SELECT);
@@ -919,9 +812,11 @@ function checkDrewOverSelect(n) {
     strokeWeight(LINE_WIDTH);
 }
 
-async function astar(sX, sY, eX, eY) {
+// if dijkstras then set heuristic to 0 each time
+async function astar(sX, sY, eX, eY, dijkstras = false) {
     let startNode = new AStarNode(sX, sY);
-    startNode.opened = true;
+    startNode.g = 0;
+    startNode.f = startNode.h;
     frontierQ = new TinyQueue();
     frontierQ.compare = function (a, b) { return a.f - b.f; }
     let visited = new Map();
@@ -942,7 +837,7 @@ async function astar(sX, sY, eX, eY) {
 
     while (frontierQ.length) {
         let n = frontierQ.pop(); // pop node with min f value
-        if (n.invalid) {
+        if (n.closed) {
             continue;
         }
         ++_ops;
@@ -966,9 +861,6 @@ async function astar(sX, sY, eX, eY) {
             let nb;
             if (!visited.has(h)) { // hasnt been visited so make new node and add it
                 nb = new AStarNode(nbc.x, nbc.y);
-                // stroke('#FFFFFF');
-                //nb.parent = n;
-                // drawLineToParentPath(nb);
                 stroke('#00FF00');
                 drawGridCircle(nb.x, nb.y, 0, 200, 0);
                 checkDrewOverSelect(nb);
@@ -985,12 +877,11 @@ async function astar(sX, sY, eX, eY) {
             // calculate next g score from that
             let nextg = n.g + (nb.x - n.x == 0 || nb.y - n.y == 0 ? 1 : root2);
 
-            // check if neighbor node has not been inspected yet or if it 
             // can be reached with a smaller cost from current node
-            if (!nb.opened || nextg < nb.g) {
+            if (nextg < nb.g) {
                 nb.g = nextg;
 
-                if (nb.h == 0) { // set heuristic
+                if (nb.h == 0 && !dijkstras) { // set heuristic
                     nb.h = chebyshev(Math.abs(nb.x - eX), Math.abs(nb.y - eY));
                     // make lines look more natural by adding slight bias when going in direction of endNode
                     if (options.crossProdTie) {
@@ -999,22 +890,9 @@ async function astar(sX, sY, eX, eY) {
                 }
 
                 nb.f = nb.g + nb.h; // f score is what we sort by
-                let oldParent = nb.parent;
                 nb.parent = n; // n is now nb parent
 
-                if (!nb.opened) {
-                    frontierQ.push(nb);
-                    nb.opened = true;
-                } else {
-                    updateNodePrio(nb);
-                    // if (oldParent != null) {
-                    //     stroke('#FF0000');
-                    //     nb.parent = oldParent;
-                    //     drawLineToParentPath(nb);
-                    //     checkDrewOverSelect(nb.parent);
-                    //     // dont need to restore nb since it got replaced in updateNodePrio
-                    // }
-                }
+                frontierQ.push(nb);
             }
         }
 
@@ -1058,7 +936,7 @@ async function findPath() {
 
     let pathAlgo = pathAlgoSelect.value;
     if (pathAlgo == "Dijkstra's") {
-        await dijkstras();
+        await astar(pathStartX, pathStartY, pathEndX, pathEndY, true);
     } else if (pathAlgo == "A* search") {
         await astar(pathStartX, pathStartY, pathEndX, pathEndY);
     } else {
@@ -1244,7 +1122,7 @@ calculatePathButton.onclick = function () {
     calcPath();
 }
 
-function calcPath(){
+function calcPath() {
     if (pathStartX != -1 && pathStartY != -1 && pathEndX != -1 && pathEndY != -1) {
         resetPath();
         redrawGrid();
@@ -1287,29 +1165,13 @@ genPauseButton.onclick = function () {
 }
 
 // changing the finishes to work as restart again, seems more useful
-pathFinishButton.onclick = function(){
+pathFinishButton.onclick = function () {
     calcPath();
 }
-genFinishButton.onclick = function(){
+genFinishButton.onclick = function () {
     initGrid();
     setTimeout(genGrid, 5, true);
 }
-
-// pathFinishButton.onclick = function () {
-//     if (_operating) {
-//         pathFinishButton.classList.add("mydis");
-//         _paused = false;
-//         setTimeout(() => { options.pathInstant = true; }, 0);
-//     }
-// }
-
-// genFinishButton.onclick = function () {
-//     if (_operating) {
-//         genFinishButton.classList.add("mydis");
-//         _paused = false;
-//         setTimeout(() => { options.genInstant = true; }, 0);
-//     }
-// }
 
 crossProdTieCheckbox.onclick = function () {
     options.crossProdTie = crossProdTieCheckbox.checked;
