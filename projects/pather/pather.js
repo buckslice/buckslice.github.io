@@ -1,18 +1,3 @@
-// todo
-// astar / other algo support
-// maybe try adding circles for nodes that change colors depending on if they are closed / open
-// make path length calc diagonals correctly
-// add zoom in and out capability (lets you have super huge maps this way!!!)
-// calc 2 second path drawer like the other path and gen await functions to work properly
-//      otherwise its still way too slow on large mazes to do lost sleep time
-// add line grid draw tool so users can make their own designs easier
-//      add little outline square selector showing what grid postion they are on
-//      also undo and redo maybe
-// maybe draw circle under currently opened node or something. then have to redraw neighbors blech
-// add bias slider for depth first maze, horizontal or vertical bias
-// redo everything to use HSB color mode
-// make the draw functions not retardode
-// try green to red for path coloring
 
 //code.iamkate.com
 function Queue() { var a = [], b = 0; this.getLength = function () { return a.length - b }; this.isEmpty = function () { return 0 == a.length }; this.enqueue = function (b) { a.push(b) }; this.dequeue = function () { if (0 != a.length) { var c = a[b]; 2 * ++b >= a.length && (a = a.slice(b), b = 0); return c } }; this.peek = function () { return 0 < a.length ? a[b] : void 0 } };
@@ -82,8 +67,8 @@ options.genMsPerOp = 1.0;
 options.crossProdTie = true;
 
 let canvas;
-const canvasWidth = window.innerWidth - 160;
-const canvasHeight = window.innerHeight;
+var canvasWidth;
+var canvasHeight;
 const TARGET_FRAME_RATE = 120;
 
 // try to set grid based on max screen height
@@ -148,7 +133,7 @@ function initGrid() {
 
     clearGenUI();
 
-    GRIDX = Math.floor((canvasWidth - 1) / GRID_SIZE);
+    GRIDX = Math.floor((canvasWidth - 1) / GRID_SIZE)+1;
     GRIDY = Math.floor((canvasHeight - 1) / GRID_SIZE);
     gridDimsText.innerHTML = `${GRIDX}x${GRIDY}`
     origX = origY = 0.5;
@@ -174,10 +159,12 @@ function initGrid() {
 //console.log(grid);
 
 function setup() {
+    const container = document.getElementById("canvas-container");
+    canvasWidth = container.clientWidth;
+    canvasHeight = container.clientHeight;
 
-    // Sets the screen to be 720 pixels wide and 400 pixels high
     canvas = createCanvas(canvasWidth, canvasHeight);
-    canvas.parent('main')
+    canvas.parent("canvas-container")
     //pixelDensity(2.)
     frameRate(TARGET_FRAME_RATE);
     noSmooth(); // might not be doing anything, more important to make sure pixel positions are rounded
