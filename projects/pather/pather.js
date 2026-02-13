@@ -661,7 +661,7 @@ function lerp(v0, v1, t) {
 
 function draw() {
 
-    if (mouseIsPressed && !_operating && lastMouseStartX >= 155) {
+    if ((mouseIsPressed || touchPressed) && !_operating) {
         let x = (mouseX - origX) / GRID_SIZE;
         x = Math.floor(x);
         let y = (mouseY - origY) / GRID_SIZE;
@@ -970,6 +970,16 @@ function mousePressed(event) {
     lastMouseButton = event.button;
     mouseJustPressed = true;
     wasHoldingShiftWhenMousePressed = keyIsDown(SHIFT);
+}
+let touchPressed = false;
+function touchStarted(event) {
+    lastMouseStartX = event.x;
+    lastMouseButton = 2;
+    mouseJustPressed = true;
+    touchPressed = true;
+}
+function touchEnded() {
+    touchPressed = false;
 }
 
 function wait(ms) {
